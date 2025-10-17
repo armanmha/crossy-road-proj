@@ -7,6 +7,7 @@
 
 ## Project Description
  > * Why is it important or interesting to you?
+ > * **This project is important to us as it introduces us to the same methods of product development that software engineers utilize on a daily basis.**
  > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
  > * What will be the input/output of your project?
  > * What are the features that the project provides?
