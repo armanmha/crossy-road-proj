@@ -7,10 +7,13 @@
 
 ## Project Description
  > * Why is it important or interesting to you?
- > * **This project is important to us as it introduces us to the same methods of product development that software engineers utilize on a daily basis.**
+ > * **This project is important to us as it introduces us to the same methods of product development that software engineers utilize on a daily basis. Learning to work as a team in similar ways as we would in a professional environment will help prepare each other once we are hired for such positions, internships, and so on.**
  > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
+> *  **We plan to use C++ mainly and may add additional tools/technologies, but currently plan on solely using C++.**
  > * What will be the input/output of your project?
+>  * **The input for our project will be user input (arrow keys, 'WASD' keys) for moving their character, while the output of the program will be the continuously updating visuals such as vehicles interacting with our character such as our character getting run over, resulting in the game ending.**
  > * What are the features that the project provides?
+>  * **The features that the project provides are the ability for the user to control a game character, moving through a road of speeding vehicles, trying to avoid getting run over. The simple objective of the game is to "cross the road" for as long as possible, without getting hit by a car. There will be a point system at the end of each game, showing the user how well they did, and giving them the ability to compete for the best score. This may consist of a timed system where the longer the user lasts, the higher the score, or a point system where each vehicle they pass, their score increases by a certain amount of points. Each game will also start in a different place, so the user cannot learn the pattern of the cars to "cheat the game" and increase their score by memorizing the game pattern.**
  > This description should be in enough detail that the TA/instructor can determine the complexity of the project and if it is sufficient for the team members to complete in the time allotted. 
  > 
  > You also need to set up an empty project board using GitHub projects (board view with columns for a scrum board). Make sure you add the board under your project repository. You should also add a `Product Backlog` and an `In testing` column. Please also rename the `TODO` column to `Sprint Backlog` and the `In Progress` column to `In Development`. All columns should be in the right order.
