@@ -3,10 +3,7 @@
 
 # Crossy Road Clone
 
- > Authors: [Jacob McLaughlin](https://github.com/BacoJaco)
- >          [Aaron](https://github.com/)
- >          [Arman](https://github.com/)
- >          [Ethan](https://github.com/)
+ > Authors: [Jacob McLaughlin](https://github.com/BacoJaco), [Aaron Limtiaco](https://github.com/airvon), [Arman Hamidi Asl](https://github.com/armanmha), [Ethan Jung](https://github.com/ethanjung-commits)
 
 ## Project Description
  > * Why is it important or interesting to you?
