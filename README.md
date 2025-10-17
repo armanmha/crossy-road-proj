@@ -4,9 +4,9 @@
 # Crossy Road Clone
 
  > Authors: [Jacob McLaughlin](https://github.com/BacoJaco)
-            [Aaron](https://github.com/)
-            [Arman](https://github.com/)
-            [Ethan](https://github.com/)
+ >          [Aaron](https://github.com/)
+ >          [Arman](https://github.com/)
+ >          [Ethan](https://github.com/)
 
 ## Project Description
  > * Why is it important or interesting to you?
