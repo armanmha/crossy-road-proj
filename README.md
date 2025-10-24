@@ -11,10 +11,7 @@ This project is important to us because our group grew up with the dream of maki
 We plan to use C++ for both the game logic and the graphics (which will be terminal-based). The input for our project will be key-presses for movement, pausing the game, and quitting the game. The output will be continuously-updating visuals that respond to the user's input. Visuals will include the character (a chicken), moving vehicles, a live-score, and a pause menu.
 
 The features that the project provides include real-time character movement, a live-scoring system, and procedurally generated games. The objective of the game is to "cross the road" for as long as possible, without getting hit by a vehicle. The scoring system will show the user how well they did, and allow them to compete for the highest score. The score may be based on a timed system, where the longer the user lasts, the higher the score, or a point system, where each row of vehicles passed equates to one point. Each game will be procedurally generated (ie. every new game's vehicle placement is unique), so the user cannot memorize the pattern of the vehicles to "cheat the game" and easily get a high score.
- > 
- > You also need to set up an empty project board using GitHub projects (board view with columns for a scrum board). Make sure you add the board under your project repository. You should also add a `Product Backlog` and an `In testing` column. Please also rename the `TODO` column to `Sprint Backlog` and the `In Progress` column to `In Development`. All columns should be in the right order.
-> 
-> Finally, one member from your team needs to submit the Project Group Signups form (link available on Canvas) to provide a link to your team's project repository before the deadline for this porposal phase.
+
  > ## Phase II
  > In addition to completing the "User Interface Specification" and "Class Diagram" sections below, you will need to:
  > * Create an "Epic" (note) for each feature. Place these epics in the `Product Backlog` column
