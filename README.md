@@ -30,6 +30,11 @@ The features that the project provides include real-time character movement, a l
 ### Navigation Diagram
 > Draw a diagram illustrating how the user can navigate from one screen to another. Here is an [example](https://creately.com/diagram/example/ikfqudv82/user-navigation-diagram-classic?r=v). Nodes represent the different screens in your program and arrows represent the way to navigate from one screen to another. It can be useful to label each symbol that represents a screen so that you can reference the screens in the next section or the rest of the document if necessary. Give a brief description of what the diagram represents.
 
+Navigation Diagram: 
+![alt text][logo]
+
+[logo]: https://github.com/final-project-ahami040-ejung047-alimt001-jmcla012/"Final_Project_Nav_Diagram.png"
+
 ### Screen Layouts
 > Include the layout of each of your screens. The layout should describe the screen’s major components such as menus and prompts for user inputs and expected output, or any graphical user interface components if applicable (e.g. buttons, text boxes, etc). Explain what is on the layout, and the purpose of each menu item, button, etc. If many screens share the same layout, start by describing the general layout and then list the screens that will be using that layout and the differences between each of them.
 
