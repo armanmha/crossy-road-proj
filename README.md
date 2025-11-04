@@ -44,5 +44,4 @@ The main menu screen presents the user with options to “Play”, “Change Dif
  
 <h1></h1><b>Class Diagram:</b>
 
-<img width="980" height="802" alt="Class_Diagram" src="https://github.com/user-attachments/assets/e0906811-2b54-4e4f-bd33-adec5626023e" /><h1></h1>
-
+<img width="1086" height="802" alt="Class_Diagram" src="https://github.com/user-attachments/assets/ea793c7d-fafc-441f-9996-a3aea382d8db" />
