@@ -5,7 +5,6 @@
 
 using std::cout;
 
-static const int SCREEN_WIDTH = 80; 
 
 void Menu::startGame(){
 
@@ -35,12 +34,33 @@ void Menu::display(int highScore){
     // system("cls");
     system("clear");
 
-    cout << "\n";
-    cout << "Crossy Road\n";
-    cout << "===========\n\n\n\n";
-    cout << "PLAY\n\n";
-    cout << "High Score: " << highScore << "\n\n";
-    cout << "===========\n\n";
-    cout << "Change Difficulty: " << getDifficulty(); 
-    cout << "\tQuit Game\t\t See Leaderboard\n\n";
+    static const int SCREEN_WIDTH = 80; 
+    string title = "Crossy Road";
+    string line(SCREEN_WIDTH/2, '=');
+    cout << "\n\n";
+
+    //center title
+    cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n\n\n";
+    
+    // line above play button
+    cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
+
+    // play button
+    string play = "PLAY";
+    cout << std::setw((SCREEN_WIDTH + play.size()) / 2) << play << "\n\n";
+
+    // high score
+    string scoreText = "High Score: " + std::to_string(highScore);
+    cout << std::setw((SCREEN_WIDTH + scoreText.size()) / 2) << scoreText << "\n\n"; 
+
+    // line below play button/high score
+    cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n\n\n";
+
+    cout << std::setw(SCREEN_WIDTH/4) << "Change Difficulty: " << getDifficulty();
+    cout << std::setw(20) << "Quit Game";
+    cout << std::setw(29) << "View Leaderboard\n\n";
+
+    
+    // cout << "Change Difficulty: " << getDifficulty(); 
+    // cout << "\tQuit Game\t\t See Leaderboard\n\n";
 }
