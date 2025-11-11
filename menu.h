@@ -1,5 +1,4 @@
-#include <screen.h>
-
+#include "screen.h"
 #include <string>
 using std::string;
 
@@ -15,5 +14,7 @@ class Menu : public Screen{
     void changeDifficulty(int &);
     string getDifficulty();
     void seeLeaderboard();
+
+    void display(int highScore);
 
 };
