@@ -5,10 +5,10 @@
 
 using std::cout;
 
-
 void Menu::startGame(){
 
 }
+
 void Menu::changeDifficulty(int &newDifficulty){
     currentDifficulty = newDifficulty;
 }
@@ -59,8 +59,4 @@ void Menu::display(int highScore){
     cout << std::setw(SCREEN_WIDTH/4) << "Change Difficulty: " << getDifficulty();
     cout << std::setw(20) << "Quit Game";
     cout << std::setw(29) << "View Leaderboard\n\n";
-
-    
-    // cout << "Change Difficulty: " << getDifficulty(); 
-    // cout << "\tQuit Game\t\t See Leaderboard\n\n";
 }
