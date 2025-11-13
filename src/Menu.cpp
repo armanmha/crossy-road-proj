@@ -34,7 +34,6 @@ void Menu::display(int highScore){
     // system("cls");
     system("clear");
 
-    static const int SCREEN_WIDTH = 80; 
     string title = "Crossy Road";
     string line(SCREEN_WIDTH/2, '=');
     cout << "\n\n";

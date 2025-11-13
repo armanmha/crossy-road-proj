@@ -2,10 +2,11 @@
 using std::vector;
 
 class Screen {
-    private: 
+ protected: 
     vector<int> cursorPosition;
+    static const int SCREEN_WIDTH = 80;
 
-    public: 
+ public: 
     void processInput(char input);
 
 };

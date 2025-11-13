@@ -31,9 +31,7 @@ void Leaderboard::loadSortedScores(){
 
 }
 
-void Leaderboard::displayScores(int numScores){
-    static const int SCREEN_WIDTH = 80;
-    
+void Leaderboard::displayScores(int numScores){    
     string line(SCREEN_WIDTH/2, '=');
 
 
