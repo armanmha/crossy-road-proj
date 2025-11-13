@@ -3,10 +3,12 @@
 
 int main(){
     Menu mainMenu;
-    int highScore = 150;
 
-    mainMenu.display(highScore);
-    std::cout << "Press Enter to Quit...";
+    mainMenu.display();
+    mainMenu.seeLeaderboard("../data/playerScores.txt", 2);
+
+
+    std::cout << "Press Q to Quit...";
     std::cin.get();
     return 0;
 }

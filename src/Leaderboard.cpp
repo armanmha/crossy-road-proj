@@ -27,14 +27,10 @@ void Leaderboard::loadSortedScores(){
     }
 
     inFS.close();
-
-
 }
 
 void Leaderboard::displayScores(int numScores){    
     string line(SCREEN_WIDTH/2, '=');
-
-
 
     // Center title
     string title = "Leaderboard";

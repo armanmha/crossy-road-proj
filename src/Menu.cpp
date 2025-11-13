@@ -1,4 +1,6 @@
 #include "../header/Menu.h"
+#include "../header/Leaderboard.h"
+
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
@@ -26,12 +28,15 @@ string Menu::getDifficulty(){
     }
 }
 
-void Menu::seeLeaderboard(){
 
+void Menu::seeLeaderboard(string filename, int scoresToDisplay){
+    Leaderboard board(filename);
+    board.loadSortedScores();
+    board.displayScores(scoresToDisplay);
 }
 
-void Menu::display(int highScore){
-    // system("cls");
+
+void Menu::display(){
     system("clear");
 
     string title = "Crossy Road";
@@ -48,11 +53,13 @@ void Menu::display(int highScore){
     string play = "PLAY";
     cout << std::setw((SCREEN_WIDTH + play.size()) / 2) << play << "\n\n";
 
-    // high score
+    /*
+    // High score
     string scoreText = "High Score: " + std::to_string(highScore);
     cout << std::setw((SCREEN_WIDTH + scoreText.size()) / 2) << scoreText << "\n\n"; 
+    */
 
-    // line below play button/high score
+    // Line below play button/high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n\n\n";
 
     cout << std::setw(SCREEN_WIDTH/4) << "Change Difficulty: " << getDifficulty();
