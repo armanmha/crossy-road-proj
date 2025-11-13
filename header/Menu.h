@@ -1,4 +1,4 @@
-#include "screen.h"
+#include "Screen.h"
 #include <string>
 using std::string;
 
