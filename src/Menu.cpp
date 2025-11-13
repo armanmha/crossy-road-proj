@@ -39,7 +39,7 @@ void Menu::display(int highScore){
     string line(SCREEN_WIDTH/2, '=');
     cout << "\n\n";
 
-    //center title
+    // Center title
     cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n\n\n";
     
     // line above play button

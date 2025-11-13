@@ -1,11 +1,16 @@
 #include "Screen.h"
 #include <utility>
+#include <vector>
 #include <string>
+
+using std::string;
+using std::vector;
+using std::pair;
 
 class Leaderboard: public Screen {
  private:
-    std::pair<std::string, int> players;
-    std::string inputFileName;
+    vector<pair<string, int>> players;
+    string inputFileName;
  public:
     Leaderboard(std::string fileName): inputFileName(fileName) {}
     void loadSortedScores();
