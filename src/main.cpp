@@ -6,10 +6,20 @@ int main(){
 
     mainMenu.display();
 
+
+    char input;
+
     std::cout << "Press Q to Quit...";
-    while(std::cin.get() != 'Q' && std::cin.get() != 'q') {
-        if(std::cin.get() == 'L') {
+    while(std::cin.get(input)) {
+        if(input == 'Q' || input == 'q') {
+            break;
+        }
+        
+        if(input == 'L' || input == 'l') {
             mainMenu.seeLeaderboard("../data/playerScores.txt", 2);
+            if(std::cin.get() == 'Q' || std::cin.get() == 'q') {
+                mainMenu.display();
+            }
         }
     }
 
