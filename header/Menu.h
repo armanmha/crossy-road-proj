@@ -1,8 +1,9 @@
 #include "Screen.h"
 #include <string>
+
 using std::string;
 
-class Menu : public Screen{
+class Menu : public Screen {
     private: 
     int currentDifficulty;
    
@@ -13,8 +14,8 @@ class Menu : public Screen{
     void startGame();
     void changeDifficulty(int &);
     string getDifficulty();
-    void seeLeaderboard();
+    void seeLeaderboard(string, int);
 
-    void display(int highScore);
+    void display();
 
 };

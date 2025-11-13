@@ -5,10 +5,13 @@ int main(){
     Menu mainMenu;
 
     mainMenu.display();
-    mainMenu.seeLeaderboard("../data/playerScores.txt", 2);
-
 
     std::cout << "Press Q to Quit...";
-    std::cin.get();
+    while(std::cin.get() != 'Q' && std::cin.get() != 'q') {
+        if(std::cin.get() == 'L') {
+            mainMenu.seeLeaderboard("../data/playerScores.txt", 2);
+        }
+    }
+
     return 0;
 }
