@@ -1,15 +1,29 @@
 #pragma once
 
-#include <vector>
-
-using std::vector;
+enum class InputKey {
+  Up,
+  Down,
+  Left,
+  Right,
+  Enter,
+  Quit,
+  Unknown
+};
 
 class Screen {
- protected: 
-   vector<int> cursorPosition;
-   static const int SCREEN_WIDTH = 80;
+  private:
+    bool rawEnabled = false;
 
- public: 
-   void processInput(char input);
+  protected:
+    static const int SCREEN_WIDTH = 80;
 
+  public:
+    Screen();
+    ~Screen();
+    
+    void enableRawMode();
+    void disableRawMode();
+
+    InputKey processInput();
+    void clear();
 };
