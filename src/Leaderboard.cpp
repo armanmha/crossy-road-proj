@@ -5,6 +5,7 @@
 #include <utility>
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
 
 using std::string;
 using std::vector;
@@ -18,6 +19,7 @@ void Leaderboard::loadSortedScores(){
 
     if (!inFS.is_open()) throw std::runtime_error("Could not open file: " + inputFileName);
 
+    // Read scores from file
     while(!inFS.eof()){
         string name;
         int score;
@@ -25,6 +27,10 @@ void Leaderboard::loadSortedScores(){
         if(inFS.fail()) break;
         players.push_back(std::make_pair(name, score));
     }
+
+    // Sort and then reverse to obtain descending order
+    std::sort(players.begin(), players.end());
+    std::reverse(players.begin(), players.end());
 
     inFS.close();
 }
@@ -39,7 +45,7 @@ void Leaderboard::displayScores(int numScores){
     // Line above play button
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
-    // Scores
+    // Scores (up to numScores)
     for(int i = 0; i < numScores && i < players.size(); i++){
         string scoreEntry = std::to_string(i + 1) + ". " + players.at(i).first + " - " + std::to_string(players.at(i).second);
 
