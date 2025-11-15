@@ -14,7 +14,7 @@ using std::pair;
 
 
 // Player scores file is read, sorted, and stored
-void Leaderboard::loadSortedScores(){
+void LeaderboardScoreManagement::loadSortedScores(){
     std::ifstream inFS(inputFileName); 
 
     if (!inFS.is_open()) throw std::runtime_error("Could not open file: " + inputFileName);
@@ -35,7 +35,9 @@ void Leaderboard::loadSortedScores(){
     inFS.close();
 }
 
-void Leaderboard::displayScores(int numScores){    
+void LeaderboardDisplay::displayScores(int numScores){    
+    vector<pair<string, int>> playerScores = leaderboardManager.getScores();
+    
     string line(SCREEN_WIDTH/2, '=');
 
     // Center title

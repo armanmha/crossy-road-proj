@@ -1,6 +1,4 @@
 #include "../header/Menu.h"
-#include "../header/Leaderboard.h"
-#include "../header/Screen.h"
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
@@ -9,18 +7,16 @@
 using std::cout;
 using std::string;
 
-// FUNCTION: starts game class
 void Menu::startGame(){
     // TODO: connect to game object later
 }
 
 
-// FUNCTION: updates difficulty stored in menu
 void Menu::changeDifficulty(int &newDifficulty){
     currentDifficulty = newDifficulty;
 }
 
-// FUNCTION: converts number in difficulty to equivalent string
+// Converts number in difficulty to equivalent string
 string Menu::getDifficulty(){
     switch(currentDifficulty){
         case 1:
@@ -34,26 +30,27 @@ string Menu::getDifficulty(){
     }
 }
 
-// calls leaderboard screen
-void Menu::seeLeaderboard(Screen& screen, string filename, int scoresToDisplay){
-    Leaderboard board(filename);                // creates leaderboard object
-    board.loadSortedScores();                   // loads scores from text file into board object
-    board.displayScores(scoresToDisplay);       // displays scores as string
+// Displays leaderboard screen
+void Menu::seeLeaderboard(int scoresToDisplay) {
+    // Load scores and sort them from file
+    leaderboardManager.loadSortedScores();
 
-    cout << "\nPress Enter to return to menu..." << std::flush; // flushes buffer for safety
+    leaderboardDisplay.displayScores(scoresToDisplay);
 
-    // wait for ENTER or Q using the SAME input system as menu
+    cout << "\nPress Enter to return to menu..." << std::flush; // Flushes buffer for safety
+
+    // Wait for ENTER or Q using the SAME input system as menu
     while (true) {
-        InputKey key = screen.processInput();       // retrieves input
+        InputKey key = processInput();
 
-        // exit leaderboard screen when enter is pressed
+        // Exit leaderboard screen when enter is pressed
         if (key == InputKey::Enter || key == InputKey::Quit) {
             break;
         }
     }
 }
 
-// FUNCTION: generates new frame with updated cursor instantly 
+// Generates new frame with updated cursor instantly 
 void Menu::display(int cursorIndex){
     // \x1b[3J - clears scrollback history in terminal
     // \x1b[2J - clears screen in terminal
@@ -107,21 +104,20 @@ void Menu::display(int cursorIndex){
     cout << "\n"; // extra space at end
 }
 
-// FUNCTION: run menu
-void Menu::run(Screen& screen) {
+void Menu::run() {
     int cursor = 0;             // reset cursor to beginning
     const int numItems = 4;     // set constant number of menu items
     bool running = true;        // tracks if menu is running
 
-    screen.enableRawMode();     // enables RAW mode in terminal
+    enableRawMode();     // enables RAW mode in terminal
 
     // while menu is running
     while (running) {
         std::cout << "\x1b[3J"; // clear scrollback buffer for safety
-        screen.clear();         // clear screen 
+        clear();         // clear screen 
         display(cursor);        // display frame with current cursor position
 
-        InputKey key = screen.processInput();  // process arrow key input and assigns it to enum
+        InputKey key = processInput();  // process arrow key input and assigns it to enum
 
         // determines cursor position
         switch (key) {
@@ -156,8 +152,8 @@ void Menu::run(Screen& screen) {
                     changeDifficulty(newDifficulty);                        // update difficulty variable in class
                 }
                 else if (cursor == 2) {                                     // when on leaderboard selection
-                    screen.clear();                                         // clears current screen
-                    seeLeaderboard(screen, "../data/playerScores.txt", 5);  // calls leaderboard object and displays 5 scores
+                    clear();                                         // clears current screen
+                    seeLeaderboard(5);  // calls leaderboard object and displays 5 scores
                 }
                 else if (cursor == 3) {                                     // if on quit game
                     running = false;                                        // deactivate menu loop
@@ -173,5 +169,5 @@ void Menu::run(Screen& screen) {
         }
     }
 
-    screen.disableRawMode();                                                // disables RAW mode in terminal
+    disableRawMode();                                                // disables RAW mode in terminal
 }

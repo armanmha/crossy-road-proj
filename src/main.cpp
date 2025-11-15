@@ -3,11 +3,10 @@
 #include <iostream>
 
 int main() {
-    Menu mainMenu;
-    Screen screen;
+    Menu mainMenu("./data/playerScores.txt");
 
     std::cout << "\x1b[3J\x1b[H\x1b[2J" << std::flush;
-    mainMenu.run(screen);
+    mainMenu.run();
 
     return 0;
 }

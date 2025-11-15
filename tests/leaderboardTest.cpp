@@ -2,11 +2,11 @@
 #include "../header/Leaderboard.h"
 
 TEST(LeaderboardLoadScoresTests, loadValidFile) {
-    Leaderboard board("tests/testScores.txt");
+    LeaderboardScoreManagement board("tests/testScores.txt");
     EXPECT_NO_THROW (board.loadSortedScores());  
 }
 
 TEST(LeaderboardLoadScoresTests, loadInvalidFile) {
-    Leaderboard board("banana");
+    LeaderboardScoreManagement board("banana");
     EXPECT_THROW (board.loadSortedScores(), std::runtime_error);  
 }
