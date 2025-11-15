@@ -9,7 +9,7 @@ using std::pair;
 
 class Leaderboard: public Screen {
  private:
-    vector<pair<string, int>> players;
+    vector<pair<string, int>> playerScores;
     string inputFileName;
  public:
     Leaderboard(std::string fileName): inputFileName(fileName) {}

@@ -8,6 +8,7 @@ add_subdirectory(googletest)
 add_executable(runLeaderboardTests
     leaderboardTest.cpp
     ../src/Leaderboard.cpp
+    ../src/Screen.cpp
 )
 
 
