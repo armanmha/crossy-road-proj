@@ -22,10 +22,11 @@ void LeaderboardScoreManagement::loadSortedScores(){
     // Read scores from file
     while(!inFS.eof()){
         string name;
+        string difficulty;
         int score;
-        inFS >> score >> name;
+        inFS >> score >> name >> difficulty;
         if(inFS.fail()) break;
-        playerScores.push_back(std::make_pair(name, score));
+        playerScores.push_back(LeaderboardPlayer{name, score, difficulty});
     }
 
     // Sort and then reverse to obtain descending order
@@ -36,7 +37,7 @@ void LeaderboardScoreManagement::loadSortedScores(){
 }
 
 void LeaderboardDisplay::displayScores(int numScores){    
-    vector<pair<string, int>> playerScores = leaderboardManager.getScores();
+    vector<LeaderboardPlayer> playerScores = leaderboardManager.getScores();
     
     string line(SCREEN_WIDTH/2, '=');
 
@@ -49,7 +50,7 @@ void LeaderboardDisplay::displayScores(int numScores){
 
     // Scores (up to numScores)
     for(int i = 0; i < numScores && i < playerScores.size(); i++){
-        string scoreEntry = std::to_string(i + 1) + ". " + playerScores.at(i).first + " - " + std::to_string(playerScores.at(i).second);
+        string scoreEntry = std::to_string(i + 1) + ". " + playerScores.at(i).name + " - " + std::to_string(playerScores.at(i).score) + " (" + playerScores.at(i).difficulty + ")";
 
         cout << std::setw((SCREEN_WIDTH + scoreEntry.size()) / 2) << scoreEntry << "\n\n";
     }
