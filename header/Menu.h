@@ -7,18 +7,19 @@ using std::string;
 
 class Menu : public Screen {
  private: 
-    int currentDifficulty;
+   int currentDifficulty;
 
-    LeaderboardScoreManagement leaderboardManager{"No_File"};
-    LeaderboardDisplay leaderboardDisplay{leaderboardManager};
+   LeaderboardScoreManagement leaderboardManager{"No_File"}; // Initialize with invalid filename
+   LeaderboardDisplay leaderboardDisplay{leaderboardManager};
  public:
-    Menu(string scoresFilename): currentDifficulty(1), leaderboardManager(scoresFilename), leaderboardDisplay(leaderboardManager) {}; // Default difficulty = 1 (easy)
-    ~Menu() {};
+   Menu(string scoresFilename): currentDifficulty(1), leaderboardManager(scoresFilename), leaderboardDisplay(leaderboardManager) {}; // Default difficulty = 1 (easy)
+   ~Menu() {};
 
-    void startGame();                                                           // run game class
-    void changeDifficulty(int &newDifficulty);                                  // change difficulty
-    string getDifficulty();                                                     // retrieve difficulty
-    void seeLeaderboard(int scoresToDisplay);  // call leaderboard class
-    void display(int cursorIndex);                                              // displays frame with updated cursor
-    void run();                                                   // runs program
+   void startGame();                          // Brings player to game screen 
+   void changeDifficulty(int &newDifficulty);
+   void seeLeaderboard(int scoresToDisplay);  // Brings player to separate leaderboard screen
+   void display(int cursorIndex);             // Displays frame with updated cursor
+   void run();                                // Runs program
+
+   string getDifficulty();
 };

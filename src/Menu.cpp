@@ -65,7 +65,7 @@ void Menu::display(int cursorIndex){
     // Center title
     cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
     
-    // line above high score
+    // Line above high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
     // Print high score
@@ -73,10 +73,10 @@ void Menu::display(int cursorIndex){
     string scoreText = "High Score: " + std::to_string(highScore);
     cout << std::setw((SCREEN_WIDTH + scoreText.size()) / 2) << scoreText << "\n\n"; 
 
-    // line below high score
+    // Line below high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
-    // declare menu string items with updated 
+    // Declare menu string items with updated difficulty
     const string items[] = {
         "PLAY",
         "Change Difficulty: " + getDifficulty(),
@@ -86,88 +86,89 @@ void Menu::display(int cursorIndex){
 
     int numItems = 4;
 
-    // run for loop to display arrow at correct selection
+    // Displays arrow at correct selection
     for (int i = 0; i < numItems; ++i) {
-        string text = items[i];                             // declare array with string object
+        string text = items[i];                             // Declare array with string object
 
-        int padding = (SCREEN_WIDTH - text.size()) / 2;     // calculate padding
+        int padding = (SCREEN_WIDTH - text.size()) / 2;     // Calculate padding
 
-        // simple cursor: ">" before selected item
-        if (i == cursorIndex) {                             // if cursor index is at an index put an arrow in front of that string
+        // Simple cursor: ">" before selected item
+        if (i == cursorIndex) {
             cout << std::setw(padding - 2) << "" << "> " << text << "\n\n";
         } 
-        else {                                              // else print out string as normal
+        else {
+            // If cursor not at this item, just print normally
             cout << std::setw(padding) << "" << text << "\n\n";
         }             
     }
 
-    cout << "\n"; // extra space at end
+    cout << "\n";
 }
 
 void Menu::run() {
-    int cursor = 0;             // reset cursor to beginning
-    const int numItems = 4;     // set constant number of menu items
-    bool running = true;        // tracks if menu is running
+    int cursor = 0;             // Reset cursor to beginning
+    const int numItems = 4;     // Set constant number of menu items
+    bool running = true;        // Tracks if menu is running
 
-    enableRawMode();     // enables RAW mode in terminal
+    enableRawMode();     // Enables RAW mode in terminal
 
-    // while menu is running
+    // While menu is running
     while (running) {
-        std::cout << "\x1b[3J"; // clear scrollback buffer for safety
-        clear();         // clear screen 
-        display(cursor);        // display frame with current cursor position
+        std::cout << "\x1b[3J"; // Clear scrollback buffer for safety
+        clear();                // Clear screen
+        display(cursor);        // Display frame with current cursor position
 
-        InputKey key = processInput();  // process arrow key input and assigns it to enum
+        InputKey key = processInput();  // Process arrow key input and assigns it to enum
 
-        // determines cursor position
+        // Determines cursor position
         switch (key) {
-            case InputKey::Up: // moves cursor 1 position up in menu
-                cursor = (cursor - 1 + numItems) % numItems; // calculate cursor position
+            case InputKey::Up: // Moves cursor 1 position up in menu
+                cursor = (cursor - 1 + numItems) % numItems;
                 break;
 
-            case InputKey::Down: // moves cursor 1 position down in menu
-                cursor = (cursor + 1) % numItems; // calculate cursor position
+            case InputKey::Down: // Moves cursor 1 position down in menu
+                cursor = (cursor + 1) % numItems;
                 break;
 
-            case InputKey::Left:    // changes difficulty 
-                if (cursor == 1) {                                           // if cursor is at difficulty section
+            case InputKey::Left:    // Changes difficulty 
+                if (cursor == 1) {                                           // If cursor is at difficulty section
                     int newDifficulty = (currentDifficulty - 2 + 3) % 3 + 1; // Ex. left on easy(1) -> hard(3)
-                    changeDifficulty(newDifficulty);                         // update difficulty variable in class
+                    changeDifficulty(newDifficulty);
                 } 
                 break;
 
-            case InputKey::Right:   // changes difficulty
-                if (cursor == 1) {                                           // if cursor is at difficulty section
+            case InputKey::Right:   // Changes difficulty
+                if (cursor == 1) {                                           // If cursor is at difficulty section
                     int newDifficulty = (currentDifficulty % 3) + 1;         // Ex. right on hard(3) -> easy(1)
-                    changeDifficulty(newDifficulty);                         // update difficulty variable in class
+                    changeDifficulty(newDifficulty);
                 }
                 break;
 
             case InputKey::Enter:   
-                if (cursor == 0) {                                          // when on play button
-                    startGame();                                            // starts running game
+                if (cursor == 0) {                                          // When on play button
+                    startGame();
                 }
-                else if (cursor == 1) {                                     // when on difficulty selection
+                else if (cursor == 1) {                                     // When on difficulty selection
                     int newDifficulty = (currentDifficulty % 3) + 1;        // Ex. right on hard(3) -> easy(1)
-                    changeDifficulty(newDifficulty);                        // update difficulty variable in class
+                    changeDifficulty(newDifficulty);
                 }
-                else if (cursor == 2) {                                     // when on leaderboard selection
-                    clear();                                         // clears current screen
-                    seeLeaderboard(5);  // calls leaderboard object and displays 5 scores
+                else if (cursor == 2) {                                     // When on leaderboard selection
+                    clear();
+                    seeLeaderboard(5);
                 }
-                else if (cursor == 3) {                                     // if on quit game
-                    running = false;                                        // deactivate menu loop
+                else if (cursor == 3) {                                     // If on quit game
+                    running = false;                                        // Deactivate menu loop
                 }
                 break;
 
-            case InputKey::Quit:                                            // quit the game
-                running = false;                                            // stop running the late
+            case InputKey::Quit:                                            // Quit the game
+                running = false;
                 break;
             
-            default:                                                        // breaks out of switch
+            default:                                                        // Breaks out of switch
                 break;
         }
     }
 
-    disableRawMode();                                                // disables RAW mode in terminal
+    disableRawMode();
 }

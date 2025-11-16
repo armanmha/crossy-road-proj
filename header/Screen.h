@@ -1,6 +1,6 @@
 #pragma once
 
-enum class InputKey {         // maps numbers to arrow keys
+enum class InputKey {         // Maps numbers to arrow keys
   Up,
   Down,
   Left,
@@ -12,18 +12,18 @@ enum class InputKey {         // maps numbers to arrow keys
 
 class Screen {
   private:
-    bool rawEnabled = false;  // tracks if raw mode is enabled in terminal
+    bool rawEnabled = false;  // Tracks if raw mode is enabled in terminal
 
   protected:
-    static const int SCREEN_WIDTH = 80; // constant screen size in terminal
+    static const int SCREEN_WIDTH = 80; // Width of terminal screen
 
   public:
-    Screen();                 // constructor 
-    ~Screen();                // destructor
+    Screen();
+    ~Screen();
     
-    void enableRawMode();     // enables raw mode
-    void disableRawMode();    // disables raw mode
+    void enableRawMode();
+    void disableRawMode();
 
-    InputKey processInput();  // processes key input
-    void clear();             // clear screen
+    InputKey processInput();  // Processes user input
+    void clear();             // Clears screen/terminal
 };
