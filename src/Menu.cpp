@@ -50,6 +50,11 @@ void Menu::seeLeaderboard(int scoresToDisplay) {
     }
 }
 
+// Helper function for display
+void Menu::printRight(const string& text, int padding) {
+    cout << std::right << std::setw(SCREEN_WIDTH + padding) << text << "\n";
+}
+
 // Generates new frame with updated cursor instantly 
 void Menu::display(int cursorIndex){
     // \x1b[3J - clears scrollback history in terminal
@@ -58,9 +63,13 @@ void Menu::display(int cursorIndex){
     std::cout << "\x1b[3J\x1b[2J\x1b[H" << std::flush;  
 
     // Declares title
-    string title = "Crossy Road";
+    string title = "CROSSY ROAD";
     string line(SCREEN_WIDTH/2, '=');
+    string frame(SCREEN_WIDTH,  '=');
     cout << "\n\n";
+
+    // Top Frame
+    cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << frame << "\n\n";
 
     // Center title
     cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
@@ -70,8 +79,8 @@ void Menu::display(int cursorIndex){
 
     // Print high score
     int highScore = 1000; // temp high score
-    string scoreText = "High Score: " + std::to_string(highScore);
-    cout << std::setw((SCREEN_WIDTH + scoreText.size()) / 2) << scoreText << "\n\n"; 
+    string scoreText = "** High Score: " + std::to_string(highScore);
+    cout << std::setw((SCREEN_WIDTH + scoreText.size()) / 2) << scoreText << " ** \n\n"; 
 
     // Line below high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
@@ -92,17 +101,39 @@ void Menu::display(int cursorIndex){
 
         int padding = (SCREEN_WIDTH - text.size()) / 2;     // Calculate padding
 
-        // Simple cursor: ">" before selected item
+        // Simple cursor: "→" before selected item
         if (i == cursorIndex) {
-            cout << std::setw(padding - 2) << "" << "> " << text << "\n\n";
+            cout << std::setw(padding - 2) << "" << "→ " << text << "\n\n";
         } 
         else {
             // If cursor not at this item, just print normally
             cout << std::setw(padding) << "" << text << "\n\n";
-        }             
+        }
+        
     }
 
-    cout << "\n";
+    switch(cursorIndex) {
+        case 0: 
+            printRight("Press ENTER to start game", 0);
+            break;
+
+        case 1:
+            printRight("Press ← or → to change", 4);
+            break;
+
+        case 2:
+            printRight("Press ENTER to view leaderboard", 0);
+            break;
+
+        case 3:
+            printRight("Press ENTER to quit game", 0);
+            break;
+        default:
+            cout << "\n";
+    }
+
+    // Bottom Frame
+    cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << frame << "\n\n";
 }
 
 void Menu::run() {
