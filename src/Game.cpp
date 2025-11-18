@@ -26,7 +26,7 @@ void Game::start(){
         // probably will just have quit button in pause screen, but for now
         // pressing q takes back to main menu
         InputKey key = screen.processInput();
-        if (key == InputKey::Quit || key == InputKey::Enter){
+        if (key == InputKey::Quit){
             running = false;
         }
     }
