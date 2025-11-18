@@ -21,5 +21,5 @@ class GameOverScreen : public Screen {
     public:
     void retry();
     void quit();
-    void saveScoreWithName(const string&);
+    void saveScoreWithName(const std::string&);
 };
