@@ -3,9 +3,34 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <vector>
 
 using std::cout;
 using std::string;
+using std::vector;
+
+// ANSI escape codes for colors / styles
+constexpr const char* COLOR_RESET     = "\x1b[0m";
+constexpr const char* COLOR_GREEN     = "\x1b[32m";
+constexpr const char* COLOR_YELLOW    = "\x1b[33m";
+constexpr const char* COLOR_RED       = "\x1b[31m";
+constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
+constexpr const char* UNDERLINE       = "\x1b[4m";
+
+// Declare crossy road Logo
+const std::vector<string> CROSSY_ROAD_LOGO = {
+    "  ######   ######   #######    #####   #####   ##   ## ",
+    " ##        ##  ##   ##   ##   ###     ###      ##   ## ",
+    " ##        #####    ##   ##     ###     ###     #####  ",
+    " ##        ##  ##   ##   ##      ###     ###     ###   ",
+    "  ######   ##  ##   #######   #####   #####      ###   ",
+    " ",
+    " ######   #######   #######   #####   ",
+    " ##  ##   ##   ##   ##   ##   ##   ## ",
+    " #####    ##   ##   #######   ##   ## ",
+    " ##  ##   ##   ##   ##   ##   ##   ## ",
+    " ##  ##   #######   ##   ##   #####   ",
+};
 
 void Menu::startGame(){
     // TODO: connect to game object later
@@ -25,6 +50,19 @@ string Menu::getDifficulty(){
             return "Medium";
         case 3:
             return "Hard";
+        default:
+            return "Unknown";
+    }
+}
+
+string Menu::getColoredDifficulty(){
+    switch(currentDifficulty){
+        case 1:
+            return string(COLOR_GREEN) + "Easy" + COLOR_RESET;
+        case 2:
+            return string(COLOR_YELLOW) + "Medium" + COLOR_RESET;
+        case 3:
+            return string(COLOR_RED) + "Hard" + COLOR_RESET;
         default:
             return "Unknown";
     }
@@ -77,16 +115,28 @@ void Menu::display(int cursorIndex){
     std::cout << "\x1b[3J\x1b[2J\x1b[H" << std::flush;  
 
     // Declares title
-    string title = "CROSSY ROAD";
     string line(SCREEN_WIDTH/2, '=');
     string frame(SCREEN_WIDTH,  '=');
     cout << "\n\n";
 
-    // Top Frame
-    cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << frame << "\n\n";
+    int maxLogoLen = 0;
 
-    // Center title
-    cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
+    for (const auto& lineStr : CROSSY_ROAD_LOGO) {
+        if ((int)lineStr.size() > maxLogoLen) {
+            maxLogoLen = (int)lineStr.size();
+        }
+    }
+
+    // Top Frame
+    cout << std::setw((SCREEN_WIDTH + maxLogoLen) / 2) << frame << "\n\n";
+
+    for (const auto& lineStr : CROSSY_ROAD_LOGO) {
+        cout <<  std::setw((SCREEN_WIDTH + (int)lineStr.size()) / 2)
+        << lineStr
+        << COLOR_RESET << "\n";
+    }
+
+    std::cout << "\n";
     
     // Line above high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
@@ -100,9 +150,16 @@ void Menu::display(int cursorIndex){
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
     // Declare menu string items with updated difficulty
-    const string items[] = {
+    const string itemsPlain[] = {
         "PLAY",
         "Change Difficulty: " + getDifficulty(),
+        "View Leaderboard",
+        "Quit Game"
+    };
+
+    const string itemsDisplay[] = {
+        "PLAY",
+        "Change Difficulty: " + getColoredDifficulty(),
         "View Leaderboard",
         "Quit Game"
     };
@@ -111,17 +168,18 @@ void Menu::display(int cursorIndex){
 
     // Displays arrow at correct selection
     for (int i = 0; i < numItems; ++i) {
-        string text = items[i];                             // Declare array with string object
+        const string& plainText   = itemsPlain[i];                 // Declare array with string object
+        const string& displayText = itemsDisplay[i];               // Declare array with string object
 
-        int padding = (SCREEN_WIDTH - text.size()) / 2;     // Calculate padding
+        int padding = (SCREEN_WIDTH - plainText.size()) / 2;     // Calculate padding
 
         // Simple cursor: "→" before selected item
         if (i == cursorIndex) {
-            cout << std::setw(padding - 2) << "" << "→ " << text << "\n\n";
+            cout << std::setw(padding - 2) << "" << "→ " << UNDERLINE << displayText << COLOR_RESET << "\n\n";
         } 
         else {
             // If cursor not at this item, just print normally
-            cout << std::setw(padding) << "" << text << "\n\n";
+            cout << std::setw(padding) << "" << displayText << "\n\n";
         }
         
     }
@@ -147,7 +205,7 @@ void Menu::display(int cursorIndex){
     }
 
     // Bottom Frame
-    cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << frame << "\n\n";
+    cout << std::setw((SCREEN_WIDTH + maxLogoLen) / 2) << frame << "\n\n";
 }
 
 void Menu::run() {
