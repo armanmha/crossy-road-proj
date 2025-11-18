@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - name: Build tests for the Leaderboard class
+      run:
+        cmake .
+        make
+
+    - name: Run Leaderboard tests
+      run: ./tests/bin/runLeaderboardTests
