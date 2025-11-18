@@ -46,7 +46,9 @@ void Screen::disableRawMode() {
 }
 
 void Screen::clear() {
-    std::cout << "\x1b[3J\x1b[2J\x1b[H" << std::flush;              // Clear screen
+    // std::cout << "\x1b[3J\x1b[2J\x1b[H" << std::flush;              // Clear screen
+    // changed to below line as screen was not fully clearing when going through menus
+    std::cout << "\x1b[H\x1b[2J\x1b[3J" << std::flush;
 }
 
 // InputKey enumerated in Screen.h"

@@ -15,7 +15,7 @@ void Game::start(){
     bool running = true;
 
     while (running){
-        system("cls"); // clear menu screen
+        screen.clear(); // clear menu screen
         std::string title = "GAME STARTED!";
         std::string message = "Press Q to return to Main Menu: ";
 
