@@ -30,7 +30,7 @@ string Menu::getDifficulty(){
 
 
 void Menu::seeLeaderboard(string filename, int scoresToDisplay){
-    Leaderboard board(filename);
+    //Leaderboard board(filename);
     board.loadSortedScores();
     board.displayScores(scoresToDisplay);
 }
