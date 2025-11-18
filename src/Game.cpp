@@ -1,4 +1,9 @@
 #include "../header/Game.h"
+#include <string>
+#include <iostream>
+#include <iomanip>
+using std::string;
+using std::cout;
 
 Game::Game(Screen &screen) : 
     screen(screen), 
@@ -10,8 +15,20 @@ void Game::start(){
     bool running = true;
 
     while (running){
-        screen.clear(); // clear menu screen
+        system("cls"); // clear menu screen
         std::string title = "GAME STARTED!";
+        std::string message = "Press Q to return to Main Menu: ";
+
+        std::cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
+        std::cout << std::setw((SCREEN_WIDTH + message.size()) / 2) << message << "\n\n";
+
+        // will have to change later by giving user a confirm option to quit,
+        // probably will just have quit button in pause screen, but for now
+        // pressing q takes back to main menu
+        InputKey key = screen.processInput();
+        if (key == InputKey::Quit || key == InputKey::Enter){
+            running = false;
+        }
     }
 }
 
