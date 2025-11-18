@@ -19,6 +19,8 @@ void LeaderboardScoreManagement::loadSortedScores(){
 
     if (!inFS.is_open()) throw std::runtime_error("Could not open file: " + inputFileName);
 
+    playerScores.clear();
+
     // Read scores from file
     while(!inFS.eof()){
         string name;
@@ -40,9 +42,10 @@ void LeaderboardDisplay::displayScores(int numScores){
     vector<LeaderboardPlayer> playerScores = leaderboardManager.getScores();
     
     string line(SCREEN_WIDTH/2, '=');
-
-    // Center title
+    string frame(SCREEN_WIDTH,  '=');
     string title = "Leaderboard";
+
+    // Output title
     cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
     
     // Line above play button
