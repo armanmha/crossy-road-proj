@@ -32,12 +32,26 @@ string Menu::getDifficulty(){
 
 // Displays leaderboard screen
 void Menu::seeLeaderboard(int scoresToDisplay) {
+
+    string frame(SCREEN_WIDTH,  '=');
+    string title = "Leaderboard";
+
+    // Output top frame 
+    cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << frame << "\n\n";
+
     // Load scores and sort them from file
     leaderboardManager.loadSortedScores();
 
     leaderboardDisplay.displayScores(scoresToDisplay);
 
-    cout << "\nPress Enter to return to menu..." << std::flush; // Flushes buffer for safety
+    cout << "\n";
+
+    printRight("Press ENTER to return to menu", 0);
+
+    cout << std::flush; // Flushes buffer for safety
+
+    // Output bottom frame
+    cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << frame << "\n\n";
 
     // Wait for ENTER or Q using the SAME input system as menu
     while (true) {
