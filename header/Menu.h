@@ -18,6 +18,7 @@ class Menu : public Screen {
    void startGame();                          // Brings player to game screen 
    void changeDifficulty(int &newDifficulty);
    void seeLeaderboard(int scoresToDisplay);  // Brings player to separate leaderboard screen
+   void printRight(const string& text, int padding);
    void display(int cursorIndex);             // Displays frame with updated cursor
    void run();                                // Runs program
 
