@@ -19,6 +19,8 @@ void Leaderboard::loadSortedScores(){
 
     if (!inFS.is_open()) throw std::runtime_error("Could not open file: " + inputFileName);
 
+    players.clear();
+
     // Read scores from file
     while(!inFS.eof()){
         string name;
