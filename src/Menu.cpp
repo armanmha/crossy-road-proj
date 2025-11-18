@@ -9,6 +9,8 @@ using std::string;
 
 void Menu::startGame(){
     // TODO: connect to game object later
+    Game game(*this);
+    game.start();
 }
 
 
