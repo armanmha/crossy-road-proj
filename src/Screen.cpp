@@ -3,4 +3,3 @@
 void Screen::processInput(char input){
     // begin
 }
-
