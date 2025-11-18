@@ -23,4 +23,6 @@ class Menu : public Screen {
    void run();                                // Runs program
 
    string getDifficulty();
+   string getColoredDifficulty();
+
 };
