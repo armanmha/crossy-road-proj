@@ -7,12 +7,22 @@ using std::string;
 using std::vector;
 using std::pair;
 
-class Leaderboard: public Screen {
+class LeaderboardScoreManagement: public Screen {
  private:
-    vector<pair<string, int>> players;
-    string inputFileName;
+  vector<pair<string, int>> playerScores; // Stores both player name and their score
+  string inputFileName; // File to read scores from
  public:
-    Leaderboard(std::string fileName): inputFileName(fileName) {}
-    void loadSortedScores();
-    void displayScores(int); // Where the int is the number of scores to display
+  LeaderboardScoreManagement(std::string fileName): inputFileName(fileName) {}
+  void loadSortedScores(); // Reads scores from file and sorts them
+
+  void setInputFileName(std::string fileName) { inputFileName = fileName; }
+  vector<pair<string, int>> getScores() { return playerScores; }
+};
+
+class LeaderboardDisplay: public Screen {
+ private:
+  LeaderboardScoreManagement& leaderboardManager;
+ public:
+  LeaderboardDisplay(LeaderboardScoreManagement& manager) : leaderboardManager(manager) {}
+  void displayScores(int); // The int is the number of scores to display
 };

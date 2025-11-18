@@ -14,8 +14,8 @@ using std::pair;
 
 
 // Player scores file is read, sorted, and stored
-void Leaderboard::loadSortedScores(){
-    std::ifstream inFS(inputFileName);
+void LeaderboardScoreManagement::loadSortedScores(){
+    std::ifstream inFS(inputFileName); 
 
     if (!inFS.is_open()) throw std::runtime_error("Could not open file: " + inputFileName);
 
@@ -27,17 +27,19 @@ void Leaderboard::loadSortedScores(){
         int score;
         inFS >> score >> name;
         if(inFS.fail()) break;
-        players.push_back(std::make_pair(name, score));
+        playerScores.push_back(std::make_pair(name, score));
     }
 
     // Sort and then reverse to obtain descending order
-    std::sort(players.begin(), players.end());
-    std::reverse(players.begin(), players.end());
+    std::sort(playerScores.begin(), playerScores.end());
+    std::reverse(playerScores.begin(), playerScores.end());
 
     inFS.close();
 }
 
-void Leaderboard::displayScores(int numScores){    
+void LeaderboardDisplay::displayScores(int numScores){    
+    vector<pair<string, int>> playerScores = leaderboardManager.getScores();
+    
     string line(SCREEN_WIDTH/2, '=');
 
     // Center title
@@ -48,8 +50,8 @@ void Leaderboard::displayScores(int numScores){
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
     // Scores (up to numScores)
-    for(int i = 0; i < numScores && i < players.size(); i++){
-        string scoreEntry = std::to_string(i + 1) + ". " + players.at(i).first + " - " + std::to_string(players.at(i).second);
+    for(int i = 0; i < numScores && i < playerScores.size(); i++){
+        string scoreEntry = std::to_string(i + 1) + ". " + playerScores.at(i).first + " - " + std::to_string(playerScores.at(i).second);
 
         cout << std::setw((SCREEN_WIDTH + scoreEntry.size()) / 2) << scoreEntry << "\n\n";
     }

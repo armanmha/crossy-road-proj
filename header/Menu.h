@@ -1,21 +1,26 @@
 #pragma once
-#include "Screen.h"
+#include "../header/Screen.h"
+#include "../header/Leaderboard.h"
 #include <string>
 
 using std::string;
 
 class Menu : public Screen {
-    private: 
-    int currentDifficulty = 1;
-   
-    public:
-    Menu(): currentDifficulty(1){}; // default difficulty = 1 (easy level)
-    ~Menu(){};
+ private: 
+   int currentDifficulty;
 
-    void startGame();
-    void changeDifficulty(int &newDifficulty);
-    string getDifficulty();
-    void seeLeaderboard(Screen& screen, string fileName, int scoresToDisplay);
-    void display(int cursorIndex);
-    void run(Screen& screen);
+   LeaderboardScoreManagement leaderboardManager{"No_File"}; // Initialize with invalid filename
+   LeaderboardDisplay leaderboardDisplay{leaderboardManager};
+ public:
+   Menu(string scoresFilename): currentDifficulty(1), leaderboardManager(scoresFilename), leaderboardDisplay(leaderboardManager) {}; // Default difficulty = 1 (easy)
+   ~Menu() {};
+
+   void startGame();                          // Brings player to game screen 
+   void changeDifficulty(int &newDifficulty);
+   void seeLeaderboard(int scoresToDisplay);  // Brings player to separate leaderboard screen
+   void printRight(const string& text, int padding);
+   void display(int cursorIndex);             // Displays frame with updated cursor
+   void run();                                // Runs program
+
+   string getDifficulty();
 };
