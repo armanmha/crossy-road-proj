@@ -14,6 +14,7 @@ constexpr const char* COLOR_RESET     = "\x1b[0m";
 constexpr const char* COLOR_GREEN     = "\x1b[32m";
 constexpr const char* COLOR_YELLOW    = "\x1b[33m";
 constexpr const char* COLOR_RED       = "\x1b[31m";
+constexpr const char* COLOR_BLUE      = "\x1b[36m";
 constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
 constexpr const char* UNDERLINE       = "\x1b[4m";
 
@@ -41,7 +42,7 @@ void Menu::changeDifficulty(int &newDifficulty){
     currentDifficulty = newDifficulty;
 }
 
-// Converts number in difficulty to equivalent string
+// Converts number in difficulty to equivalent string for size calculations
 string Menu::getDifficulty(){
     switch(currentDifficulty){
         case 1:
@@ -55,6 +56,7 @@ string Menu::getDifficulty(){
     }
 }
 
+// Outputs difficulty in color
 string Menu::getColoredDifficulty(){
     switch(currentDifficulty){
         case 1:
@@ -114,22 +116,24 @@ void Menu::display(int cursorIndex){
     // \x1b[H  - moves cursor to top left in terminal so frame prints in same place
     std::cout << "\x1b[3J\x1b[2J\x1b[H" << std::flush;  
 
-    // Declares title
+    // Declares variables
     string line(SCREEN_WIDTH/2, '=');
     string frame(SCREEN_WIDTH,  '=');
     cout << "\n\n";
 
     int maxLogoLen = 0;
 
+    // For loop calculates the size of the title logo for proper formatting
     for (const auto& lineStr : CROSSY_ROAD_LOGO) {
         if ((int)lineStr.size() > maxLogoLen) {
             maxLogoLen = (int)lineStr.size();
         }
     }
 
-    // Top Frame
+    // Top Frame line
     cout << std::setw((SCREEN_WIDTH + maxLogoLen) / 2) << frame << "\n\n";
 
+    // For loop prints logo line by line 
     for (const auto& lineStr : CROSSY_ROAD_LOGO) {
         cout <<  std::setw((SCREEN_WIDTH + (int)lineStr.size()) / 2)
         << lineStr
@@ -143,13 +147,13 @@ void Menu::display(int cursorIndex){
 
     // Print high score
     int highScore = 1000; // temp high score
-    string scoreText = "** High Score: " + std::to_string(highScore);
-    cout << std::setw((SCREEN_WIDTH + scoreText.size()) / 2) << scoreText << " ** \n\n"; 
+    string scoreText = string(COLOR_BLUE) + "High Score: " + std::to_string(highScore) + COLOR_RESET;
+    cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 6) << "** " << scoreText << " ** \n\n"; 
 
     // Line below high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
-    // Declare menu string items with updated difficulty
+    // Declare menu string items without color so they can be properly formatted 
     const string itemsPlain[] = {
         "PLAY",
         "Change Difficulty: " + getDifficulty(),
@@ -157,6 +161,7 @@ void Menu::display(int cursorIndex){
         "Quit Game"
     };
 
+    // Declare menu items to be displayed in color
     const string itemsDisplay[] = {
         "PLAY",
         "Change Difficulty: " + getColoredDifficulty(),
@@ -171,7 +176,7 @@ void Menu::display(int cursorIndex){
         const string& plainText   = itemsPlain[i];                 // Declare array with string object
         const string& displayText = itemsDisplay[i];               // Declare array with string object
 
-        int padding = (SCREEN_WIDTH - plainText.size()) / 2;     // Calculate padding
+        int padding = (SCREEN_WIDTH - plainText.size()) / 2;       // Calculate padding
 
         // Simple cursor: "→" before selected item
         if (i == cursorIndex) {
@@ -184,6 +189,7 @@ void Menu::display(int cursorIndex){
         
     }
 
+    // Outputs prompt to user based on selection
     switch(cursorIndex) {
         case 0: 
             printRight("Press ENTER to start game", 0);
@@ -208,6 +214,7 @@ void Menu::display(int cursorIndex){
     cout << std::setw((SCREEN_WIDTH + maxLogoLen) / 2) << frame << "\n\n";
 }
 
+// Like main for the menu, controls menu functions
 void Menu::run() {
     int cursor = 0;             // Reset cursor to beginning
     const int numItems = 4;     // Set constant number of menu items
@@ -273,5 +280,5 @@ void Menu::run() {
         }
     }
 
-    disableRawMode();
+    disableRawMode(); // resets terminal to original settings
 }

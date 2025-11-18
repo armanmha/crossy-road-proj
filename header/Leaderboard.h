@@ -36,4 +36,6 @@ class LeaderboardDisplay: public Screen {
  public:
   LeaderboardDisplay(LeaderboardScoreManagement& manager) : leaderboardManager(manager) {}
   void displayScores(int); // The int is the number of scores to display
+  string assignColor(const string& difficulty);
+  int findSize(const string& difficulty);
 };
