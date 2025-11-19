@@ -1,3 +1,4 @@
+#pragma once
 #include <utility>
 
 class GameplayObjects {
@@ -12,6 +13,7 @@ class GameplayObjects {
     ~GameplayObjects() {};
     void setSafe();
     void setPosition(int x, int y);
+
     std::pair<int, int> getPosition();
     int getLength();
     char getShape();

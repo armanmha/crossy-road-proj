@@ -1,4 +1,5 @@
 #include "../header/Game.h"
+#include "../header/Board.h"
 #include <string>
 #include <iostream>
 #include <iomanip>
@@ -14,12 +15,34 @@ Game::Game(Screen &screen) :
 void Game::start(){
     bool running = true;
 
+    const int BOARD_HEIGHT = 10;
+    Board board(SCREEN_WIDTH, BOARD_HEIGHT);
+
+    for (int i = 0; i < BOARD_HEIGHT; ++i){
+        board.spawnLane();
+    }
+
     while (running){
         screen.clear(); // clear menu screen
-        std::string title = "GAME STARTED!";
-        std::string message = "Press Q to return to Main Menu: ";
 
-        std::cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
+        auto& lanes = board.getLanes();
+        for (auto& lane : lanes){
+            char laneChar = lane.getShape();
+
+            for (int i = 0; i < board.getWidth(); ++i){
+                std::cout << laneChar;
+            }
+
+            std:: cout << "\n";
+        }
+
+        // std::string title = "GAME STARTED!";
+        // std::string message = "Press Q to return to Main Menu: ";
+
+        // std::cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
+        // std::cout << std::setw((SCREEN_WIDTH + message.size()) / 2) << message << "\n\n";
+
+        std::string message = "Press Q to return to Main Menu: \n";
         std::cout << std::setw((SCREEN_WIDTH + message.size()) / 2) << message << "\n\n";
 
         // will have to change later by giving user a confirm option to quit,
