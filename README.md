@@ -16,9 +16,8 @@ The features that the project provides include real-time character movement, a l
 
 <b>Screen Layouts:</b>
 
-<img width="1551" height="831" alt="Screen Layout" src="https://github.com/user-attachments/assets/8018eab8-f740-43ce-a03e-61c82ce49af6" /><h1></h1>
+<img width="1521" height="831" alt="Screen Layout" src="https://github.com/user-attachments/assets/5b111460-6cb0-4db8-b49f-c0beb8342284" />
 
- 
 <b>Screen Layout Description:</b>
 
 * <b>Main Menu:</b>
