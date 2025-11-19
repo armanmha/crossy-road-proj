@@ -16,14 +16,9 @@ jobs:
         submodules: 'recursive'
 
     - name: Build tests for the Leaderboard class
-      run: cmake -S . -B build
+      run: |
+        cmake .
+        make
 
-      #build project (compiling with cmake)
-    - name: Build project
-      run: cmake --build build
-
-      #lastly, run tests with ctest in the build directory
-      #if any tests fail, the action will fail, and show a red x in github branch
-      #if they pass, a green checkmark will be shown
-    - name: Run unit tests
-      run: ctest --test-dir build
+    - name: Run Leaderboard tests
+      run: ./tests/bin/runLeaderboardTests
