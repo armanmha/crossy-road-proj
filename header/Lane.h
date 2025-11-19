@@ -10,8 +10,8 @@ class Lane : public GameplayObjects{
     public:
     Lane(int len, char shp, int x, int y, bool safe)
         : GameplayObjects(len, shp, x, y, safe) {};
-
     ~Lane() {}
+    void spawnVehicle();
     
     
 };

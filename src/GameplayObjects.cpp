@@ -18,3 +18,15 @@ void GameplayObjects::setPosition(int x, int y){
 std::pair<int, int> GameplayObjects::getPosition(){
     return xyPosition;
 }
+
+int GameplayObjects::getLength(){
+    return length;
+}
+
+char GameplayObjects::getShape(){
+    return shape;
+}
+
+bool GameplayObjects::isSafeToUser(){
+    return safeToUser;
+}
