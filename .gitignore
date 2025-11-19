@@ -1,0 +1,9 @@
+game
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.ac
+
+runLeaderboardTests
+CS100FinalProject
