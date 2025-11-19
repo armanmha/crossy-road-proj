@@ -1,5 +1,6 @@
 #include "../header/Game.h"
 #include "../header/Board.h"
+#include "../header/Player.h"
 #include <string>
 #include <iostream>
 #include <iomanip>
@@ -22,8 +23,17 @@ void Game::start(){
         board.spawnLane();
     }
 
+    int startX =  SCREEN_WIDTH / 2;
+    int startY =  BOARD_HEIGHT - 1;
+    Player player(startX, startY);
+
     while (running){
         screen.clear(); // clear menu screen
+        std::vector<Lane>& lanes = board.getLanes();
+
+        for (int i = 0; i < BOARD_HEIGHT; ++i){
+            lanes[i].spawnVehicle();
+        }
 
         auto& lanes = board.getLanes();
         for (auto& lane : lanes){
