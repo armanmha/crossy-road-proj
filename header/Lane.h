@@ -8,4 +8,10 @@ class Lane : public GameplayObjects{
     std::vector<Vehicle> vehicles;
 
     public:
+    Lane(int len, char shp, int x, int y, bool safe)
+        : GameplayObjects(len, shp, x, y, safe) {};
+
+    ~Lane() {}
+    
+    
 };
