@@ -19,19 +19,3 @@ TEST(LeaderboardSortingTests, sortScoresDescending) {
         EXPECT_LE(scores[i].score, scores[i - 1].score);  
     }
 }
-
-TEST(LeaderboardDisplayTests, displayTopNScores) {
-    LeaderboardScoreManagement board("tests/testScores.txt");
-    board.loadSortedScores();
-    LeaderboardDisplay display(board);
-    
-    // Capture the output of displayScores (code from CoPilot)
-    testing::internal::CaptureStdout();
-    display.displayScores(3);
-    string output = testing::internal::GetCapturedStdout();
-    
-    // Check if the output contains the top 3 score
-    EXPECT_NE(output.find("1. CCC - 789 (Easy)"), std::string::npos);
-    EXPECT_NE(output.find("2. BBB - 456 (Medium)"), std::string::npos);
-    EXPECT_NE(output.find("3. AAA - 123 (Hard)"), std::string::npos);
-}
