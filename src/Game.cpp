@@ -55,27 +55,11 @@ void Game::start() {
     }
 }
 
-<<<<<<< HEAD
-void Game::pause(){
-
-}
-
-void Game::displayScore(int){
-
-}
-
-void Game::gameOver(){
-
-}
-
-int Game::getScore(){
-=======
 // TODO - Implement these functions
 void Game::pause() {}
 void Game::displayScore(int) {}
 void Game::gameOver() {}
 
 int Game::getScore() {
->>>>>>> dev
     return score;
 }

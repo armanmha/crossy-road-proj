@@ -1,9 +1,10 @@
 #include "../header/Board.h"
-#include <iostream>
 
-Board::Board(int width, int height) {
-    this->width  = width;
-    this->height = height;
+#include <iostream>
+#include <vector>
+#include <string>
+
+Board::Board(int width, int height) : width(width), height(height), lanes(height, Lane(width, '.', 0, 0, true)) {
 }
 
 int Board::getWidth() const {
@@ -20,13 +21,16 @@ void Board::draw(const Player& player) const {
 
     // outputs player position in 2D array
     for (int y = 0; y < height; ++y) {
+
+    const std::string& currentLaneStr = lanes.at(y).getOutputString();
+
         for (int x = 0; x < width; ++x) {
 
             if (x == posX && y == posY) {
                 std::cout << '@';   // current player position
             } 
             else {
-                std::cout << '.';   // empty grid for now
+                std::cout << currentLaneStr.at(x);   // empty grid for now
             }
         }
         std::cout << "\n";

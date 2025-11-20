@@ -3,6 +3,9 @@
 #include <vector>
 using std::vector;
 
+#include <iostream>
+using std::cout;
+
 class Lane : public GameplayObjects{
     private:
     std::vector<Vehicle> vehicles;
@@ -15,7 +18,6 @@ class Lane : public GameplayObjects{
             Vehicle newVehicle(3, '0', 0, getPosition().second, 1, false);
             vehicles.push_back(newVehicle);
         }
-        
    
     }
 
