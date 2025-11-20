@@ -7,10 +7,9 @@ class Lane : public GameplayObjects{
     private:
     std::vector<Vehicle> vehicles;
 
-    public:
-    Lane(int len, char shp, int x, int y, bool safe)
-        : GameplayObjects(len, shp, x, y, safe) {};
-    ~Lane() {}
+    public:    
+    Lane(int w, char shp, int x, int y, bool safe) : GameplayObjects(w, shp, x, y, safe) {}
+
     void spawnVehicle();
     
     

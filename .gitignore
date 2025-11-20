@@ -1,5 +1,6 @@
 game
 tests/bin
+lib
 bin
 CMakeFiles
 CMakeCache.txt

@@ -9,7 +9,7 @@ using std::string;
 
 void Menu::startGame(){
     // TODO: connect to game object later
-    Game game(*this);
+    Game game;
     game.start();
 }
 
@@ -193,6 +193,7 @@ void Menu::run() {
 
             case InputKey::Enter:   
                 if (cursor == 0) {                                          // When on play button
+                    clear();
                     startGame();
                 }
                 else if (cursor == 1) {                                     // When on difficulty selection

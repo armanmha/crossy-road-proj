@@ -1,5 +1,6 @@
 #pragma once
 #include <utility>
+#include <string>
 
 class GameplayObjects {
     private: 
@@ -7,6 +8,7 @@ class GameplayObjects {
     char shape;
     std::pair<int, int> xyPosition;
     bool safeToUser;
+    std::string outputObject;
 
     public:
     GameplayObjects(int len, char shp, int x, int y, bool safe);
@@ -18,4 +20,6 @@ class GameplayObjects {
     int getLength();
     char getShape();
     bool isSafeToUser();
+
+    void spawnObject() const;
 };

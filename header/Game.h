@@ -7,10 +7,9 @@ class Game : public Screen {
     int score;
     //GameOverScreen gameOverDisplay;
     bool isPaused;
-    Screen &screen;
 
     public: 
-    Game(Screen &screen);
+    Game();
     ~Game() {};
     void start();
     void pause();

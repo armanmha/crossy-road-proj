@@ -6,8 +6,7 @@
 using std::string;
 using std::cout;
 
-Game::Game(Screen &screen) : 
-    screen(screen), 
+Game::Game() : 
     score(0), 
     isPaused(false) 
 {}
@@ -15,25 +14,16 @@ Game::Game(Screen &screen) :
 void Game::start(){
     bool running = true;
 
-    const int BOARD_HEIGHT = 10;
-    Board board(SCREEN_WIDTH, BOARD_HEIGHT);
-
-    for (int i = 0; i < BOARD_HEIGHT; ++i){
-        board.spawnLane();
-    }
-
     while (running){
-        screen.clear(); // clear menu screen
+        clear(); // clear menu screen
 
-        auto& lanes = board.getLanes();
-        for (auto& lane : lanes){
-            char laneChar = lane.getShape();
 
-            for (int i = 0; i < board.getWidth(); ++i){
-                std::cout << laneChar;
-            }
+        const int BOARD_HEIGHT = 10;
+        Board board(SCREEN_WIDTH, BOARD_HEIGHT);
 
-            std:: cout << "\n";
+        for (int i = 0; i < BOARD_HEIGHT; ++i){
+            board.spawnLane();
+            cout << "\n";
         }
 
         // std::string title = "GAME STARTED!";
@@ -48,7 +38,7 @@ void Game::start(){
         // will have to change later by giving user a confirm option to quit,
         // probably will just have quit button in pause screen, but for now
         // pressing q takes back to main menu
-        InputKey key = screen.processInput();
+        InputKey key = processInput();
         if (key == InputKey::Quit){
             running = false;
         }

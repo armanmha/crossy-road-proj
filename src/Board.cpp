@@ -7,11 +7,10 @@ void Board::spawnLane(){
     
     if (laneIndex >= height) return; // to avoid exceeding board height
 
-    char laneChar = '='; // character that will build the lanes
-    bool safe = true;
-
-    Lane lane(width, laneChar, 0, laneIndex, safe);
+    Lane lane(width, '=', 0, laneIndex, true);
     lanes.push_back(lane);
+
+    lanes.at(laneIndex).spawnObject();
 }
 
  int Board::getWidth() {
