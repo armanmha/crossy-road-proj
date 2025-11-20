@@ -1,22 +1,19 @@
 #pragma once
+#include "Player.h"
 #include <vector>
-#include "../header/Lane.h"
-using std::vector;
+#include <string>
 
 class Board {
     private:
-    int width;
-    int height;
-    std::vector<Lane> lanes;
-
+        int width;
+        int height;
+    
     public:
-    Board(int, int);
-    ~Board() {}
-    void spawnLane();
+        Board() : width(0), height(0) {}
+        Board(int w, int h);
 
-    int getWidth();
-    int getHeight();
-    std::vector<Lane>& getLanes();
+        int getWidth() const;
+        int getHeight() const;
 
-    void updateLane();
+        void draw(const Player& player) const; // draws grid and player
 };

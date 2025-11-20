@@ -1,33 +1,34 @@
 #include "../header/Board.h"
+#include <iostream>
 
-Board::Board(int w, int h): width(w), height(h) {}
-
-void Board::spawnLane(){
-    int laneIndex = lanes.size();
-    
-    //if (laneIndex >= height) return; // to avoid exceeding board height
-
-    Lane lane(width, '=', 0, laneIndex, true);
-    lanes.push_back(lane);
-    lanes.updateLane();
-    
+Board::Board(int width, int height) {
+    this->width  = width;
+    this->height = height;
 }
 
- int Board::getWidth() {
+int Board::getWidth() const {
     return width;
- }
+}
 
-int Board::getHeight() {
+int Board::getHeight() const {
     return height;
 }
 
-std::vector<Lane>& Board::getLanes() {
-    return lanes;
-}
+void Board::draw(const Player& player) const {
+    int posX = player.getPosition().first;  // retrieve updated x position
+    int posY = player.getPosition().second; // retrieve updated y position
 
-void Board::updateLane() {
-    for (Lane &lane : lanes) {
-        lane.spawnVehicles();
-        
+    // outputs player position in 2D array
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+
+            if (x == posX && y == posY) {
+                std::cout << '@';   // current player position
+            } 
+            else {
+                std::cout << '.';   // empty grid for now
+            }
+        }
+        std::cout << "\n";
     }
 }

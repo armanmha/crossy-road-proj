@@ -1,25 +1,21 @@
 #pragma once
 #include <utility>
-#include <string>
 
 class GameplayObjects {
-    protected: 
-    int length;
-    char shape;
-    std::pair<int, int> xyPosition;
-    bool safeToUser;
-    std::string outputObject;
+    protected:
+        int length;                         // for objects longer than 1 cell (cars, logs)
+        char shape;                         // characters used to draw object
+        std::pair<int, int> position;       // (x, y) grid position
+        bool safeToUser;                    // whether player can stand on it (logs yes, cars no)
 
     public:
-    GameplayObjects(int len, char shp, int x, int y, bool safe);
-    ~GameplayObjects() {};
-    void setSafe();
-    void setPosition(int x, int y);
+        GameplayObjects(char shape, int x, int y, int length = 1, bool safe = true);
 
-    std::pair<int, int> getPosition();
-    int getLength();
-    char getShape();
-    bool isSafeToUser();
+        void setSafe(bool safeToUser);
+        void setPosition(int x, int y);
+        std::pair<int, int> getPosition() const;
 
-    void spawnObject() const;
+        char getShape() const;
+        int getLength() const;
+        bool isSafe() const;
 };

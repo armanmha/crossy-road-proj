@@ -1,30 +1,22 @@
+#pragma once
 #include "../header/Screen.h"
-#include <string>
-using std::string;
+#include "../header/Board.h"
+#include "../header/Player.h"
+#include "../header/Menu.h"
 
 class Game : public Screen {
-    private: 
-    int score;
-    //GameOverScreen gameOverDisplay;
-    bool isPaused;
+    private:
+        int score;
+        bool isPaused;
+        Board board;
+        Player player;
 
-    public: 
-    Game();
-    ~Game() {};
-    void start();
-    void pause();
-    void displayScore(int);
-    void gameOver();
-    int getScore();
-
-};
-
- // just working on play function first
-/*
-class GameOverScreen : public Screen {
     public:
-    void retry();
-    void quit();
-    void saveScoreWithName(const std::string&);
+        Game();
+
+        void start();
+        void pause();
+        void displayScore(int);
+        void gameOver();
+        int getScore();
 };
-*/

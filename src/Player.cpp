@@ -1,30 +1,48 @@
 #include "../header/Player.h"
 
-void Player::movePlayer(char direction){
-    auto pos = getPosition();
-    int x = pos.first;
-    int y = pos.second;
+Player::Player(int startX, int startY)
+    : GameplayObjects('P', startX, startY) {}
 
-    switch(direction){
-        case 'w':
-            setPosition(x, y-1);
+void Player::movePlayer(InputKey key, int boardWidth, int boardHeight) {
+    auto [x, y] = getPosition();
+
+    switch (key) {
+        case InputKey::Up:
+            y -= 1;
             break;
-        case 'a':
-            setPosition(x-1, y);
+        case InputKey::Down:
+            y += 1;
             break;
-        case 's':
-            setPosition(x, y+1);
+        case InputKey::Left:
+            x -= 1;
             break;
-        case 'd':
-            setPosition(x+1, y);
+        case InputKey::Right:
+            x += 1;
             break;
         default:
-            break;
+            return;
     }
-    
-    setPosition(x,y);
+
+    if (x < 0) {
+        x = 0;
+    }
+
+    if (x >= boardWidth) {
+        x = boardWidth - 1;
+    }
+
+    if (y < 0) {
+        y = 0;
+    }
+
+    if (y >= boardHeight) {
+        y = boardHeight - 1;
+    }
+
+    setPosition (x, y);
 }
 
-bool Player::checkCollision(){
+// TODO - Link to car objects
+bool Player::checkCollision() const {
     return false;
 }

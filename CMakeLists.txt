@@ -19,12 +19,19 @@ add_executable(CS100FinalProject
     src/Menu.cpp
     src/Screen.cpp
     src/Leaderboard.cpp
+<<<<<<< HEAD
 
     src/Board.cpp
     src/Game.cpp
     src/Lane.cpp
     src/GameplayObjects.cpp
     src/Vehicle.cpp
+=======
+    src/Game.cpp
+    src/GameplayObjects.cpp
+    src/Board.cpp
+    src/Player.cpp
+>>>>>>> dev
 )
 
 # BUILD TESTS

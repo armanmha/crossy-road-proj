@@ -1,11 +1,12 @@
-#include "../header/GameplayObjects.h"
+#pragma once
+#include "GameplayObjects.h"
+#include "Screen.h" // import InputKey
 
 class Player : public GameplayObjects {
     public:
-    void movePlayer(char);
-    bool checkCollision();
+        Player() : GameplayObjects('P', 0, 0) {}
+        Player(int startX, int startY);
 
-    // player will be an @ symbol, length of 1
-    Player(int x, int y) : GameplayObjects(1, '@', x, y, true){}
-
+        void movePlayer(InputKey key, int boardWidth, int boardHeight);
+        bool checkCollision() const;
 };

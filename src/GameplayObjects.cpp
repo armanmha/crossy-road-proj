@@ -1,40 +1,36 @@
+#include "../header/Screen.h"
 #include "../header/GameplayObjects.h"
-
-#include <iomanip>
+#include <termios.h>
+#include <unistd.h>
 #include <iostream>
 
-GameplayObjects::GameplayObjects(int len, char shp, int x, int y, bool safe) {
-    length = len;
-    shape = shp;
-    xyPosition = std::make_pair(x, y);
-    safeToUser = safe;
-
-    outputObject = std::string(length, shape);
+GameplayObjects::GameplayObjects(char shape, int x, int y, int length, bool safeToUser) {
+    this-> shape     = shape;
+    this->length     = length;
+    this->position   = std::make_pair(x, y);
+    this->safeToUser = safeToUser;
 }
 
-void GameplayObjects::setSafe(){
-    safeToUser = true;
+void GameplayObjects::setSafe(bool safeToUser) {
+    safeToUser = safeToUser;
 }
 
-void GameplayObjects::setPosition(int x, int y){
-    xyPosition = std::make_pair(x, y);
+void GameplayObjects::setPosition(int x, int y) {
+    position = {x, y};
 }
 
-std::pair<int, int> GameplayObjects::getPosition(){
-    return xyPosition;
+std::pair<int, int> GameplayObjects::getPosition() const {
+    return position;
 }
 
-int GameplayObjects::getLength(){
-    return length;
-}
-
-char GameplayObjects::getShape(){
+char GameplayObjects::getShape() const {
     return shape;
 }
 
-bool GameplayObjects::isSafeToUser(){
-    return safeToUser;
+int GameplayObjects::getLength() const {
+    return length;
 }
-void GameplayObjects::spawnObject() const {
-    std::cout << outputObject;
+
+bool GameplayObjects::isSafe() const {
+    return safeToUser;
 }

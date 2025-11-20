@@ -1,53 +1,61 @@
 #include "../header/Game.h"
-#include "../header/Board.h"
-#include "../header/Player.h"
-#include <string>
 #include <iostream>
+#include <cstdlib>
+#include <string>
 #include <iomanip>
-using std::string;
+
 using std::cout;
+using std::string;
 
-Game::Game() : 
-    score(0), 
-    isPaused(false) 
-{}
+Game::Game() {
+    score    = 0;
+    isPaused = false;
+    board    = Board(SCREEN_WIDTH,SCREEN_WIDTH / 4);
+    player   = Player(board.getWidth() / 2, board.getHeight() - 1); // start player in bottom-middle of board
+}
 
-void Game::start(){
+void Game::start() {
+    // declare vars
+    string frame(SCREEN_WIDTH,  '=');
     bool running = true;
 
-    const int BOARD_HEIGHT = 10;
-    Board board(SCREEN_WIDTH, BOARD_HEIGHT);
+    while(running) {
+        clear();        // clear previous page if present
+        clear();        // clear previous frame
 
+        // top Frame line
+        cout << "\n\n" << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n";
 
-    while (running){
-        clear(); // clear menu screen
+        board.draw(player);
 
-        for (int i = 0; i < BOARD_HEIGHT; ++i){
-            board.spawnLane();
-            cout << "\n";
-        }
+        std::cout << "\nScore: " << score << "\n";
+        std::cout << "Use arrows to move. Q to quit.\n";
 
-        board.updateLane();
+        // bottom Frame line
+        cout << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n\n";
 
-        // std::string title = "GAME STARTED!";
-        // std::string message = "Press Q to return to Main Menu: ";
-
-        // std::cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
-        // std::cout << std::setw((SCREEN_WIDTH + message.size()) / 2) << message << "\n\n";
-
-        std::string message = "Press Q to return to Main Menu: \n";
-        std::cout << std::setw((SCREEN_WIDTH + message.size()) / 2) << message << "\n\n";
-
-        // will have to change later by giving user a confirm option to quit,
-        // probably will just have quit button in pause screen, but for now
-        // pressing q takes back to main menu
+        // get user input
         InputKey key = processInput();
-        if (key == InputKey::Quit){
-            running = false;
+
+        // move player if arrow keys pressed
+        switch (key) {
+            case InputKey::Up:
+            case InputKey::Down:
+            case InputKey::Left:
+            case InputKey::Right:
+                player.movePlayer(key, board.getWidth(), board.getHeight());
+                break;
+            case InputKey::Quit:
+                running = false;
+                break;
+            
+            default:
+                break;
         }
     }
 }
 
+<<<<<<< HEAD
 void Game::pause(){
 
 }
@@ -61,5 +69,13 @@ void Game::gameOver(){
 }
 
 int Game::getScore(){
+=======
+// TODO - Implement these functions
+void Game::pause() {}
+void Game::displayScore(int) {}
+void Game::gameOver() {}
+
+int Game::getScore() {
+>>>>>>> dev
     return score;
 }
