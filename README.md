@@ -1,6 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/EvxoT0RF)
-[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=21130909)
-
 # Crossy Road Clone
 
   Authors: [Jacob McLaughlin](https://github.com/BacoJaco), [Aaron Limtiaco](https://github.com/airvon), [Arman Hamidi Asl](https://github.com/armanmha), [Ethan Jung](https://github.com/ethanjung-commits)
@@ -44,8 +41,7 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 <h1></h1><b>Class Diagram:</b>
 <br></br>
 
-
-<img width="1086" height="802" alt="Class_Diagram" src="https://github.com/user-attachments/assets/ea793c7d-fafc-441f-9996-a3aea382d8db" />
+<img width="1985" height="950" alt="CS100 Milestone 3 UML" src="https://github.com/user-attachments/assets/85d3adbe-a1b5-4d5d-9148-895f1f6d27d4" />
 
 <h1></h1>
 
@@ -57,11 +53,20 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 * <b> Menu: </b>
 	The menu class connects the user to the overall program. It holds the currentDifficulty int (enumerated: 1 = easy, 2 = medium, 3 = hard) and displays the current difficulty to the user. This class gives the user the ability to start the game, quit the program, change the current difficulty, and see the leaderboard. It also holds processInput() which processes user input by reading arrow keys and displays their current selection as a cursor which moves in real time.
 
-* <b> Leaderboard: </b>
-	The leaderboard class is aggregated to the Menu class and works by reading off scores stored in a predefined text file. It temporarily holds them in a sorted vector pair containing a user’s name and related score whenever the user navigates to the leaderboard screen. Using a vector pair allows the top 5 scores to be quickly displayed while giving the game class the ability to add scores and players to the leaderboard through the text file with less risk of erasing the score.
+* <b> LeaderboardScoreManagement: </b>
+	The leaderboard score management class is aggregated to the Menu class and works by reading off scores stored in a predefined text file. It stores these scores in a vector of LeaderboardPlayer objects, which have an associated name, score, and difficulty level. The scores are sorted in descending order.
+
+* <b> LeaderboardDisplay: </b>
+	The leaderboard display class displays the organized scores from the score management class onto the screen for the user to see. When implemented, the user may choose how many scores to display (within the bounds of the vector).
+
+* <b> LeaderboardPlayer: </b>
+	The leaderboard player struct stores all data regarding the player (ie. name, score, and difficulty level). The '<' operator is overridden for sorting purposes.
 
 * <b> Game: </b>
-The game class is called by the Menu class and controls the functions of the game. It is in charge of generating a Board object and holding the user’s score and name once a playthrough has ended. The savePlayerScore() function prompts the user for their name once they finish a playthrough and saves it, along with their score in the text file. When a player loses by hitting an obstacle, they are able to retry which resets the score to 0 and generates a brand new Board with different random obstacles, or they can select quit, which returns them to the main menu.
+	The game class is called by the menu class and is in charge of tracking the user's score and the state of the game. The game may be started, paused, and ended from this class. Ending the game calls the class in charge of the game over screen.
+
+* <b> GameOverScreen: </b>
+	The game over screen class displays a game over screen for the player if they lose the game. It includes their score, an option to save their score (along with their specified name), and options to retry or quit. Retrying calls the game class again, and the player restarts the game. Selecting quit causes the user to go back to the main menu, which is handled by the menu class.
 
 * <b> Board: </b>
 	The board class has a specified width and height, which represent the bounds of the game itself. The class can spawn in “lanes”, which is what the player and obstacles travel on during gameplay (these lanes are stored in a vector). A new board is generated each time a user plays through a game.
@@ -77,3 +82,17 @@ The game class is called by the Menu class and controls the functions of the gam
 
 * <b> Player: </b>
 	The player class is a gameplay object whose movement dynamically changes. The movement is controlled by the movePlayer(char) function, which is called by the Game class and passes in the user’s input. This class holds a checkCollision() function which checks to see if the user's coordinates conflict with those from an unsafe gameplay object. This would mean that the player hit an object (vehicle in the context of the game) they weren’t supposed to and end the game.
+
+<b>Class Diagram S.O.L.I.D. Updates:</b>
+
+* <b> Leaderboard Class: </b>
+	The Leaderboard class has now been split into two separate classes: one for data management, and one for displaying that data. This was done to comply with the single responsibility principle. This new setup allows us to make tweaks to how the scores are stored, managed, and sorted without affecting how they are displayed.
+
+	A LeaderboardPlayer struct was also added to improve data management. It is now more efficient to change what data may be associated with a player.
+
+* <b> GameOverScreen Class: </b>
+	The game over display has now been separated from the overarching Game class. This was done to comply with both the single responsibility principle and the dependency inversion principle. Now, if the game over screen needs to be tweaked, or more options need to be added, it won’t affect the functionality of the Game class (ie. it follows the dependency principle).
+
+* <b> Other S.O.L.I.D. Principles: </b>
+	All classes inheriting from our GameplayObjects class already abide by the S.O.L.I.D. principles, namely the open-closed, Liskov’s substitution, and interface segregation principles. Each inherited class utilizes every function from the parent class, and any instance of GameplayObject could be substituted for one of the inherited classes.
+

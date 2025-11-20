@@ -12,6 +12,14 @@ using std::vector;
 using std::cout;
 using std::pair;
 
+// ANSI escape codes for colors / styles
+constexpr const char* COLOR_RESET     = "\x1b[0m";
+constexpr const char* COLOR_GREEN     = "\x1b[32m";
+constexpr const char* COLOR_YELLOW    = "\x1b[33m";
+constexpr const char* COLOR_RED       = "\x1b[31m";
+constexpr const char* COLOR_BLUE      = "\x1b[36m";
+constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
+constexpr const char* UNDERLINE       = "\x1b[4m";
 
 // Player scores file is read, sorted, and stored
 void LeaderboardScoreManagement::loadSortedScores(){
@@ -38,6 +46,39 @@ void LeaderboardScoreManagement::loadSortedScores(){
     inFS.close();
 }
 
+// assigns color to difficulty
+string LeaderboardDisplay::assignColor(const string& difficulty){
+    if (difficulty == "Easy") {
+        return string(COLOR_GREEN) + "Easy" + COLOR_RESET;
+    }
+    else if (difficulty == "Medium") {
+        return string(COLOR_YELLOW) + "Medium" + COLOR_RESET;
+    }
+    else if (difficulty == "Hard") {
+        return string(COLOR_RED) + "Hard" + COLOR_RESET;
+    }
+    else {
+        return difficulty;
+    }
+}
+
+// returns proper padding size when outputting scores
+int LeaderboardDisplay::findSize(const string& difficulty){
+    if (difficulty == "Easy") {
+        return 4;
+    }
+    else if (difficulty == "Medium") {
+        return 6;
+    }
+    else if (difficulty == "Hard") {
+        return 4;
+    }
+    else {
+        return 0;
+    }
+}
+
+
 void LeaderboardDisplay::displayScores(int numScores){    
     vector<LeaderboardPlayer> playerScores = leaderboardManager.getScores();
     
@@ -53,8 +94,12 @@ void LeaderboardDisplay::displayScores(int numScores){
 
     // Scores (up to numScores)
     for(int i = 0; i < numScores && i < playerScores.size(); i++){
-        string scoreEntry = std::to_string(i + 1) + ". " + playerScores.at(i).name + " - " + std::to_string(playerScores.at(i).score) + " (" + playerScores.at(i).difficulty + ")";
 
-        cout << std::setw((SCREEN_WIDTH + scoreEntry.size()) / 2) << scoreEntry << "\n\n";
+        // tracks padding size for difficulty
+        int difficultySize = findSize(playerScores.at(i).difficulty);
+
+        string scoreEntry = std::to_string(i + 1) + ". " + playerScores.at(i).name + " - " + std::to_string(playerScores.at(i).score) + " (" + assignColor(playerScores.at(i).difficulty) + ")";
+
+        cout << std::setw(((SCREEN_WIDTH + scoreEntry.size() + difficultySize + 2) / 2)) << scoreEntry << "\n\n";
     }
 }
