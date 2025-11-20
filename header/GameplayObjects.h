@@ -3,7 +3,7 @@
 #include <string>
 
 class GameplayObjects {
-    private: 
+    protected: 
     int length;
     char shape;
     std::pair<int, int> xyPosition;

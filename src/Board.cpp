@@ -10,7 +10,10 @@ void Board::spawnLane(){
     Lane lane(width, '=', 0, laneIndex, true);
     lanes.push_back(lane);
 
+
+    lanes.at(laneIndex).spawnVehicles();
     lanes.at(laneIndex).spawnObject();
+    
 }
 
  int Board::getWidth() {
