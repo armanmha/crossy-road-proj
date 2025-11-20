@@ -1,6 +1,7 @@
 #pragma once
 #include "../header/Screen.h"
 #include "../header/Leaderboard.h"
+#include "../header/Game.h"
 #include <string>
 
 using std::string;

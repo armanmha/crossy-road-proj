@@ -53,18 +53,35 @@ void Screen::clear() {
 InputKey Screen::processInput() {
     char c;
 
-    if (read(STDIN_FILENO, &c, 1) != 1) return InputKey::Unknown; 
+    // check if first byte typed by user is valid
+    if (read(STDIN_FILENO, &c, 1) != 1) {              
+        return InputKey::Unknown; 
+    }
+    
+    // check if enter was pressed
+    if (c == '\n') {                            
+        return InputKey::Enter;                         // Output ENTER
+    }
 
-    if (c == '\n') return InputKey::Enter;              // Output ENTER
-    if (c == 'q' || c == 'Q') return InputKey::Quit;    // Output QUIT
+    // check if variation of Q was pressed
+    if (c == 'q' || c == 'Q') {
+        return InputKey::Quit;    // Output QUIT
+    }
 
-    // ESC key
-    if (c == '\x1b') {                                  // Arrow keys start with \x1b 
+    // Arrows begin with ESC character
+    if (c == '\x1b') {                                  
         char seq[2];                                    // Read next 2 characters
-        if (read(STDIN_FILENO, &seq[0], 1) != 1) return InputKey::Unknown; 
-        if (read(STDIN_FILENO, &seq[1], 1) != 1) return InputKey::Unknown;
 
-        if (seq[0] == '[') {
+        // if 3rd byte is not valid return keystroke as unknown
+        if (read(STDIN_FILENO, &seq[0], 1) != 1) {
+            return InputKey::Unknown; 
+        } 
+        if (read(STDIN_FILENO, &seq[1], 1) != 1) {
+            return InputKey::Unknown;
+        }
+
+        // if valid arrow key is pressed
+        if (seq[0] == '[') {                            
             switch (seq[1]) {
                 case 'A': return InputKey::Up;
                 case 'B': return InputKey::Down;

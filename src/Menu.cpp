@@ -34,7 +34,8 @@ const std::vector<string> CROSSY_ROAD_LOGO = {
 };
 
 void Menu::startGame(){
-    // TODO: connect to game object later
+    Game game;
+    game.start();
 }
 
 
