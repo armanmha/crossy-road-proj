@@ -1,5 +1,6 @@
 #include "../header/Game.h"
 #include "../header/Board.h"
+#include "../header/Player.h"
 #include <string>
 #include <iostream>
 #include <iomanip>
