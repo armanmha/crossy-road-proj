@@ -68,6 +68,23 @@ InputKey Screen::processInput() {
         return InputKey::Quit;    // Output QUIT
     }
 
+    // WASD support
+    if (c == 'w' || c == 'W') {
+        return InputKey::Up;
+    }
+
+    if (c == 's' || c == 'S') {
+        return InputKey::Down;
+    }
+
+    if (c == 'a' || c == 'A') {
+        return InputKey::Left;
+    }
+
+    if (c == 'd' || c == 'D') {
+        return InputKey::Right;
+    }
+
     // Arrows begin with ESC character
     if (c == '\x1b') {                                  
         char seq[2];                                    // Read next 2 characters
