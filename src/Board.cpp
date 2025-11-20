@@ -5,14 +5,11 @@ Board::Board(int w, int h): width(w), height(h) {}
 void Board::spawnLane(){
     int laneIndex = lanes.size();
     
-    if (laneIndex >= height) return; // to avoid exceeding board height
+    //if (laneIndex >= height) return; // to avoid exceeding board height
 
     Lane lane(width, '=', 0, laneIndex, true);
     lanes.push_back(lane);
-
-
-    lanes.at(laneIndex).spawnVehicles();
-    lanes.at(laneIndex).spawnObject();
+    lanes.updateLane();
     
 }
 
@@ -26,4 +23,11 @@ int Board::getHeight() {
 
 std::vector<Lane>& Board::getLanes() {
     return lanes;
+}
+
+void Board::updateLane() {
+    for (Lane &lane : lanes) {
+        lane.spawnVehicles();
+        
+    }
 }

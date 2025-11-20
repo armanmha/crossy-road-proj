@@ -1,3 +1,4 @@
+#pragma once
 #include "../header/GameplayObjects.h"
 
 class Vehicle : public GameplayObjects {

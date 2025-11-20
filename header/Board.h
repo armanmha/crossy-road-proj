@@ -17,4 +17,6 @@ class Board {
     int getWidth();
     int getHeight();
     std::vector<Lane>& getLanes();
+
+    void updateLane();
 };

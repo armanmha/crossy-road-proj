@@ -15,17 +15,19 @@ Game::Game() :
 void Game::start(){
     bool running = true;
 
+    const int BOARD_HEIGHT = 10;
+    Board board(SCREEN_WIDTH, BOARD_HEIGHT);
+
+
     while (running){
         clear(); // clear menu screen
-
-
-        const int BOARD_HEIGHT = 10;
-        Board board(SCREEN_WIDTH, BOARD_HEIGHT);
 
         for (int i = 0; i < BOARD_HEIGHT; ++i){
             board.spawnLane();
             cout << "\n";
         }
+
+        board.updateLane();
 
         // std::string title = "GAME STARTED!";
         // std::string message = "Press Q to return to Main Menu: ";
