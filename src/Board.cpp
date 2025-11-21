@@ -4,7 +4,12 @@
 #include <vector>
 #include <string>
 
-Board::Board(int width, int height) : width(width), height(height), lanes(height, Lane(width, '.', 0, 0, true)) {
+Board::Board(int width, int height) : width(width), height(height) {
+    // Create each lane with its specific 'y' coordinate
+    for (int i = 0; i < height; ++i) {
+        // Now passing 'i' as the y-coordinate
+        lanes.push_back(Lane('.', 0, i, width, true)); 
+    }
 }
 
 int Board::getWidth() const {

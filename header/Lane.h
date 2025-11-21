@@ -11,7 +11,7 @@ class Lane : public GameplayObjects{
     std::vector<Vehicle> vehicles;
 
     public:    
-    Lane(int w, char shp, int x, int y, bool safe) : GameplayObjects(w, shp, x, y, safe) {
+    Lane(char shp, int x, int y, int w, bool safe) : GameplayObjects(shp, x, y, w, safe) {
         // THEN spawn vehicle (in the future make '3' (ie. the length) random)
         
         for(int i = 0; i < y; ++i) {
