@@ -23,6 +23,8 @@ add_executable(CS100FinalProject
     src/GameplayObjects.cpp
     src/Board.cpp
     src/Player.cpp
+    src/Lane.cpp
+    src/Vehicle.cpp
 )
 
 # BUILD TESTS

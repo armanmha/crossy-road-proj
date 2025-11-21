@@ -6,8 +6,8 @@ class Vehicle : public GameplayObjects {
     int speed;
 
     public: 
-    Vehicle(int len, char shp, int x, int y, int spd, bool safe)
-        : GameplayObjects(len, shp, x, y, safe), speed(spd) {};
+    Vehicle(char shp, int x, int y, int length, int spd, bool safe)
+        : GameplayObjects(shp, x, y, length, safe), speed(spd) {};
     ~Vehicle() {};
     void moveVehicle(int, int);
 };

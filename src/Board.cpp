@@ -20,14 +20,15 @@ int Board::getHeight() const {
     return height;
 }
 
-void Board::draw(const Player& player) const {
+void Board::draw(const Player& player) {
     int posX = player.getPosition().first;  // retrieve updated x position
     int posY = player.getPosition().second; // retrieve updated y position
 
     // outputs player position in 2D array
     for (int y = 0; y < height; ++y) {
 
-    const std::string& currentLaneStr = lanes.at(y).getOutputString();
+        lanes.at(y).spawnVehicles();
+        const std::string& currentLaneStr = lanes.at(y).getOutputString();
 
         for (int x = 0; x < width; ++x) {
 

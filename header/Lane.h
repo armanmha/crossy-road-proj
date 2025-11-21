@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../header/GameplayObjects.h" 
 #include "../header/Vehicle.h"
 #include <vector>
@@ -15,8 +17,7 @@ class Lane : public GameplayObjects{
         // THEN spawn vehicle (in the future make '3' (ie. the length) random)
         
         for(int i = 0; i < y; ++i) {
-            Vehicle newVehicle(3, '0', 0, getPosition().second, 1, false);
-            vehicles.push_back(newVehicle);
+            vehicles.push_back(Vehicle('0', 0, y, 3, 1, false));
         }
    
     }

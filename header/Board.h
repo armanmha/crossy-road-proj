@@ -19,6 +19,6 @@ class Board {
         int getWidth() const;
         int getHeight() const;
 
-        void draw(const Player& player) const; // draws grid
+        void draw(const Player& player); // draws grid
         
 };
