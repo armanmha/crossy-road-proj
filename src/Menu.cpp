@@ -115,7 +115,7 @@ void Menu::display(int cursorIndex){
     // \x1b[3J - clears scrollback history in terminal
     // \x1b[2J - clears screen in terminal
     // \x1b[H  - moves cursor to top left in terminal so frame prints in same place
-    std::cout << "\x1b[3J\x1b[2J\x1b[H" << std::flush;  
+    // std::cout << "\x1b[3J\x1b[2J\x1b[H" << std::flush;  
 
     // Declares variables
     string line(SCREEN_WIDTH/2, '=');
@@ -257,6 +257,7 @@ void Menu::run() {
 
             case InputKey::Enter:   
                 if (cursor == 0) {                                          // When on play button
+                    clear();
                     startGame();
                 }
                 else if (cursor == 1) {                                     // When on difficulty selection
