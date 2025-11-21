@@ -40,7 +40,7 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 <h1></h1><b>Class Diagram:</b>
 <br></br>
 
-<img width="1985" height="950" alt="CS100 Milestone 3 UML" src="https://github.com/user-attachments/assets/85d3adbe-a1b5-4d5d-9148-895f1f6d27d4" />
+<img width="2025" height="950" alt="CS100 Milestone 3 UML" src="https://github.com/user-attachments/assets/baa4f39a-b3f5-4140-9837-d21247f45052" />
 
 <h1></h1>
 
