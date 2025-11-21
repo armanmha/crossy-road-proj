@@ -2,6 +2,7 @@
 #include "../header/Screen.h"
 #include <iostream>
 
+
 int main() {
     Menu mainMenu("../data/playerScores.txt");
 

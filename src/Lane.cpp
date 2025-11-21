@@ -1,6 +1,10 @@
 #include "../header/Lane.h"
 #include "../header/Vehicle.h"
 
+#include <cstdlib>
+#include <ctime>
+
+
 void Lane::spawnVehicles() {
     // Wait a random amount of time
 
