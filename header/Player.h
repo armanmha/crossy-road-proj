@@ -10,3 +10,5 @@ class Player : public GameplayObjects {
         void movePlayer(InputKey key, int boardWidth, int boardHeight);
         bool checkCollision() const;
 };
+
+// ToDo - add the score inside of the player class and and update it when the player moves up a row only.

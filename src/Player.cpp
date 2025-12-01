@@ -46,3 +46,8 @@ void Player::movePlayer(InputKey key, int boardWidth, int boardHeight) {
 bool Player::checkCollision() const {
     return false;
 }
+
+// TODO - add the score inside of the player class and and update it when the player moves up a row only. 
+// main function here inside of this cpp file 
+
+// After this is done it will go into the game.cpp file and update the score display there. 
