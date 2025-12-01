@@ -28,7 +28,6 @@ class LeaderboardScoreManagement: public Screen {
 
   void setInputFileName(std::string fileName) { inputFileName = fileName; }
   const vector<LeaderboardPlayer>& getScores() const { return playerScores; }
-  int gethighestScore();
 };
 
 class LeaderboardDisplay: public Screen {

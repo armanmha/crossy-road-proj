@@ -147,8 +147,7 @@ void Menu::display(int cursorIndex){
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
     // Print high score
-    int highScore;
-    highScore = leaderboardManager.getHighScore();
+    int highScore = 1000; // temp high score
     string scoreText = string(COLOR_BLUE) + "High Score: " + std::to_string(highScore) + COLOR_RESET;
     cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 6) << "** " << scoreText << " ** \n\n"; 
 
