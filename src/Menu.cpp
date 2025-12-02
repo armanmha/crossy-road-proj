@@ -148,6 +148,7 @@ void Menu::display(int cursorIndex){
 
     // Print high score
     int highScore = 1000; // temp high score
+    int highScore = leaderboardManager.getHighScore();
     string scoreText = string(COLOR_BLUE) + "High Score: " + std::to_string(highScore) + COLOR_RESET;
     cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 6) << "** " << scoreText << " ** \n\n"; 
 

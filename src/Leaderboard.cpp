@@ -103,3 +103,17 @@ void LeaderboardDisplay::displayScores(int numScores){
         cout << std::setw(((SCREEN_WIDTH + scoreEntry.size() + difficultySize + 2) / 2)) << scoreEntry << "\n\n";
     }
 }
+int LeaderboardScoreManagement::getHighScore(){
+    std::ifstream inFS(inputFileName);
+    if (!inFS.is_open()) throw std::runtime_error("Could not open file: " + inputFileName);
+
+    int highScore = 0;
+    int score;
+    string name, difficulty;
+    while(inFS >> score >> name >> difficulty){
+        if(score > highScore){
+            highScore = score;
+        }   
+    }
+    return highScore;
+}
