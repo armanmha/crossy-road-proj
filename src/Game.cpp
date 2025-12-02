@@ -48,7 +48,10 @@ void Game::start() {
             case InputKey::Quit:
                 running = false;
                 break;
-            
+            case InputKey::Change:
+                // Change character representation of player
+                player.setCharacter(static_cast<char>(shape = (shape == '*') ? '@' : '*'));
+                break;
             default:
                 break;
         }

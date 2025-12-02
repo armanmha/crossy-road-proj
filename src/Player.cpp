@@ -46,3 +46,9 @@ void Player::movePlayer(InputKey key, int boardWidth, int boardHeight) {
 bool Player::checkCollision() const {
     return false;
 }
+
+// for the easter egg 
+void Player::setCharacter(char newChar) {
+    char shape;
+    shape = newChar;
+}
