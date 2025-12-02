@@ -47,7 +47,14 @@ bool Player::checkCollision() const {
     return false;
 }
 
-// TODO - add the score inside of the player class and and update it when the player moves up a row only. 
-// main function here inside of this cpp file 
+int scoreUpdating(int score) {
+    int currentRow;
+    int highestRow;
+if (currentRow > highestRow) {
+        score++;
+        highestRow = currentRow;   // update so backtracking won't increase score
+    }
+}
 
-// After this is done it will go into the game.cpp file and update the score display there. 
+// TODO NEED to put the correct score into the places that need it and make sure it updates correctly
+// Most importantly inside of the game loop and the screen showing the current score 
