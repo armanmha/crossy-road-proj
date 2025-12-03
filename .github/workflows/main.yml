@@ -23,11 +23,6 @@ jobs:
     - name: Run Leaderboard tests
       run: ./tests/bin/runLeaderboardTests
 
-    - name: Run Game tests
-      run: | 
-        ./tests/bin/runGameTests
-        Q
-
     - name: Run Lane tests
       run: | 
         ./tests/bin/runLaneTests

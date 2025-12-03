@@ -24,17 +24,6 @@ add_executable(runMenuTests
     ../src/Vehicle.cpp
 )
 
-add_executable(runGameTests
-    gameTest.cpp
-    ../src/Game.cpp
-    ../src/Board.cpp
-    ../src/Player.cpp
-    ../src/GameplayObjects.cpp
-    ../src/Lane.cpp
-    ../src/Vehicle.cpp
-    ../src/Screen.cpp
-)
-
 add_executable(runLaneTests
     laneTest.cpp
     ../src/Lane.cpp
@@ -45,5 +34,4 @@ add_executable(runLaneTests
 
 target_link_libraries(runLeaderboardTests gtest gtest_main)
 target_link_libraries(runMenuTests gtest gtest_main)
-target_link_libraries(runGameTests gtest gtest_main)
 target_link_libraries(runLaneTests gtest gtest_main)

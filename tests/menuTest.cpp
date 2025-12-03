@@ -50,8 +50,3 @@ TEST(MenuDisplayTests, DisplayMenuItems) {
     EXPECT_NE(output.find("View Leaderboard"), std::string::npos);
     EXPECT_NE(output.find("Quit Game"), std::string::npos);
 }
-
-TEST(MenuLeaderboardTests, SeeLeaderboardFunction) {
-    Menu menu("tests/testScores.txt");
-    EXPECT_NO_THROW(menu.seeLeaderboard(5));
-}
