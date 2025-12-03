@@ -4,7 +4,14 @@
 #include <vector>
 #include <string>
 
-Board::Board(int width, int height) : width(width), height(height) {
+Board::Board(int width, int height) {
+    if(width <= 0 || height <= 0) {
+        throw std::invalid_argument("Width and Height must be positive integers.");
+    }
+
+    this->width = width;
+    this->height = height;
+    lanes.clear();
     // Create each lane with its specific 'y' coordinate
     for (int i = 0; i < height; ++i) {
         // Now passing 'i' as the y-coordinate

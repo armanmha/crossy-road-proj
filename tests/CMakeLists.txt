@@ -32,7 +32,15 @@ add_executable(runLaneTests
     ../src/GameplayObjects.cpp
 )
 
+add_executable(runBoardTests
+    boardTest.cpp
+    ../src/Board.cpp
+    ../src/Lane.cpp
+    ../src/Vehicle.cpp
+    ../src/GameplayObjects.cpp
+)
 
 target_link_libraries(runLeaderboardTests gtest gtest_main)
 target_link_libraries(runMenuTests gtest gtest_main)
 target_link_libraries(runLaneTests gtest gtest_main)
+target_link_libraries(runBoardTests gtest gtest_main)

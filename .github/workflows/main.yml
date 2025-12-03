@@ -30,4 +30,8 @@ jobs:
     - name: Run Menu tests
       run: | 
         ./tests/bin/runMenuTests
+
+    - name: Run Board tests
+      run: | 
+        ./tests/bin/runBoardTests
         
