@@ -1,11 +1,14 @@
 #include "../header/Player.h"
 
 Player::Player(int startX, int startY)
-    : GameplayObjects('P', startX, startY) {}
+    : GameplayObjects('@', startX, startY) {}
 
 void Player::movePlayer(InputKey key, int boardWidth, int boardHeight) {
-    auto [x, y] = getPosition();
+    // retrieve player position
+    int x = getPosition().first;
+    int y = getPosition().second; 
 
+    // calculate next player position based on input
     switch (key) {
         case InputKey::Up:
             y -= 1;
@@ -23,23 +26,28 @@ void Player::movePlayer(InputKey key, int boardWidth, int boardHeight) {
             return;
     }
 
+    // if x is less than 0 out of bounds
     if (x < 0) {
         x = 0;
     }
 
+    // if x exceeds board width, out of bounds
     if (x >= boardWidth) {
         x = boardWidth - 1;
     }
 
+    // if y is less than 0 out of bounds
     if (y < 0) {
         y = 0;
     }
 
+    // if y exceeds board height, out of bounds
     if (y >= boardHeight) {
         y = boardHeight - 1;
     }
 
-    setPosition (x, y);
+    // update poition in board
+    setPosition (x, y);     
 }
 
 // TODO - Link to car objects

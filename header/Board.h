@@ -11,6 +11,7 @@ class Board {
         int height;
 
         std::vector<Lane> lanes;
+        int frameCounter = 0;
     
     public:
         Board() : width(0), height(0) {}
@@ -20,6 +21,7 @@ class Board {
         int getWidth() const;
         int getHeight() const;
 
+        void update();
         void draw(const Player& player); // draws grid
         
 };

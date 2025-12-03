@@ -21,9 +21,11 @@ class Screen {
     Screen();
     ~Screen();
     
-    void enableRawMode();
+    void enableMenuMode();
+    void enableGameMode();
     void disableRawMode();
 
     InputKey processInput();  // Processes user input
+    InputKey processInputNonBlocking();  // Processes user input
     void clear();             // Clears screen/terminal
 };
