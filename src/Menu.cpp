@@ -1,4 +1,5 @@
 #include "../header/Menu.h"
+
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
@@ -43,7 +44,7 @@ void Menu::startGame(){
 }
 
 
-void Menu::changeDifficulty(int &newDifficulty){
+void Menu::changeDifficulty(int newDifficulty){
     currentDifficulty = newDifficulty;
 }
 

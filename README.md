@@ -16,9 +16,8 @@ The features that the project provides include real-time character movement, a l
 
 <b>Screen Layouts:</b>
 
-<img width="1551" height="831" alt="Screen Layout" src="https://github.com/user-attachments/assets/8018eab8-f740-43ce-a03e-61c82ce49af6" /><h1></h1>
+<img width="1521" height="831" alt="Screen Layout" src="https://github.com/user-attachments/assets/5b111460-6cb0-4db8-b49f-c0beb8342284" />
 
- 
 <b>Screen Layout Description:</b>
 
 * <b>Main Menu:</b>
@@ -41,7 +40,7 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 <h1></h1><b>Class Diagram:</b>
 <br></br>
 
-<img width="1985" height="950" alt="CS100 Milestone 3 UML" src="https://github.com/user-attachments/assets/85d3adbe-a1b5-4d5d-9148-895f1f6d27d4" />
+<img width="2025" height="950" alt="CS100 Milestone 3 UML" src="https://github.com/user-attachments/assets/baa4f39a-b3f5-4140-9837-d21247f45052" />
 
 <h1></h1>
 

@@ -1,4 +1,7 @@
 #include "../header/Game.h"
+#include "../header/GameOverScreen.h"
+#include "../header/Screen.h"
+#include "../header/Menu.h"
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -20,6 +23,8 @@ Game::Game() {
 
 void Game::start() {
     // declare vars
+    score = 0; // reset score at start of game
+    player.setPosition(board.getWidth() / 2, board.getHeight() - 1); // reset player position
     string frame(SCREEN_WIDTH,  '=');
     bool running = true;
 
@@ -57,7 +62,8 @@ void Game::start() {
                 player.movePlayer(key, board.getWidth(), board.getHeight());
                 break;
             case InputKey::Quit:
-                running = false;
+                gameOver();
+                //running = false; 
                 break;
             
             default:
@@ -77,7 +83,11 @@ void Game::start() {
 // TODO - Implement these functions
 void Game::pause() {}
 void Game::displayScore(int) {}
-void Game::gameOver() {}
+
+void Game::gameOver() {
+    GameOverScreen gameOverScreen(*this, mainMenu);
+    gameOverScreen.run();
+}
 
 int Game::getScore() {
     return score;
