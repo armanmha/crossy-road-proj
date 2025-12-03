@@ -47,14 +47,14 @@ bool Player::checkCollision() const {
     return false;
 }
 
-int scoreUpdating(int score) {
-    int currentRow;
-    int highestRow;
+int Player::scoreUpdating(int score) {
+    auto [x, y] = getPosition();
+    int currentRow = y;
 if (currentRow > highestRow) {
-        score++;
+        ++score;
         highestRow = currentRow;   // update so backtracking won't increase score
     }
+    return score;
 }
 
 // TODO NEED to put the correct score into the places that need it and make sure it updates correctly
-// Most importantly inside of the game loop and the screen showing the current score 
