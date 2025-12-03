@@ -10,7 +10,9 @@ class Board {
         int width;
         int height;
 
-        std::vector<Lane> lanes;
+        std::vector<VehicleLane> vehiclesLanes;
+        std::vector<RockLane> rocksLanes;
+
         int frameCounter = 0;
     
     public:
