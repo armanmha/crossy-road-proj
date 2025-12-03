@@ -1,8 +1,9 @@
 #pragma once
-#include "../header/Screen.h"
-#include "../header/Board.h"
-#include "../header/Player.h"
-#include "../header/Menu.h"
+#include "Screen.h"
+#include "Board.h"
+#include "Player.h"
+
+class Menu; // Forward declaration
 
 class Game : public Screen {
     private:
@@ -10,9 +11,11 @@ class Game : public Screen {
         bool isPaused;
         Board board;
         Player player;
+        Menu& mainMenu; // track main menu for quitting back to it
 
     public:
-        Game();
+        Game(Menu& menu) : score(0), isPaused(false), board(SCREEN_WIDTH, SCREEN_WIDTH / 4), player(board.getWidth() / 2, board.getHeight() - 1), mainMenu(menu) {}
+        ~Game() {}
 
         void start();
         void pause();

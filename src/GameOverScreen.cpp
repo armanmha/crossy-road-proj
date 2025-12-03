@@ -4,6 +4,7 @@
 #include <iomanip>
 #include "../header/Game.h"
 #include "../header/Screen.h"
+#include "../header/Menu.h"
 
 using std::string;
 using std::cout;
@@ -15,7 +16,8 @@ void GameOverScreen::retry() {
 }
 
 void GameOverScreen::quitToMenu() {
-    // Logic to quit to the main menu
+    mainMenu.clear();
+    mainMenu.run();
 }
 
 void GameOverScreen::saveScoreWithName(const std::string& name) {

@@ -35,7 +35,7 @@ const std::vector<string> CROSSY_ROAD_LOGO = {
 };
 
 void Menu::startGame(){
-    Game game;
+    Game game(*this);
     game.start();
 }
 

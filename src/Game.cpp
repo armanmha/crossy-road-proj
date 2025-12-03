@@ -1,5 +1,7 @@
 #include "../header/Game.h"
 #include "../header/GameOverScreen.h"
+#include "../header/Screen.h"
+#include "../header/Menu.h"
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -8,12 +10,7 @@
 using std::cout;
 using std::string;
 
-Game::Game() {
-    score    = 0;
-    isPaused = false;
-    board    = Board(SCREEN_WIDTH,SCREEN_WIDTH / 4);
-    player   = Player(board.getWidth() / 2, board.getHeight() - 1); // start player in bottom-middle of board
-}
+
 
 void Game::start() {
     // declare vars
@@ -64,7 +61,7 @@ void Game::pause() {}
 void Game::displayScore(int) {}
 
 void Game::gameOver() {
-    GameOverScreen gameOverScreen(*this);
+    GameOverScreen gameOverScreen(*this, mainMenu);
     gameOverScreen.run();
 }
 
