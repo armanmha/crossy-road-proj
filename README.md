@@ -95,3 +95,15 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 * <b> Other S.O.L.I.D. Principles: </b>
 	All classes inheriting from our GameplayObjects class already abide by the S.O.L.I.D. principles, namely the open-closed, Liskov’s substitution, and interface segregation principles. Each inherited class utilizes every function from the parent class, and any instance of GameplayObject could be substituted for one of the inherited classes.
 
+## Screenshots
+
+## Installation/Usage
+
+<b> Dependencies: </b>
+* Ensure CMake is installed on your system. For information on how to install CMake, refer to the [documentation](https://cmake.org/cmake/help/latest/index.html).
+* For accurate testing, install Google Test in the ./tests directory by running the command: `git submodule add https://github.com/google/googletest.git`
+
+<b> Running the Game: </b>
+* While in the root directory, run `cmake .`, followed by `make`.
+* Run `./bin/CS100FinalProject`, and enjoy the game!
+
