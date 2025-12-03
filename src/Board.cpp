@@ -14,11 +14,12 @@ Board::Board(int width, int height) {
 
     this->width = width;
     this->height = height;
-    lanes.clear();
+    vehiclesLanes.clear();
+    rocksLanes.clear();
     // Create each lane with its specific 'y' coordinate
     for (int i = 0; i < height; ++i) {
-        // Now passing 'i' as the y-coordinate
-        lanes.push_back(Lane('.', 0, i, width, true)); 
+        vehiclesLanes.push_back(VehicleLane('.', 0, i, width, false)); 
+        rocksLanes.push_back(RockLane('.', 0, i, width, true)); 
     }
 }
 
@@ -37,7 +38,8 @@ void Board::update() {
 
     for (int y = 0; y < height; ++y) {
         if (shouldSpawnThisFrame) {
-            lanes.at(y).spawnVehicles();
+            vehiclesLanes.at(y).spawnVehicles();
+            rocksLanes.at(y).spawnRocks();
         }
     }
 
@@ -46,10 +48,14 @@ void Board::update() {
 void Board::draw(const Player& player) {
     int posX = player.getPosition().first;  // retrieve updated x position
     int posY = player.getPosition().second; // retrieve updated y position
-
+    std::string currentLaneStr;
     // outputs player position in 2D array
     for (int y = 0; y < height; ++y) {
-        const std::string& currentLaneStr = lanes.at(y).getOutputString();
+        if (y % 2 == 0) {
+            currentLaneStr = vehiclesLanes.at(y).getOutputString();
+        } else {
+            currentLaneStr = rocksLanes.at(y).getOutputString();
+        }
 
         for (int x = 0; x < width; ++x) {
             if (x == posX && y == posY) {

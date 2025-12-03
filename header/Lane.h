@@ -10,15 +10,26 @@
 using std::cout;
 using std::vector;
 
-class Lane : public GameplayObjects{
+class VehicleLane : public GameplayObjects{
     private:
     std::vector<Vehicle> vehicles;
 
     public:    
-    Lane(char shp, int x, int y, int w, bool safe);
-    ~Lane();
+    VehicleLane(char shp, int x, int y, int w, bool safe);
+    ~VehicleLane();
 
     void spawnVehicles();
     
     
+};
+
+class RockLane : public GameplayObjects{
+    private:
+    std::vector<GameplayObjects> rocks;
+
+    public:
+    RockLane(char shp, int x, int y, int w, bool safe);
+    ~RockLane() {}
+
+    void spawnRocks();
 };
