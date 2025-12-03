@@ -119,7 +119,7 @@ void GameOverScreen::run() {
     const int numItems = 3;     // Set constant number of menu items
     bool running = true;        // Tracks if menu is running
 
-    enableRawMode();     // Enables RAW mode in terminal
+    enableMenuMode();     // Enables RAW mode in terminal
 
     // While menu is running
     while (running) {

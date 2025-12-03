@@ -14,13 +14,6 @@
 using std::cout;
 using std::string;
 
-Game::Game() {
-    score    = 0;
-    isPaused = false;
-    board    = Board(SCREEN_WIDTH,SCREEN_WIDTH / 4);
-    player   = Player((board.getWidth() - 1) / 2, board.getHeight() - 1); // start player in bottom-middle of board
-}
-
 void Game::start() {
     // declare vars
     score = 0; // reset score at start of game

@@ -1,4 +1,5 @@
 #include "../header/Menu.h"
+#include "../header/Game.h"
 
 #include <cstdlib>
 #include <iostream>
@@ -35,7 +36,7 @@ const std::vector<string> CROSSY_ROAD_LOGO = {
 };
 
 void Menu::startGame(){
-    Game game;
+    Game game(*this); // Passes current menu to game for returning later
     disableRawMode();
     enableGameMode();
     game.start();

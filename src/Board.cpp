@@ -4,6 +4,9 @@
 #include <vector>
 #include <string>
 
+constexpr const char* COLOR_YELLOW = "\x1b[33m";
+constexpr const char* COLOR_RESET  = "\x1b[0m";
+
 Board::Board(int width, int height) {
     if(width <= 0 || height <= 0) {
         throw std::invalid_argument("Width and Height must be positive integers.");
