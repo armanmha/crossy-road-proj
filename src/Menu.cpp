@@ -35,7 +35,11 @@ const std::vector<string> CROSSY_ROAD_LOGO = {
 
 void Menu::startGame(){
     Game game;
+    disableRawMode();
+    enableGameMode();
     game.start();
+    disableRawMode();
+    enableMenuMode(); 
 }
 
 
@@ -221,7 +225,7 @@ void Menu::run() {
     const int numItems = 4;     // Set constant number of menu items
     bool running = true;        // Tracks if menu is running
 
-    enableRawMode();     // Enables RAW mode in terminal
+    enableMenuMode();     // Enables RAW mode in terminal
 
     // While menu is running
     while (running) {
