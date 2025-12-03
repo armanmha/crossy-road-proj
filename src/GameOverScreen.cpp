@@ -13,6 +13,15 @@ using std::cout;
 using std::endl;
 using std::setw;
 
+// ANSI escape codes for colors / styles
+constexpr const char* COLOR_RESET     = "\x1b[0m";
+constexpr const char* COLOR_GREEN     = "\x1b[32m";
+constexpr const char* COLOR_YELLOW    = "\x1b[33m";
+constexpr const char* COLOR_RED       = "\x1b[31m";
+constexpr const char* COLOR_BLUE      = "\x1b[36m";
+constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
+constexpr const char* UNDERLINE       = "\x1b[4m";
+
 void GameOverScreen::retry() {
     game.start();
 }
@@ -22,14 +31,19 @@ void GameOverScreen::quitToMenu() {
     mainMenu.run();
 }
 
-void GameOverScreen::saveScoreWithName(const std::string& name) {
+bool GameOverScreen::saveScoreWithName(const std::string& name) {
     int playerScore = game.getScore();
     string difficulty = mainMenu.getDifficulty();
 
     std::ofstream scoreFile("./data/scores.txt", std::ios::app);
-    if(!scoreFile.is_open()) throw std::runtime_error("Could not open scores file for writing.");
+    if(!scoreFile.is_open()) {
+        throw std::runtime_error("Could not open scores file for writing.");
+    }
+
     scoreFile << playerScore << ' ' << name << ' ' << difficulty << '\n';
     scoreFile.close();
+
+    return true;
 }
 
 // Generates new frame with updated cursor instantly 
@@ -46,22 +60,20 @@ void GameOverScreen::display(int cursorIndex){
     string frame(SCREEN_WIDTH,  '=');
     cout << "\n\n";
 
-    string title = "GAME OVER";
+    string title = string(COLOR_RED) + "GAME OVER" + COLOR_RESET;
 
     // Top Frame line
     cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << frame << "\n\n";
 
-    cout <<  std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
+    cout <<  std::setw(((SCREEN_WIDTH + title.size()) / 2) + 4) << title << "\n\n";
 
-
-    
     // Line above high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
     // Print high score
     int highScore = game.getScore(); // temp high score
-    string scoreText = "High Score: " + std::to_string(highScore);
-    cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 6) << "** " << scoreText << " ** \n\n"; 
+    string scoreText = string(COLOR_BLUE) + "Score: " + std::to_string(highScore) + COLOR_RESET;
+    cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 4) << "** " << scoreText << " ** \n\n"; 
 
     // Line below high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
@@ -73,22 +85,29 @@ void GameOverScreen::display(int cursorIndex){
         "Quit to Menu"
     };
 
+    // Declare menu items to be displayed in color
+    const string itemsDisplay[] = {
+        "Save Score",
+        "Retry",
+        "Quit to Menu"
+    };
 
     int numItems = 3;
 
     // Displays arrow at correct selection
     for (int i = 0; i < numItems; ++i) {
         const string& plainText   = itemsPlain[i];                 // Declare array with string object
+        const string& displayText = itemsDisplay[i];               // Declare array with string object
 
         int padding = (SCREEN_WIDTH - plainText.size()) / 2;       // Calculate padding
 
         // Simple cursor: "→" before selected item
         if (i == cursorIndex) {
-            cout << std::setw(padding - 2) << "" << "→ " << "\x1b[4m" << plainText << "\n\n";
+            cout << std::setw(padding - 2) << "" << "→ " << UNDERLINE << displayText << COLOR_RESET << "\n\n";
         } 
         else {
             // If cursor not at this item, just print normally
-            cout << std::setw(padding) << "" << plainText << "\n\n";
+            cout << std::setw(padding) << "" << displayText << "\n\n";
         }
         
     }
@@ -141,13 +160,28 @@ void GameOverScreen::run() {
             case InputKey::Enter:   
                 if (cursor == 0) {
                     clear();
+                    disableRawMode();
                     cout << "Enter your three letter name: ";
                     std::string name;
                     std::cin >> name;
                     if (name.length() > 3) {
                         name = name.substr(0, 3); // Truncate to first 3 characters
                     }
-                    saveScoreWithName(name);
+
+                    bool saveSuccessful = saveScoreWithName(name);
+
+                    if (saveSuccessful) {
+                        cout << name << "'s score saved successfully\n";
+                    }
+                    else {
+                        cout << name << "'s score not saved. Please try again\n";
+                    }
+
+                    cout << "Press ENTER to continue ...";
+                    std::cin.ignore(1000, '\n');
+                    std::cin.get();
+
+                    enableMenuMode();
                 }
                 else if (cursor == 1) {
                     clear();
