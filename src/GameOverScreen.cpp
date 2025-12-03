@@ -29,6 +29,8 @@ void GameOverScreen::display(int cursorIndex){
     // \x1b[H  - moves cursor to top left in terminal so frame prints in same place
     // std::cout << "\x1b[3J\x1b[2J\x1b[H" << std::flush;  
 
+    clear(); // Clear screen
+
     // Declares variables
     string line(SCREEN_WIDTH/2, '=');
     string frame(SCREEN_WIDTH,  '=');

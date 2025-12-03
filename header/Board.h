@@ -14,6 +14,7 @@ class Board {
     
     public:
         Board() : width(0), height(0) {}
+        ~Board() {}
         Board(int w, int h);
 
         int getWidth() const;

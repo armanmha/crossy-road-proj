@@ -18,6 +18,7 @@ Game::Game() {
 void Game::start() {
     // declare vars
     score = 0; // reset score at start of game
+    player.setPosition(board.getWidth() / 2, board.getHeight() - 1); // reset player position
     string frame(SCREEN_WIDTH,  '=');
     bool running = true;
 
