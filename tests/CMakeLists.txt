@@ -22,6 +22,7 @@ add_executable(runMenuTests
     ../src/GameplayObjects.cpp
     ../src/Lane.cpp
     ../src/Vehicle.cpp
+    ../src/GameOverScreen.cpp
 )
 
 add_executable(runLaneTests
