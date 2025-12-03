@@ -6,9 +6,9 @@ class Menu; // Forward declaration
 
 class GameOverScreen : public Screen {
     private:
-     Game& game;
-     void display(int);
-    Menu& mainMenu;
+        Game& game;
+        void display(int);
+        Menu& mainMenu;
 
     public:
         GameOverScreen(Game& game, Menu& mainMenu) : game(game), mainMenu(mainMenu) {}

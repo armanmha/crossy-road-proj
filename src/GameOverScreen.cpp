@@ -1,7 +1,9 @@
 #include "../header/GameOverScreen.h"
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <iomanip>
+#include <stdexcept>
 #include "../header/Game.h"
 #include "../header/Screen.h"
 #include "../header/Menu.h"
@@ -21,7 +23,13 @@ void GameOverScreen::quitToMenu() {
 }
 
 void GameOverScreen::saveScoreWithName(const std::string& name) {
-    // Logic to save the score with the provided name
+    int playerScore = game.getScore();
+    string difficulty = mainMenu.getDifficulty();
+
+    std::ofstream scoreFile("./data/scores.txt", std::ios::app);
+    if(!scoreFile.is_open()) throw std::runtime_error("Could not open scores file for writing.");
+    scoreFile << playerScore << ' ' << name << ' ' << difficulty << '\n';
+    scoreFile.close();
 }
 
 // Generates new frame with updated cursor instantly 
@@ -60,12 +68,13 @@ void GameOverScreen::display(int cursorIndex){
 
     // Declare menu string items without color so they can be properly formatted 
     const string itemsPlain[] = {
+        "Save Score",
         "Retry",
         "Quit to Menu"
     };
 
 
-    int numItems = 2;
+    int numItems = 3;
 
     // Displays arrow at correct selection
     for (int i = 0; i < numItems; ++i) {
@@ -93,6 +102,9 @@ void GameOverScreen::display(int cursorIndex){
         case 1:
             cout << std::right << std::setw(SCREEN_WIDTH) << "Press ENTER to quit to menu" << "\n";
             break;
+        case 2:
+            cout << std::right << std::setw(SCREEN_WIDTH) << "Press ENTER to save score" << "\n";
+            break;
         default:
             cout << "\n";
     }
@@ -104,7 +116,7 @@ void GameOverScreen::display(int cursorIndex){
 // Like main for the menu, controls menu functions
 void GameOverScreen::run() {
     int cursor = 0;             // Reset cursor to beginning
-    const int numItems = 2;     // Set constant number of menu items
+    const int numItems = 3;     // Set constant number of menu items
     bool running = true;        // Tracks if menu is running
 
     enableRawMode();     // Enables RAW mode in terminal
@@ -127,17 +139,27 @@ void GameOverScreen::run() {
                 cursor = (cursor + 1) % numItems;
                 break;
             case InputKey::Enter:   
-                if (cursor == 0) {                                          // When on play button
+                if (cursor == 0) {
                     clear();
-                    retry();
+                    cout << "Enter your three letter name: ";
+                    std::string name;
+                    std::cin >> name;
+                    if (name.length() > 3) {
+                        name = name.substr(0, 3); // Truncate to first 3 characters
+                    }
+                    saveScoreWithName(name);
                 }
-                else if (cursor == 1) {                                     // If on quit game
-                    quitToMenu();                                       // Deactivate menu loop
+                else if (cursor == 1) {
+                    clear();
+                    retry(); 
+                }
+                else if (cursor == 2) { 
+                    quitToMenu();
                 }
                 break;
 
             case InputKey::Quit:                                            // Quit the game
-               quitToMenu();
+                quitToMenu();
                 break;
             
             default:                                                        // Breaks out of switch
