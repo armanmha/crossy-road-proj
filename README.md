@@ -96,6 +96,33 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 	All classes inheriting from our GameplayObjects class already abide by the S.O.L.I.D. principles, namely the open-closed, Liskov’s substitution, and interface segregation principles. Each inherited class utilizes every function from the parent class, and any instance of GameplayObject could be substituted for one of the inherited classes.
 
 ## Screenshots
+<b>Main Menu:</b>
+<br>
+
+<img width="766" height="673" alt="MainMenuPlay" src="https://github.com/user-attachments/assets/9571585d-42c9-405f-ba95-5e3a33dfeb49" />
+<br>
+The main menu is navigated using the arrow/WASD keys, and the enter keys selects individual options. Pressing the enter key while "PLAY" is underlined leads to the gameplay.
+
+<h1></h1>
+
+<img width="758" height="677" alt="MainMenuMediumDiff" src="https://github.com/user-attachments/assets/42f5fd15-0b52-4e08-b18c-0c2cd1d62584" />
+<br>
+The left/right arrow keys change the difficulty. The options are "Easy", "Medium", and "Hard".
+
+<h1></h1>
+
+<img width="758" height="674" alt="MainMenuLeaderboard" src="https://github.com/user-attachments/assets/2e4977db-b000-4254-8ea5-08826083b211" />
+<br>
+Pressing the enter key while the "View Leaderboard" option is underlined leads to the leaderboard.
+
+
+<h1></h1><b>Leaderboard:</b>
+<br>
+
+<img width="757" height="337" alt="Leaderboard" src="https://github.com/user-attachments/assets/7c26cc1c-3c62-4f70-b4c5-2302802a0ba9" />
+<br>
+The leaderboard displays the top N scores, where N is a positive number chosen by the user. Pressing either the enter or q/Q keys anywhere on the leaderboard screen leads back to the main menu.
+
 
 ## Installation/Usage
 
