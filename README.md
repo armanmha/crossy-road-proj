@@ -107,3 +107,8 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 * While in the root directory, run `cmake .`, followed by `make`.
 * Run `./bin/CS100FinalProject`, and enjoy the game!
 
+
+## Testing/Validation
+* <b>Unit Tests:</b> We utilized Google Test to cover all of our classes and their respective functions. Multiple tests were created for functions that deal with input, to ensure the program fails on invalid input.
+* <b>CI Workflow:</b> We leveraged GitHub's workflow system to automatically run our test cases on pushes to the repository. This saved us from repeatably compiling and running each individual test file, and guaranteed all test cases pass before merging with the master branch.
+
