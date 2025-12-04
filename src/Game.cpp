@@ -92,6 +92,17 @@ void Game::start() {
             }
                 break;
 
+            case InputKey::ToggleChar:
+                if (player.getShape() == '@') {
+                    player.setShape('$'); // change to easter egg character
+                } 
+                
+                else {
+                    player.setShape('@'); // revert to original character
+                }
+
+                break;
+
             case InputKey::Quit:
                 gameOver();
                 //running = false; 
