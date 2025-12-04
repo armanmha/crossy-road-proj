@@ -11,5 +11,6 @@ class Player : public GameplayObjects {
         bool checkCollision() const;
         void setCharacter(char newChar);
         int scoreUpdating(int score);
-        int highestRow = -1; // tracks highest row reached for scoring
+    private:
+        int highestRow; // tracks highest row reached for scoring
 };

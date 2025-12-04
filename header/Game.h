@@ -6,7 +6,7 @@
 
 class Game : public Screen {
     private:
-        int score;
+        int score = player.scoreUpdating(score);
         bool isPaused;
         Board board;
         Player player;

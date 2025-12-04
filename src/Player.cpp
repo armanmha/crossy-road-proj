@@ -1,4 +1,5 @@
 #include "../header/Player.h"
+#include "../header/Game.h"
 
 Player::Player(int startX, int startY)
     : GameplayObjects('P', startX, startY) {}

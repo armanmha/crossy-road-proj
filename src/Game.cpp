@@ -27,7 +27,7 @@ void Game::start() {
         cout << "\n\n" << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n";
 
         board.draw(player);
-
+        score = player.scoreUpdating(score);
         std::cout << "\nScore: " << score << "\n";
         std::cout << "Use arrows to move. Q to quit.\n";
 
@@ -57,9 +57,10 @@ void Game::start() {
 
 // TODO - Implement these functions
 void Game::pause() {}
-void Game::displayScore(int) {}
 void Game::gameOver() {}
-
+void Game::displayScore(int) {}
 int Game::getScore() {
     return score;
 }
+// Maybe When getting the score i need to use the highestrow from the player to display it and this other 
+//function is not needed or can hold it for the displaying menu function above
