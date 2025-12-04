@@ -14,6 +14,8 @@
 using std::cout;
 using std::string;
 
+Game::Game(Menu& menu) : score(0), isPaused(false), board(SCREEN_WIDTH, SCREEN_WIDTH / 4, menu.getDifficulty()), player(board.getWidth() / 2, board.getHeight() - 1), mainMenu(menu) {}
+
 void Game::start() {
     // declare vars
     score = 0; // reset score at start of game
