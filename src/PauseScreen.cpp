@@ -22,21 +22,6 @@ constexpr const char* COLOR_BLUE      = "\x1b[36m";
 constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
 constexpr const char* UNDERLINE       = "\x1b[4m";
 
-bool PauseScreen::saveScoreWithName(const std::string& name) {
-    int playerScore = game.getScore();
-    string difficulty = mainMenu.getDifficulty();
-
-    std::ofstream scoreFile("./data/scores.txt", std::ios::app);
-    if(!scoreFile.is_open()) {
-        throw std::runtime_error("Could not open scores file for writing.");
-    }
-
-    scoreFile << playerScore << ' ' << name << ' ' << difficulty << '\n';
-    scoreFile.close();
-
-    return true;
-}
-
 // Generates new frame with updated cursor instantly 
 void PauseScreen::display(int cursorIndex){
     // \x1b[3J - clears scrollback history in terminal
@@ -72,18 +57,16 @@ void PauseScreen::display(int cursorIndex){
     // Declare menu string items without color so they can be properly formatted 
     const string itemsPlain[] = {
         "Resume",
-        "Save Score",
         "Quit to Menu"
     };
 
     // Declare menu items to be displayed in color
     const string itemsDisplay[] = {
         "Resume",
-        "Save Score",
         "Quit to Menu"
     };
 
-    int numItems = 3;
+    int numItems = 2;
 
     // Displays arrow at correct selection
     for (int i = 0; i < numItems; ++i) {
@@ -110,9 +93,6 @@ void PauseScreen::display(int cursorIndex){
             break;
 
         case 1:
-            cout << std::right << std::setw(SCREEN_WIDTH) << "Press ENTER to save score\n";
-            break;
-        case 2:
             cout << std::right << std::setw(SCREEN_WIDTH) << "Press ENTER to quit to menu\n";
             break;
         default:
@@ -126,7 +106,7 @@ void PauseScreen::display(int cursorIndex){
 // Like main for the menu, controls menu functions
 PauseResult PauseScreen::run() {
     int cursor = 0;             // Reset cursor to beginning
-    const int numItems = 3;     // Set constant number of menu items
+    const int numItems = 2;     // Set constant number of menu items
     bool inPause = true;        // Tracks if menu is running
     PauseResult result = PauseResult::Resume;
 
@@ -154,31 +134,8 @@ PauseResult PauseScreen::run() {
                     // Resume
                     result =  PauseResult::Resume;
                     inPause = false;
-                } else if (cursor == 1) {
-                    clear();
-                    disableRawMode();
-                    cout << "Enter your three letter name: ";
-                    std::string name;
-                    std::cin >> name;
-                    if (name.length() > 3) {
-                        name = name.substr(0, 3); // Truncate to first 3 characters
-                    }
-
-                    bool saveSuccessful = saveScoreWithName(name);
-
-                    if (saveSuccessful) {
-                        cout << name << "'s score saved successfully\n";
-                    }
-                    else {
-                        cout << name << "'s score not saved. Please try again\n";
-                    }
-
-                    cout << "Press ENTER to continue ...";
-                    std::cin.ignore(1000, '\n');
-                    std::cin.get();
-
-                    enableMenuMode();
-                } else if (cursor == 2) {
+                } 
+                else if (cursor == 1) {
                     bool reallyQuit = game.confirmQuitToMenu();
 
                     if (reallyQuit) {

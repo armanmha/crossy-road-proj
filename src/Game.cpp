@@ -175,6 +175,7 @@ bool Game::confirmQuitToMenu() {
     while (choosing) {
         clear();
 
+        std::string line(SCREEN_WIDTH/2, '=');
         std::string frame(SCREEN_WIDTH, '=');
         std::string title = "Quit to menu?";
 
@@ -183,6 +184,8 @@ bool Game::confirmQuitToMenu() {
         // Top Frame line
         cout << std::setw((SCREEN_WIDTH + frame.size()) / 2) << frame << "\n\n";
         cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
+        cout << std::setw((SCREEN_WIDTH + frame.size()) / 2) << line<< "\n\n";
+
 
         const std::string options[] = {"Yes", "No"};
 

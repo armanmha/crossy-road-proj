@@ -13,6 +13,5 @@ class PauseScreen : public Screen {
 
     public:
         PauseScreen(Game& game, Menu& mainMenu) : game(game), mainMenu(mainMenu) {}
-        bool saveScoreWithName(const std::string& name);
         PauseResult run();
 };
