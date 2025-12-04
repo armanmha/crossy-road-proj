@@ -19,6 +19,10 @@ class Game : public Screen {
         Player player;
         Menu& mainMenu; // track main menu for quitting back to it
 
+        int barrierY;         // current row of barrier
+        int barrierCounter;   // used to move barrier slowly
+        int barrierSpeed; // changes speed of barrier based on difficulty
+
     public:
         Game(Menu& menu);
         ~Game() {}

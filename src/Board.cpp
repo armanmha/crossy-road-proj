@@ -6,9 +6,11 @@
 
 constexpr const char* COLOR_YELLOW = "\x1b[33m";
 constexpr const char* COLOR_RESET  = "\x1b[0m";
+constexpr const char* COLOR_RED       = "\x1b[31m";
 constexpr const char* COLOR_GREEN   = "\x1b[32m";
+constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
 
-Board::Board(int width, int height, const std::string difficulty) {
+Board::Board(int width, int height, const std::string& difficulty) {
     if(width <= 0 || height <= 0) {
         throw std::invalid_argument("Width and Height must be positive integers.");
     }
@@ -18,9 +20,11 @@ Board::Board(int width, int height, const std::string difficulty) {
     vehiclesLanes.clear();
     rocksLanes.clear();
     // Create each lane with its specific 'y' coordinate
-    for (int i = 0; i < height; ++i) {
-        vehiclesLanes.push_back(VehicleLane('.', 0, i, width, false, difficulty)); 
-        rocksLanes.push_back(RockLane('.', 0, i, width, true)); 
+    for (int y = 0; y < height; ++y) {
+        bool safeRow = ((y == height - 1) || (y == 0));
+
+        vehiclesLanes.emplace_back(VehicleLane('.', 0, y, width, safeRow, difficulty)); 
+        rocksLanes.emplace_back(RockLane('.', 0, y, width, safeRow)); 
     }
 }
 
@@ -46,10 +50,11 @@ void Board::update() {
 
 }
 
-void Board::draw(const Player& player) {
+void Board::draw(const Player& player, int barrierY) {
     int posX = player.getPosition().first;  // retrieve updated x position
     int posY = player.getPosition().second; // retrieve updated y position
     std::string currentLaneStr;
+
     // outputs player position in 2D array
     for (int y = 0; y < height; ++y) {
         if (y % 2 == 0) {
@@ -59,8 +64,6 @@ void Board::draw(const Player& player) {
         }
 
         for (int x = 0; x < width; ++x) {
-
-            
             if (x == posX && y == posY) {
                 char shape = player.getShape();
 
@@ -73,8 +76,10 @@ void Board::draw(const Player& player) {
                 }
                 // draw the player at their position with the correct color and shape 
                 std::cout << color << shape << COLOR_RESET; 
+            } 
+            else if (y >= barrierY && barrierY < height) {
+                std::cout << COLOR_RED << '#' << COLOR_RESET;
             }
-
             else {
                 std::cout << currentLaneStr.at(x);   // empty grid for now
             }
@@ -100,5 +105,18 @@ char Board::getObstaclePos(int x, int y) const {
     
     else {
         return rocksLanes.at(y).getOutputString().at(x);
+    }
+}
+
+void Board::regenerate() {
+    frameCounter = 0;
+    vehiclesLanes.clear();
+    rocksLanes.clear();
+
+    for (int y = 0; y < height; ++y) {
+        bool safeRow = ((y == height - 1) || (y == 0));
+
+        vehiclesLanes.emplace_back(VehicleLane('.', 0, y, width, safeRow, difficulty)); 
+        rocksLanes.emplace_back(RockLane('.', 0, y, width, safeRow)); 
     }
 }
