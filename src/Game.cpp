@@ -24,6 +24,8 @@ constexpr const char* COLOR_BLUE      = "\x1b[36m";
 constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
 constexpr const char* UNDERLINE       = "\x1b[4m";
 
+Game::Game(Menu& menu) : score(0), isPaused(false), board(SCREEN_WIDTH, SCREEN_WIDTH / 4, menu.getDifficulty()), player(board.getWidth() / 2, board.getHeight() - 1), mainMenu(menu) {}
+
 void Game::start() {
 
     enableGameMode();
@@ -118,6 +120,17 @@ void Game::start() {
                     } 
                 }
             }
+                break;
+
+            case InputKey::ToggleChar:
+                if (player.getShape() == '@') {
+                    player.setShape('$'); // change to easter egg character
+                } 
+                
+                else {
+                    player.setShape('@'); // revert to original character
+                }
+
                 break;
 
             case InputKey::Quit:

@@ -6,8 +6,9 @@
 
 constexpr const char* COLOR_YELLOW = "\x1b[33m";
 constexpr const char* COLOR_RESET  = "\x1b[0m";
+constexpr const char* COLOR_GREEN   = "\x1b[32m";
 
-Board::Board(int width, int height) {
+Board::Board(int width, int height, const std::string difficulty) {
     if(width <= 0 || height <= 0) {
         throw std::invalid_argument("Width and Height must be positive integers.");
     }
@@ -18,7 +19,7 @@ Board::Board(int width, int height) {
     rocksLanes.clear();
     // Create each lane with its specific 'y' coordinate
     for (int i = 0; i < height; ++i) {
-        vehiclesLanes.push_back(VehicleLane('.', 0, i, width, false)); 
+        vehiclesLanes.push_back(VehicleLane('.', 0, i, width, false, difficulty)); 
         rocksLanes.push_back(RockLane('.', 0, i, width, true)); 
     }
 }
@@ -58,9 +59,22 @@ void Board::draw(const Player& player) {
         }
 
         for (int x = 0; x < width; ++x) {
+
+            
             if (x == posX && y == posY) {
-                std::cout << COLOR_YELLOW << '@' << COLOR_RESET;   // current player position
-            } 
+                char shape = player.getShape();
+
+                // default color is yellow when '@' player
+                const char* color = COLOR_YELLOW;
+
+                // if user selected 'y' change color of '$' to green
+                if (shape == '$'){
+                    color = COLOR_GREEN;
+                }
+                // draw the player at their position with the correct color and shape 
+                std::cout << color << shape << COLOR_RESET; 
+            }
+
             else {
                 std::cout << currentLaneStr.at(x);   // empty grid for now
             }

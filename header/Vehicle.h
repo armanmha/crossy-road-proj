@@ -10,4 +10,6 @@ class Vehicle : public GameplayObjects {
         : GameplayObjects(shp, x, y, length, safe), speed(spd) {};
     ~Vehicle() {};
     void moveVehicle(int, int);
+
+    int getSpeed() const { return speed; }
 };
