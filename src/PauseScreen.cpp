@@ -178,10 +178,16 @@ PauseResult PauseScreen::run() {
                     std::cin.get();
 
                     enableMenuMode();
-                } else if (cursor == 2) { 
-                    // Quit to Menu
-                    result = PauseResult::QuitToMenu;
-                    inPause = false;
+                } else if (cursor == 2) {
+                    bool reallyQuit = game.confirmQuitToMenu();
+
+                    if (reallyQuit) {
+                        // Quit to Menu
+                        result = PauseResult::QuitToMenu;
+                        inPause = false;
+                    }
+
+                    enableMenuMode();
                 }
                 break;
 

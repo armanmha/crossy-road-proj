@@ -8,6 +8,7 @@ enum class InputKey {         // Maps numbers to arrow keys
   Enter,
   Quit,
   Pause,
+  ToggleChar,
   Unknown
 };
 
