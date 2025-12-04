@@ -58,15 +58,38 @@ void Game::start() {
             case InputKey::Up:
             case InputKey::Down:
             case InputKey::Left:
-            case InputKey::Right:
+            case InputKey::Right: {
+
+                // remember old player position
+                auto oldPos = player.getPosition();
+                int oldX = oldPos.first;
+                int oldY = oldPos.second;
+
+                // move player as usual
                 player.movePlayer(key, board.getWidth(), board.getHeight());
 
-                // for when player moves into cars
-                if (player.checkCollision(board)) {
-                    gameOver();
-                    running = false;
-                } 
+                // remember old player position
+                auto newPos = player.getPosition();
+                int newX = newPos.first;
+                int newY = newPos.second;
+
+                char tile = board.getObstaclePos(newX, newY);
+
+                // if a rock(+) is present, cancel the move
+                if (tile == '+') {
+                    // Can't walk on rocks -> revert to previous position
+                    player.setPosition(oldX, oldY);
+                }
+                else {
+                    // Only check colliosion if player moved onto a non-rock tile
+                    if (player.checkCollision(board)) {
+                        gameOver();
+                        running = false;
+                    } 
+                }
+            }
                 break;
+
             case InputKey::Quit:
                 gameOver();
                 //running = false; 
@@ -75,6 +98,7 @@ void Game::start() {
             default:
                 break;
         }
+    
 
         // cap FPS
         auto frameEnd = clock::now();
