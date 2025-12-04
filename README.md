@@ -123,6 +123,35 @@ Pressing the enter key while the "View Leaderboard" option is underlined leads t
 <br>
 The leaderboard displays the top N scores, where N is a positive number chosen by the user. Pressing either the enter or q/Q keys anywhere on the leaderboard screen leads back to the main menu.
 
+<h1></h1><b>Gameplay:</b>
+<br>
+
+<img width="763" height="569" alt="Gameplay@0" src="https://github.com/user-attachments/assets/b6ccdb30-0651-4ac3-9a19-1cd5965402de" />
+<br>
+The gameplay can be navigated with the WASD/arrow keys. The yellow '@' symbol represents the character.
+
+<h1></h1>
+
+<img width="763" height="564" alt="Gameplay@6" src="https://github.com/user-attachments/assets/f271ab35-52f9-4e82-a8fa-d8ac14830fbe" />
+<br>
+As the player progresses up through the level, the score is incremented.
+
+<h1></h1><b>Game Over Screen:</b>
+<br>
+
+<img width="766" height="420" alt="GameOver@6" src="https://github.com/user-attachments/assets/1605316a-3035-471c-b317-4b8424b51420" />
+<br>
+When the player overlaps with a vehicle (denoted by '0'), the game ends. Navigating to "Save Score" with the arrow keys allows the player to save their score for the leaderboard. Selecting "Retry" brings the player to a new level, and selecting "Quit to Menu" quits to the menu.
+
+<h1></h1>
+
+<img width="330" height="90" alt="SaveName" src="https://github.com/user-attachments/assets/b353ec18-745c-4b51-8138-794ccf8aff9e" />
+<br>
+Selecting "Save Score" leads to this screen, where the player may type up to three characters to represent their name. Pressing the enter key confirms and saves the score to a text file.
+
+<h1></h1>
+
+
 
 ## Installation/Usage
 
