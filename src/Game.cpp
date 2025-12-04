@@ -27,7 +27,6 @@ void Game::start() {
         cout << "\n\n" << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n";
 
         board.draw(player);
-        score = player.scoreUpdating(score);
         std::cout << "\nScore: " << score << "\n";
         std::cout << "Use arrows to move. Q to quit.\n";
 
@@ -36,6 +35,7 @@ void Game::start() {
 
         // get user input
         InputKey key = processInput();
+
 
         // move player if arrow keys pressed
         switch (key) {
@@ -52,15 +52,15 @@ void Game::start() {
             default:
                 break;
         }
+        //updating score adds the current score to the total score
+        score += player.scoreUpdating();
     }
 }
 
 // TODO - Implement these functions
 void Game::pause() {}
 void Game::gameOver() {}
-void Game::displayScore(int) {}
 int Game::getScore() {
     return score;
 }
-// Maybe When getting the score i need to use the highestrow from the player to display it and this other 
 //function is not needed or can hold it for the displaying menu function above

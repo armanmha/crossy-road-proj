@@ -10,7 +10,7 @@ class Player : public GameplayObjects {
         void movePlayer(InputKey key, int boardWidth, int boardHeight);
         bool checkCollision() const;
         void setCharacter(char newChar);
-        int scoreUpdating(int score);
+        int scoreUpdating();
     private:
-        int highestRow; // tracks highest row reached for scoring
+        int highestRow_; // tracks highest row reached for scoring
 };

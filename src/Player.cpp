@@ -2,7 +2,7 @@
 #include "../header/Game.h"
 
 Player::Player(int startX, int startY)
-    : GameplayObjects('P', startX, startY) {}
+    : GameplayObjects('P', startX, startY), highestRow_(startY) {}
 
 void Player::movePlayer(InputKey key, int boardWidth, int boardHeight) {
     auto [x, y] = getPosition();
@@ -47,15 +47,17 @@ void Player::movePlayer(InputKey key, int boardWidth, int boardHeight) {
 bool Player::checkCollision() const {
     return false;
 }
-
-int Player::scoreUpdating(int score) {
+// Chaanges the score when going up a new row
+int Player::scoreUpdating() {
     auto [x, y] = getPosition();
-    int currentRow = y;
-if (currentRow > highestRow) {
-        ++score;
-        highestRow = currentRow;   // update so backtracking won't increase score
+    if (y < highestRow_) {
+            int delta = highestRow_ - y; // Rows that moved upwords
+            highestRow_ = y; // and updaate it the highest row reached
+            return delta;
     }
-    return score;
+    return 0;
 }
+
+
 
 // TODO NEED to put the correct score into the places that need it and make sure it updates correctly
