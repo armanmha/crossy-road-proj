@@ -34,4 +34,12 @@ jobs:
     - name: Run Board tests
       run: | 
         ./tests/bin/runBoardTests
+
+    - name: Run Game tests
+      run: | 
+        ./tests/bin/runGameTests
+
+    - name: Run Game Over tests
+      run: | 
+        ./tests/bin/runGameOverTests
         
