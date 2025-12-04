@@ -89,6 +89,11 @@ InputKey Screen::processInput() {
         return InputKey::Quit;    // Output QUIT
     }
 
+    // easter egg: if user presses y or Y, toggle character mode
+    if (c == 'y' || c == 'Y') {
+        return InputKey::ToggleChar;
+    }
+
     // WASD support
     if (c == 'w' || c == 'W') {
         return InputKey::Up;
@@ -160,6 +165,11 @@ InputKey Screen::processInputNonBlocking() {
         // check if variation of Q was pressed
         if (c == 'q' || c == 'Q') {
             return InputKey::Quit;    // Output QUIT
+        }
+
+        // easter egg: if user presses y or Y, toggle character mode
+        if (c == 'y' || c == 'Y') {
+        return InputKey::ToggleChar;
         }
 
         // WASD support

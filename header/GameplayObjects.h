@@ -16,7 +16,8 @@ class GameplayObjects {
 
         void setSafe(bool safeToUser);
         void setPosition(int x, int y);
-        std::pair<int, int> getPosition() const;
+        std::pair<int, int> getPosition() const; 
+        void setShape(char s) {shape = s;} // new function for easter egg feature, to change player character midgame
 
         char getShape() const { return shape; }
         std::string getOutputString() const { return outputString; }

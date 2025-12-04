@@ -7,7 +7,8 @@ enum class InputKey {         // Maps numbers to arrow keys
   Right,
   Enter,
   Quit,
-  Unknown
+  Unknown,
+  ToggleChar
 };
 
 class Screen {
