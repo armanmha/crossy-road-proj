@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <string>
 
 using std::cout;
 using std::vector;
@@ -15,7 +16,7 @@ class VehicleLane : public GameplayObjects{
     std::vector<Vehicle> vehicles;
 
     public:    
-    VehicleLane(char shp, int x, int y, int w, bool safe);
+    VehicleLane(char shp, int x, int y, int w, bool safe, std::string difficulty);
     ~VehicleLane();
 
     void spawnVehicles();

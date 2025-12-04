@@ -4,12 +4,21 @@
 #include <cstdlib>
 #include <ctime>
 
-VehicleLane::VehicleLane(char shp, int x, int y, int w, bool safe) : GameplayObjects(shp, x, y, w, safe) {
+VehicleLane::VehicleLane(char shp, int x, int y, int w, bool safe, std::string difficulty) : GameplayObjects(shp, x, y, w, safe) {
         static bool seeded = false;
         if (!seeded) { 
             std::srand(std::time(0));
             seeded = true;
         }
+
+        int speed = 1;
+        
+        if(difficulty == "Medium") {
+            speed = 3;
+        } else if(difficulty == "Hard") {
+            speed = 5;
+        }
+    
         
         int minLen = 1;
         int maxLen = 4;
@@ -23,7 +32,7 @@ VehicleLane::VehicleLane(char shp, int x, int y, int w, bool safe) : GameplayObj
 
             randomGap = ((std::rand() % 6) + 3); // gap between vehicles
 
-            vehicles.push_back(Vehicle('0', i, y, randomLen, 1, false));
+            vehicles.push_back(Vehicle('0', i, y, randomLen, speed, false));
             i += randomLen + randomGap - 1; // move index forward by length of vehicle and gap
         }
 }
@@ -39,11 +48,13 @@ void VehicleLane::spawnVehicles() {
     for(Vehicle &v : vehicles){
         outputString.replace(v.getPosition().first, v.getLength(), std::string(v.getLength(), shape));
 
+        v.moveVehicle(v.getSpeed(), 0);
+
         if(v.getPosition().first + v.getLength() >= length){
             v.setPosition(0, v.getPosition().second); // reset position to start
         }
-        v.moveVehicle(1, 0);
-        outputString.replace(v.getPosition().first, v.getLength(), std::string(v.getLength(), v.getShape()));
+        
+        outputString.replace((v.getPosition().first), v.getLength(), std::string(v.getLength(), v.getShape()));
 
     }
 }

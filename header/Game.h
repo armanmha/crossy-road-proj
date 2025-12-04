@@ -14,7 +14,7 @@ class Game : public Screen {
         Menu& mainMenu; // track main menu for quitting back to it
 
     public:
-        Game(Menu& menu) : score(0), isPaused(false), board(SCREEN_WIDTH, SCREEN_WIDTH / 4), player(board.getWidth() / 2, board.getHeight() - 1), mainMenu(menu) {}
+        Game(Menu& menu);
         ~Game() {}
 
         void start();
