@@ -184,10 +184,10 @@ bool Game::confirmQuitToMenu() {
         // Top Frame line
         cout << std::setw((SCREEN_WIDTH + frame.size()) / 2) << frame << "\n\n";
         cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
-        cout << std::setw((SCREEN_WIDTH + frame.size()) / 2) << line<< "\n\n";
+        cout << std::setw((SCREEN_WIDTH + line.size()) / 2)  << line  << "\n\n";
 
 
-        const std::string options[] = {"Yes", "No"};
+        const std::string options[] = {"Yes", "No "};
 
         for (int i = 0; i < numItems; ++i) {
             const std::string& label = options[i];
