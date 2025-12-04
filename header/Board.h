@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+class Player;
+
 class Board {
     private:
         int width;
@@ -26,4 +28,5 @@ class Board {
         void update();
         void draw(const Player& player); // draws grid
         
+        char getObstaclePos(int x, int y) const;
 };

@@ -51,6 +51,23 @@ void Player::movePlayer(InputKey key, int boardWidth, int boardHeight) {
 }
 
 // TODO - Link to car objects
-bool Player::checkCollision() const {
-    return false;
+bool Player::checkCollision(const Board& board) const {
+
+    // get players position
+    auto pos = getPosition();
+    int x = pos.first;
+    int y = pos.second;
+
+    // check if there is an obstacle at that position
+    char tile = board.getObstaclePos(x, y);
+    
+    // if the tile at that position is '0', there is a collision and the game should terminate 
+    if (tile == '0'){
+        return true; 
+    }
+
+    // if not, keep playing
+    else {
+        return false; 
+    }
 }

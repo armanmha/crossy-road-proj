@@ -68,3 +68,23 @@ void Board::draw(const Player& player) {
         std::cout << "\n";
     }
 }
+
+char Board::getObstaclePos(int x, int y) const {
+    if (x < 0 || x >= width || y < 0 || y >= height) {
+        return '.'; // Out of bounds so just returning safe character
+    }
+
+    // takes pattern from draw function: if x is even, vehicle lane or if odd, rock lane
+    // finds if vehicle, rock, or empty space is at that position
+    // this works like this because currently rows of vehicles and rocks alternate top down
+    // ex: row 0 = vehicles, row 1 = rocks, etc etc
+
+    // basically, 
+    if (y % 2 == 0) {
+        return vehiclesLanes.at(y).getOutputString().at(x);
+    } 
+    
+    else {
+        return rocksLanes.at(y).getOutputString().at(x);
+    }
+}

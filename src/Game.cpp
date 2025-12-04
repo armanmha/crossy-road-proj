@@ -32,6 +32,13 @@ void Game::start() {
 
         board.update();
 
+        // check for collision by calling checkCollision function, if true, end game
+        // for when cars move into player
+        if (player.checkCollision(board)) {
+            gameOver();
+            running = false;
+        }
+
         // top Frame line
         cout << "\n\n" << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n";
 
@@ -53,6 +60,12 @@ void Game::start() {
             case InputKey::Left:
             case InputKey::Right:
                 player.movePlayer(key, board.getWidth(), board.getHeight());
+
+                // for when player moves into cars
+                if (player.checkCollision(board)) {
+                    gameOver();
+                    running = false;
+                } 
                 break;
             case InputKey::Quit:
                 gameOver();
