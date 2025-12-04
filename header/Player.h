@@ -1,6 +1,8 @@
 #pragma once
 #include "GameplayObjects.h"
 #include "Screen.h" // import InputKey
+#include "Board.h"
+class Board;
 
 class Player : public GameplayObjects {
     public:
@@ -8,5 +10,5 @@ class Player : public GameplayObjects {
         Player(int startX, int startY);
 
         void movePlayer(InputKey key, int boardWidth, int boardHeight);
-        bool checkCollision() const;
+        bool checkCollision(const Board& board) const;
 };
