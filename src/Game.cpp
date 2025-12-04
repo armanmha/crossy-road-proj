@@ -58,15 +58,35 @@ void Game::start() {
             case InputKey::Up:
             case InputKey::Down:
             case InputKey::Left:
-            case InputKey::Right:
+            case InputKey::Right:{
+
+                // store old position before move, in case need to bring player back if on obstacle
+                auto oldPos = player.getPosition();
+
+                // move player based on user input
                 player.movePlayer(key, board.getWidth(), board.getHeight());
 
-                // for when player moves into cars
-                if (player.checkCollision(board)) {
+                // get players new position after the move
+                auto newPos = player.getPosition();
+    
+                // check current tile at new player position for obstacle
+                char tile = board.getObstaclePos(newPos.first, newPos.second);
+
+                // if the user is moving on a rock, revert to their previous position
+                if (tile == '+') 
+                {
+                    player.setPosition(oldPos.first, oldPos.second);
+                }
+                
+                // check for collision again after player move
+                else if (player.checkCollision(board)) {
                     gameOver();
                     running = false;
-                } 
+                }
+
                 break;
+        }
+
             case InputKey::Quit:
                 gameOver();
                 //running = false; 
