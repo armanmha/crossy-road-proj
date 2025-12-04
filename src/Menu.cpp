@@ -289,4 +289,5 @@ void Menu::run() {
     }
 
     disableRawMode(); // resets terminal to original settings
+    std::exit(0);
 }
