@@ -3,6 +3,11 @@
 #include "Board.h"
 #include "Player.h"
 
+enum class PauseResult {
+    Resume,
+    QuitToMenu
+};
+
 class Menu; // Forward declaration
 
 class Game : public Screen {
@@ -18,8 +23,8 @@ class Game : public Screen {
         ~Game() {}
 
         void start();
-        void pause();
         void displayScore(int);
+        void pause();
         void gameOver();
         int getScore();
 };
