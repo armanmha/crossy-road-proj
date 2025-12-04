@@ -14,6 +14,7 @@ class Game : public Screen {
     private:
         int score;
         bool isPaused;
+        
         Board board;
         Player player;
         Menu& mainMenu; // track main menu for quitting back to it
@@ -27,4 +28,5 @@ class Game : public Screen {
         void pause();
         void gameOver();
         int getScore();
+        bool confirmQuitToMenu();
 };

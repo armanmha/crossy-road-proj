@@ -133,9 +133,21 @@ void Game::start() {
 
                 break;
 
-            case InputKey::Quit:
-                gameOver();
+            case InputKey::Quit: {
+                bool reallyQuit = confirmQuitToMenu();
+
+                if (reallyQuit) {
+                    mainMenu.clear();
+                    mainMenu.run();
+
+                    return;
+
+                } else {
+                    enableGameMode();
+                }
+
                 break;
+            }
             
             default:
                 break;
@@ -150,6 +162,77 @@ void Game::start() {
             std::this_thread::sleep_for(frameDuration - elapsed);
         }
     }
+}
+
+bool Game::confirmQuitToMenu() {
+    enableMenuMode();
+
+    int cursor = 0;
+    const int numItems = 2;
+    bool choosing = true;
+    bool confirm = false;
+
+    while (choosing) {
+        clear();
+
+        std::string frame(SCREEN_WIDTH, '=');
+        std::string title = "Quit to menu?";
+
+        std::cout << "\n\n";
+
+        // Top Frame line
+        cout << std::setw((SCREEN_WIDTH + frame.size()) / 2) << frame << "\n\n";
+        cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
+
+        const std::string options[] = {"Yes", "No"};
+
+        for (int i = 0; i < numItems; ++i) {
+            const std::string& label = options[i];
+            int padding = (SCREEN_WIDTH - (int)label.size()) / 2;
+
+            if (i == cursor) {
+                std::cout << std::setw(padding - 2) << "" << "→ " << label << "\n\n";
+            } else {
+                std::cout << std::setw(padding) << "" << label << "\n\n";
+            }
+        }
+
+        // Bottom Frame line
+        cout << std::setw((SCREEN_WIDTH + frame.size()) / 2) << frame << "\n\n";
+
+        InputKey key = processInput();  // Process arrow key input and assigns it to enum
+
+        // Determines cursor position
+        switch (key) {
+            case InputKey::Up: // Moves cursor 1 position up in menu
+            case InputKey::Left:
+                cursor = (cursor - 1 + numItems) % numItems;
+                break;
+
+            case InputKey::Down: // Moves cursor 1 position down in menu
+            case InputKey::Right:
+                cursor = (cursor + 1) % numItems;
+                break;
+
+            case InputKey::Enter:   
+                confirm = (cursor == 0); // Yes -> true, No -> false
+                choosing = false;
+                break;
+
+            case InputKey::Quit:                                            
+                // Treat Q as "No"
+                confirm = false; 
+                choosing = false;
+                break;
+            
+            default:                                                        
+                break;
+        }
+    }
+
+    disableRawMode();
+
+    return confirm;
 }
 
 void Game::gameOver() {
