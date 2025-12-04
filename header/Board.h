@@ -16,17 +16,20 @@ class Board {
         std::vector<RockLane> rocksLanes;
 
         int frameCounter = 0;
+        std::string difficulty;
     
     public:
         Board() : width(0), height(0) {}
         ~Board() {}
-        Board(int w, int h, const std::string difficulty);
+        Board(int w, int h, const std::string& difficulty);
 
         int getWidth() const;
         int getHeight() const;
 
         void update();
-        void draw(const Player& player); // draws grid
+        void draw(const Player& player, int barrierY); // draws grid
         
         char getObstaclePos(int x, int y) const;
+
+        void regenerate();
 };
