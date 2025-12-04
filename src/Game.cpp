@@ -1,5 +1,6 @@
 #include "../header/Game.h"
 #include "../header/GameOverScreen.h"
+#include "../header/PauseScreen.h"
 #include "../header/Screen.h"
 #include "../header/Menu.h"
 #include <iostream>
@@ -14,9 +15,21 @@
 using std::cout;
 using std::string;
 
+// ANSI escape codes for colors / styles
+constexpr const char* COLOR_RESET     = "\x1b[0m";
+constexpr const char* COLOR_GREEN     = "\x1b[32m";
+constexpr const char* COLOR_YELLOW    = "\x1b[33m";
+constexpr const char* COLOR_RED       = "\x1b[31m";
+constexpr const char* COLOR_BLUE      = "\x1b[36m";
+constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
+constexpr const char* UNDERLINE       = "\x1b[4m";
+
 Game::Game(Menu& menu) : score(0), isPaused(false), board(SCREEN_WIDTH, SCREEN_WIDTH / 4, menu.getDifficulty()), player(board.getWidth() / 2, board.getHeight() - 1), mainMenu(menu) {}
 
 void Game::start() {
+
+    enableGameMode();
+    
     // declare vars
     score = 0; // reset score at start of game
     player.setPosition(board.getWidth() / 2, board.getHeight() - 1); // reset player position
@@ -47,7 +60,7 @@ void Game::start() {
         board.draw(player);
 
         std::cout << "\nScore: " << score << "\n";
-        std::cout << "Use arrows to move. Q to quit.\n";
+        std::cout << "Use ARROWS to move. ESC to pause. Q to quit.\n";
 
         // bottom Frame line
         cout << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n\n";
@@ -57,6 +70,23 @@ void Game::start() {
 
         // move player if arrow keys pressed
         switch (key) {
+            case InputKey::Pause: {
+                // Show pause menu while game state is preserved 
+                PauseScreen pauseScreen(*this, mainMenu);
+                PauseResult result = pauseScreen.run();
+            
+                
+                if (result == PauseResult::QuitToMenu) {
+                    running = false;  // stop the game loop and retrun control back to main menu
+                }
+            }
+
+            if (running) {
+                enableGameMode();
+            }
+            break;
+            
+
             case InputKey::Up:
             case InputKey::Down:
             case InputKey::Left:
@@ -105,7 +135,6 @@ void Game::start() {
 
             case InputKey::Quit:
                 gameOver();
-                //running = false; 
                 break;
             
             default:
@@ -123,14 +152,15 @@ void Game::start() {
     }
 }
 
-// TODO - Implement these functions
-void Game::pause() {}
-void Game::displayScore(int) {}
-
 void Game::gameOver() {
     GameOverScreen gameOverScreen(*this, mainMenu);
     gameOverScreen.run();
 }
+
+// TODO - Implement these functions
+void Game::displayScore(int) {}
+
+
 
 int Game::getScore() {
     return score;

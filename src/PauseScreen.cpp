@@ -1,4 +1,4 @@
-#include "../header/GameOverScreen.h"
+#include "../header/PauseScreen.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -22,17 +22,7 @@ constexpr const char* COLOR_BLUE      = "\x1b[36m";
 constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
 constexpr const char* UNDERLINE       = "\x1b[4m";
 
-void GameOverScreen::retry() {
-    clear();
-    game.start();
-}
-
-void GameOverScreen::quitToMenu() {
-    mainMenu.clear();
-    mainMenu.run();
-}
-
-bool GameOverScreen::saveScoreWithName(const std::string& name) {
+bool PauseScreen::saveScoreWithName(const std::string& name) {
     int playerScore = game.getScore();
     string difficulty = mainMenu.getDifficulty();
 
@@ -48,7 +38,7 @@ bool GameOverScreen::saveScoreWithName(const std::string& name) {
 }
 
 // Generates new frame with updated cursor instantly 
-void GameOverScreen::display(int cursorIndex){
+void PauseScreen::display(int cursorIndex){
     // \x1b[3J - clears scrollback history in terminal
     // \x1b[2J - clears screen in terminal
     // \x1b[H  - moves cursor to top left in terminal so frame prints in same place
@@ -61,35 +51,35 @@ void GameOverScreen::display(int cursorIndex){
     string frame(SCREEN_WIDTH,  '=');
     cout << "\n\n";
 
-    string title = string(COLOR_RED) + "GAME OVER" + COLOR_RESET;
+    string title = string(COLOR_YELLOW) + "PAUSED" + COLOR_RESET;
 
     // Top Frame line
     cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << frame << "\n\n";
 
-    cout <<  std::setw(((SCREEN_WIDTH + title.size()) / 2) + 4) << title << "\n\n";
+    cout << std::setw(((SCREEN_WIDTH + title.size()) / 2) + 6) << title << "\n\n";
 
     // Line above high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
     // Print high score
     int highScore = game.getScore(); // temp high score
-    string scoreText = string(COLOR_BLUE) + "Score: " + std::to_string(highScore) + COLOR_RESET;
-    cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 4) << "** " << scoreText << " ** \n\n"; 
+    string scoreText = string(COLOR_BLUE) + "Current Score: " + std::to_string(highScore) + COLOR_RESET;
+    cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 6) << "** " << scoreText << " ** \n\n"; 
 
     // Line below high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
     // Declare menu string items without color so they can be properly formatted 
     const string itemsPlain[] = {
+        "Resume",
         "Save Score",
-        "Retry",
         "Quit to Menu"
     };
 
     // Declare menu items to be displayed in color
     const string itemsDisplay[] = {
+        "Resume",
         "Save Score",
-        "Retry",
         "Quit to Menu"
     };
 
@@ -116,14 +106,14 @@ void GameOverScreen::display(int cursorIndex){
     // Outputs prompt to user based on selection
     switch(cursorIndex) {
         case 0: 
-            cout << std::right << std::setw(SCREEN_WIDTH) << "Press ENTER to retry game" << "\n";
+            cout << std::right << std::setw(SCREEN_WIDTH) << "Press ENTER to resume game\n";
             break;
 
         case 1:
-            cout << std::right << std::setw(SCREEN_WIDTH) << "Press ENTER to quit to menu" << "\n";
+            cout << std::right << std::setw(SCREEN_WIDTH) << "Press ENTER to save score\n";
             break;
         case 2:
-            cout << std::right << std::setw(SCREEN_WIDTH) << "Press ENTER to save score" << "\n";
+            cout << std::right << std::setw(SCREEN_WIDTH) << "Press ENTER to quit to menu\n";
             break;
         default:
             cout << "\n";
@@ -134,15 +124,16 @@ void GameOverScreen::display(int cursorIndex){
 }
 
 // Like main for the menu, controls menu functions
-void GameOverScreen::run() {
+PauseResult PauseScreen::run() {
     int cursor = 0;             // Reset cursor to beginning
     const int numItems = 3;     // Set constant number of menu items
-    bool running = true;        // Tracks if menu is running
+    bool inPause = true;        // Tracks if menu is running
+    PauseResult result = PauseResult::Resume;
 
     enableMenuMode();     // Enables RAW mode in terminal
 
     // While menu is running
-    while (running) {
+    while (inPause) {
         std::cout << "\x1b[3J"; // Clear scrollback buffer for safety
         clear();                // Clear screen
         display(cursor);        // Display frame with current cursor position
@@ -160,6 +151,10 @@ void GameOverScreen::run() {
                 break;
             case InputKey::Enter:   
                 if (cursor == 0) {
+                    // Resume
+                    result =  PauseResult::Resume;
+                    inPause = false;
+                } else if (cursor == 1) {
                     clear();
                     disableRawMode();
                     cout << "Enter your three letter name: ";
@@ -183,18 +178,16 @@ void GameOverScreen::run() {
                     std::cin.get();
 
                     enableMenuMode();
-                }
-                else if (cursor == 1) {
-                    clear();
-                    retry(); 
-                }
-                else if (cursor == 2) { 
-                    quitToMenu();
+                } else if (cursor == 2) { 
+                    // Quit to Menu
+                    result = PauseResult::QuitToMenu;
+                    inPause = false;
                 }
                 break;
 
             case InputKey::Quit:                                            // Quit the game
-                quitToMenu();
+                result = PauseResult::QuitToMenu;
+                inPause = false;
                 break;
             
             default:                                                        // Breaks out of switch
@@ -202,5 +195,5 @@ void GameOverScreen::run() {
         }
     }
 
-    disableRawMode(); // resets terminal to original settings
+    return result;
 }

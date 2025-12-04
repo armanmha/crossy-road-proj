@@ -192,17 +192,19 @@ InputKey Screen::processInputNonBlocking() {
         // Arrows begin with ESC character
         if (c == '\x1b') {                                  
             char seq[2];                                    // Read next 2 characters
+            ssize_t n = read(STDIN_FILENO, &seq[0], 1);
 
-            // if 3rd byte is not valid return keystroke as unknown
-            if (read(STDIN_FILENO, &seq[0], 1) != 1) {
-                return InputKey::Unknown; 
-            } 
-            if (read(STDIN_FILENO, &seq[1], 1) != 1) {
-                return InputKey::Unknown;
+            if (n != 1) {
+                // ESC alone -> pause
+                return InputKey::Pause;
             }
 
             // if valid arrow key is pressed
-            if (seq[0] == '[') {                            
+            if (seq[0] == '[') {  
+                if (read(STDIN_FILENO, &seq[1], 1) != 1) {
+                    return InputKey::Unknown;
+                }     
+
                 switch (seq[1]) {
                     case 'A': return InputKey::Up;
                     case 'B': return InputKey::Down;
@@ -210,9 +212,9 @@ InputKey Screen::processInputNonBlocking() {
                     case 'D': return InputKey::Left;
                 }
             }
-        }
 
-        return InputKey::Unknown;
+            return InputKey::Unknown;
+        }
     }
 
     return InputKey::Unknown;

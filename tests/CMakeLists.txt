@@ -23,6 +23,7 @@ add_executable(runMenuTests
     ../src/Lane.cpp
     ../src/Vehicle.cpp
     ../src/GameOverScreen.cpp
+    ../src/PauseScreen.cpp
 )
 
 add_executable(runLaneTests
@@ -51,12 +52,14 @@ add_executable(runGameTests
     ../src/Lane.cpp
     ../src/Vehicle.cpp
     ../src/GameOverScreen.cpp
+    ../src/PauseScreen.cpp
     ../src/Leaderboard.cpp
 )
 
 add_executable(runGameOverTests
     gameOverTest.cpp
     ../src/GameOverScreen.cpp
+    ../src/PauseScreen.cpp
     ../src/Screen.cpp
     ../src/Board.cpp
     ../src/Player.cpp
