@@ -61,6 +61,7 @@ void Game::start() {
 void Game::pause() {}
 void Game::gameOver() {}
 int Game::getScore() {
+    score += player.scoreUpdating();
     return score;
 }
 //function is not needed or can hold it for the displaying menu function above
