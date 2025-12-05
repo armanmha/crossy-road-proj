@@ -14,12 +14,14 @@ The features that the project provides include real-time character movement, a l
 ## Diagrams
 <b>Navigation:</b>
 
-<img width="712" height="801" alt="Nav_Diagram" src="https://github.com/user-attachments/assets/d7e41e1d-a500-4884-af2e-f2a8ce638daf" /><h1></h1>
+<img width="712" height="801" alt="Nav_Diagram" src="https://github.com/user-attachments/assets/0d7b38d3-9e97-47db-bcf7-ac93b2039e91" />
 
+<h1></h1>
 <b>Screen Layouts:</b>
 
-<img width="1521" height="831" alt="Screen Layout" src="https://github.com/user-attachments/assets/5b111460-6cb0-4db8-b49f-c0beb8342284" />
+<img width="1582" height="836" alt="Screen Layout" src="https://github.com/user-attachments/assets/0998028f-d350-4c0a-adb0-ecf69885a57b" />
 
+<h1></h1>
 <b>Screen Layout Description:</b>
 
 * <b>Main Menu:</b>
