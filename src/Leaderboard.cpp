@@ -87,7 +87,6 @@ void LeaderboardDisplay::displayScores(int numScores){
     vector<LeaderboardPlayer> playerScores = leaderboardManager.getScores();
     
     string line(SCREEN_WIDTH/2, '=');
-    string frame(SCREEN_WIDTH,  '=');
     string title = string(TEXT_BOLD) + "LEADERBOARD" + string(COLOR_RESET);
 
     // Output title
@@ -104,6 +103,6 @@ void LeaderboardDisplay::displayScores(int numScores){
 
         string scoreEntry = std::to_string(i + 1) + ". " + playerScores.at(i).name + " - " + std::to_string(playerScores.at(i).score) + " (" + assignColor(playerScores.at(i).difficulty) + ")";
 
-        cout << std::setw(((SCREEN_WIDTH + scoreEntry.size() + difficultySize + 2) / 2)) << scoreEntry << "\n\n";
+        cout << std::setw(((SCREEN_WIDTH - scoreEntry.size() + difficultySize) / 2)) << "" << scoreEntry << "\n\n";
     }
 }

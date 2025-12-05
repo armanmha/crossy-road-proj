@@ -4,7 +4,7 @@
 
 
 int main() {
-    Menu mainMenu("./data/scores.txt");
+    Menu mainMenu("./data/playerScores.txt");
 
     mainMenu.clear();
     mainMenu.run();
