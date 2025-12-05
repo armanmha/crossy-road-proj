@@ -1,7 +1,7 @@
 #include "../header/Player.h"
 
 Player::Player(int startX, int startY)
-    : GameplayObjects('@', startX, startY) {}
+    : GameplayObjects('@', startX, startY), highestRow_(startY) {}
 
 void Player::movePlayer(InputKey key, int boardWidth, int boardHeight) {
     // retrieve player position
@@ -73,7 +73,8 @@ bool Player::checkCollision(const Board& board) const {
 }
 
 int Player::scoreUpdating(){
-    auto[x, y] = getPosition();
+    auto pos = getPosition();
+    int y = pos.second;
     if (y < highestRow_){
         int delta = highestRow_ - y; // Rows that moved upwards
         highestRow_ = y; // and update it the highest row reached

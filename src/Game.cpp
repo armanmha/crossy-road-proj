@@ -37,9 +37,9 @@ void Game::start() {
     bool running = true;
 
     // barrier starts below visible grid
-    barrierY = board.getHeight() + 2;
-    barrierCounter = 0;
-    barrierSpeed = 250;
+    int barrierY = board.getHeight() + 2;
+    int barrierCounter = 0;
+    int barrierSpeed = 250;
 
     if (mainMenu.getDifficulty() == "Hard") {
         barrierSpeed = 150;
@@ -141,11 +141,11 @@ void Game::start() {
                     } else {
                         if (newY == 0) {
 
-                            board.regenerate();
 
                             player.setPosition(board.getWidth() / 2, board.getHeight() - 1);
 
                             barrierY = board.getHeight() + 1; // reinitialize barrier to below board
+                            player.resetHighestRow();
                         }
                     }
                 }
@@ -182,7 +182,9 @@ void Game::start() {
             default:
                 break;
         }
-    
+        //updating score adds the current score to the total score
+        score += player.scoreUpdating();
+
         int playerY = player.getPosition().second;
         if (playerY >= barrierY && barrierY < board.getHeight()) {
             gameOver();
@@ -196,8 +198,6 @@ void Game::start() {
         if (elapsed < frameDuration) {
             std::this_thread::sleep_for(frameDuration - elapsed);
         }
-        //updating score adds the current score to the total score
-        score += player.scoreUpdating();
     }
     
 }
@@ -284,7 +284,6 @@ void Game::gameOver() {
 // TODO - Implement these functions
 
 void Game::pause() {}
-void Game::gameOver() {}
 int Game::getScore() {
     score += player.scoreUpdating();
     return score;
