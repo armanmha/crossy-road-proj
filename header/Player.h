@@ -1,6 +1,6 @@
 #pragma once
 #include "GameplayObjects.h"
-#include "Screen.h" // import InputKey
+#include "Screen.h" // Import InputKey
 #include "Board.h"
 class Board;
 

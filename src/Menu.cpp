@@ -139,11 +139,6 @@ void Menu::printRight(const string& text, int padding) {
 
 // Generates new frame with updated cursor instantly 
 void Menu::display(int cursorIndex){
-    // \x1b[3J - clears scrollback history in terminal
-    // \x1b[2J - clears screen in terminal
-    // \x1b[H  - moves cursor to top left in terminal so frame prints in same place
-    // std::cout << "\x1b[3J\x1b[2J\x1b[H" << std::flush;  
-
     // Declares variables
     string line(SCREEN_WIDTH/2, '=');
     string frame(SCREEN_WIDTH,  '=');
@@ -186,7 +181,7 @@ void Menu::display(int cursorIndex){
     int highScore = 0; // temp high score
     leaderboardManager.loadSortedScores();
 
-    // get copy of scores
+    // Get copy of scores
     std::vector<LeaderboardPlayer> scores = leaderboardManager.getScores();
 
     for(const auto& p : scores) {
@@ -284,7 +279,7 @@ void Menu::run() {
 
         // Determines cursor position
         switch (key) {
-            case InputKey::Up: // Moves cursor 1 position up in menu
+            case InputKey::Up:   // Moves cursor 1 position up in menu
                 cursor = (cursor - 1 + numItems) % numItems;
                 break;
 
@@ -292,7 +287,7 @@ void Menu::run() {
                 cursor = (cursor + 1) % numItems;
                 break;
 
-            case InputKey::Left:    // Changes difficulty 
+            case InputKey::Left: // Changes difficulty 
                 if (cursor == 1) {                                           // If cursor is at difficulty section
                     int newDifficulty = (currentDifficulty - 2 + 3) % 3 + 1; // Ex. left on easy(1) -> hard(3)
                     changeDifficulty(newDifficulty);
@@ -307,28 +302,28 @@ void Menu::run() {
                 break;
 
             case InputKey::Enter:   
-                if (cursor == 0) {                                          // When on play button
+                if (cursor == 0) {                                           // When on play button
                     clear();
                     startGame();
                 }
-                else if (cursor == 1) {                                     // When on difficulty selection
-                    int newDifficulty = (currentDifficulty % 3) + 1;        // Ex. right on hard(3) -> easy(1)
+                else if (cursor == 1) {                                      // When on difficulty selection
+                    int newDifficulty = (currentDifficulty % 3) + 1;         // Ex. right on hard(3) -> easy(1)
                     changeDifficulty(newDifficulty);
                 }
-                else if (cursor == 2) {                                     // When on leaderboard selection
+                else if (cursor == 2) {                                      // When on leaderboard selection
                     clear();
                     seeLeaderboard(5);
                 }
-                else if (cursor == 3) {                                     // If on quit game
-                    running = false;                                        // Deactivate menu loop
+                else if (cursor == 3) {                                      // If on quit game
+                    running = false;                                         // Deactivate menu loop
                 }
                 break;
 
-            case InputKey::Quit:                                            // Quit the game
+            case InputKey::Quit:                                             // Quit the game
                 running = false;
                 break;
             
-            default:                                                        // Breaks out of switch
+            default:                                                         // Breaks out of switch
                 break;
         }
 
@@ -341,6 +336,6 @@ void Menu::run() {
         }
     }
 
-    disableRawMode(); // resets terminal to original settings
+    disableRawMode(); // Resets terminal to original settings
     std::exit(0);
 }

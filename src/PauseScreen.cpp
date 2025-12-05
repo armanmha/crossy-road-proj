@@ -27,11 +27,6 @@ constexpr const char* COLOR_GOLD   =    "\e[1;93m";
 
 // Generates new frame with updated cursor instantly 
 void PauseScreen::display(int cursorIndex){
-    // \x1b[3J - clears scrollback history in terminal
-    // \x1b[2J - clears screen in terminal
-    // \x1b[H  - moves cursor to top left in terminal so frame prints in same place
-    // std::cout << "\x1b[3J\x1b[2J\x1b[H" << std::flush;  
-
     clear(); // Clear screen
 
     // Declares variables
@@ -113,7 +108,7 @@ PauseResult PauseScreen::run() {
     bool inPause = true;        // Tracks if menu is running
     PauseResult result = PauseResult::Resume;
 
-    enableMenuMode();     // Enables RAW mode in terminal
+    enableMenuMode();           // Enables RAW mode in terminal
 
     // While menu is running
     while (inPause) {

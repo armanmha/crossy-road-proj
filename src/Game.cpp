@@ -34,18 +34,19 @@ void Game::start() {
 
     enableGameMode();
     
-    // declare vars
-    score = 0; // reset score at start of game
-    player.setPosition(board.getWidth() / 2, board.getHeight() - 1); // reset player position
-    highestRow = player.getPosition().second; // start progress at bottom
+    // Declare vars
+    score = 0;                                                       // Reset score at start of game
+    player.setPosition(board.getWidth() / 2, board.getHeight() - 1); // Reset player position
+    highestRow = player.getPosition().second;                        // Start progress at bottom
     string frame(SCREEN_WIDTH,  '=');
     bool running = true;
 
-    // barrier starts below visible grid
-    barrierY = board.getHeight() + 1;
-    barrierCounter = 0;
-    barrierSpeed = 250;
+    // barrier vars
+    barrierY = board.getHeight() + 1; // Barrier starts below visible grid
+    barrierCounter = 0;               // Helps calculate barrier speed
+    barrierSpeed = 250;               // Easy speed by default
 
+    // Change barrier movement speed
     if (mainMenu.getDifficulty() == "Hard") {
         barrierSpeed = 150;
     }
@@ -57,23 +58,23 @@ void Game::start() {
     const auto frameDuration = std::chrono::milliseconds(10);   // ~100 FPS
 
     while(running) {
-        auto frameStart = clock::now();
+        auto frameStart = clock::now(); // Keep track of beginning of frame
 
-        clear();        // clear previous page if present
-        clear();        // clear previous frame
+        clear();        // Clear previous page if present
+        clear();        // Clear previous frame
 
         ++barrierCounter;
 
         if (barrierCounter % barrierSpeed == 0) {
             if (barrierY > 0) {
-                --barrierY; // move barrier up one row
+                --barrierY; // Move barrier up one row
             }
         }
 
         board.update();
 
-        // check for collision by calling checkCollision function, if true, end game
-        // for when cars move into player
+        // Check for collision by calling checkCollision function, if true, end game
+        // For when cars move into player
         if (player.checkCollision(board)) {
             auto pos = player.getPosition();
             int cx = pos.first;
@@ -84,32 +85,32 @@ void Game::start() {
             running = false;
         }
 
-        // top Frame line
+        // Top Frame line
         cout << "\n\n" << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n";
 
         board.draw(player, barrierY);
 
+        
         std::cout << "\nScore: " << score;
-        mainMenu.printRight("Use ARROWS to move. ESC to pause. Q to quit.\n", 0);
+        mainMenu.printRight("Use ARROWS to move. ESC to pause. Q to quit.\n", -7);
         std::cout << "Current Difficulty: " << mainMenu.getColoredDifficulty();
-        mainMenu.printRight(string(COLOR_GOLD) + "C" + string(COLOR_RESET) + " give +5 points\n", 0);
+        mainMenu.printRight(string(COLOR_GOLD) + "C" + string(COLOR_RESET) + " = 5 pts | + = rock | 0000 = car", -13);
 
-        // bottom Frame line
+        // Bottom Frame line
         cout << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n\n";
 
-        // get user input
+        // Get user input
         InputKey key = processInputNonBlocking();
 
-        // move player if arrow keys pressed
+        // Move player if arrow keys pressed
         switch (key) {
             case InputKey::Pause: {
                 // Show pause menu while game state is preserved 
                 PauseScreen pauseScreen(*this, mainMenu);
                 PauseResult result = pauseScreen.run();
-            
                 
                 if (result == PauseResult::QuitToMenu) {
-                    running = false;  // stop the game loop and retrun control back to main menu
+                    running = false;  // Stop the game loop and retrun control back to main menu
                 }
             }
 
@@ -118,28 +119,27 @@ void Game::start() {
             }
             break;
             
-
             case InputKey::Up:
             case InputKey::Down:
             case InputKey::Left:
             case InputKey::Right: {
 
-                // remember old player position
+                // Remember old player position
                 auto oldPos = player.getPosition();
                 int oldX = oldPos.first;
                 int oldY = oldPos.second;
 
-                // move player as usual
+                // Move player as usual
                 player.movePlayer(key, board.getWidth(), board.getHeight());
 
-                // remember old player position
+                // Remember old player position
                 auto newPos = player.getPosition();
                 int newX = newPos.first;
                 int newY = newPos.second;
 
                 char tile = board.getObstaclePos(newX, newY);
 
-                // if a rock(+) is present, cancel the move
+                // If a rock(+) is present, cancel the move
                 if (tile == '+') {
                     // Can't walk on rocks -> revert to previous position
                     player.setPosition(oldX, oldY);
@@ -173,11 +173,11 @@ void Game::start() {
 
                             board.regenerate();
 
-                            player.setPosition(newX, board.getHeight() - 1);
+                            player.setPosition(newX, board.getHeight() - 1);    // Put player at bottom of board while keeping their X position
 
-                            barrierY = board.getHeight() + 1; // reinitialize barrier to below board
+                            barrierY = board.getHeight() + 1;                   // Reinitialize barrier to below board
                             
-                            highestRow = player.getPosition().second; // start progress at bottom
+                            highestRow = player.getPosition().second;           // Start progress at bottom
                         }
                     }
                 }
@@ -186,11 +186,11 @@ void Game::start() {
 
             case InputKey::ToggleChar:
                 if (player.getShape() == '@') {
-                    player.setShape('$'); // change to easter egg character
+                    player.setShape('$'); // Change to easter egg character
                 } 
                 
                 else {
-                    player.setShape('@'); // revert to original character
+                    player.setShape('@'); // Revert to original character
                 }
 
                 break;
@@ -216,6 +216,8 @@ void Game::start() {
         }
     
         int playerY = player.getPosition().second;
+
+        // If barrier hits player
         if (playerY >= barrierY && barrierY < board.getHeight()) {
             auto pos = player.getPosition();
             int cx = pos.first;
@@ -226,13 +228,14 @@ void Game::start() {
             running = false;
         }
 
-        // cap FPS
+        // Get end of frame generation timestamp
         auto frameEnd = clock::now();
+        // Computes how long frame took to generate
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(frameEnd - frameStart);
-      
+        // Maintain timing by sleeping for duratio
         if (elapsed < frameDuration) {
             std::this_thread::sleep_for(frameDuration - elapsed);
-        }
+        }  
     }
 }
 
@@ -288,7 +291,7 @@ bool Game::confirmQuitToMenu() {
             }
         }
 
-        // Bottom Frame line
+        // Bottom frame line
         cout << std::setw((SCREEN_WIDTH + frame.size()) / 2) << frame << "\n\n";
 
         InputKey key = processInput();  // Process arrow key input and assigns it to enum
@@ -329,9 +332,9 @@ bool Game::confirmQuitToMenu() {
 void Game::playExplosion(int cx, int cy) {
     using clock = std::chrono::steady_clock;
     const int EXPLOSION_FRAMES = 50;
-    const auto EXPLOSION_FRAME_DURATION = std::chrono::milliseconds(50);
+    const auto EXPLOSION_FRAME_DURATION = std::chrono::milliseconds(50); // ~20 FPS
 
-    // Simple explosion HUD
+    // List of random death messages
     const std::string deathMessages[] = {
         "That's gotta hurt...",
         "Maybe avoid the cars next time?",
@@ -339,15 +342,19 @@ void Game::playExplosion(int cx, int cy) {
         "Hopefully you have insurance..."
     };
 
+    // Randomly choose death message
     int numMessages = sizeof(deathMessages) / sizeof(deathMessages[0]);
     std::string chosenMessage = deathMessages[rand() % numMessages];
 
+    // Declare frame
     std::string frame(SCREEN_WIDTH, '=');
 
+    // Main animation loop
     for (int f = 0; f < EXPLOSION_FRAMES; ++f) {
-        auto start = clock::now();
+        
+        auto start = clock::now(); // Record start time 
 
-        clear();
+        clear();                   // Clear screen
 
         // Top Frame Line
         cout << "\n\n" << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n";
@@ -355,29 +362,41 @@ void Game::playExplosion(int cx, int cy) {
         int width = board.getWidth();
         int height = board.getHeight();
 
-        // explosion radius grows over time
-        int radius = 1 + f / 2;
-        int maxRadius = 7;
-        if (radius > maxRadius) radius = maxRadius;
+        // Compute explosion radius
+        int radius = 1 + f / 2; // Radius grows outward
+        int maxRadius = 7;      // Limited to 7 tiles
 
+        // Cap radius
+        if (radius > maxRadius) {
+            radius = maxRadius;
+        }
+
+        // Double loop over board coordinates
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
-                float dx = static_cast<float>(x - cx);
+                // Compute distance from explosion center
+                float dx = static_cast<float>(x - cx); 
                 float dy = static_cast<float>(y - cy);
                 
-                // account for terminal characters being more tall than wide
+                // Account for terminal characters being more tall than wide
                 const float VERTICAL_WEIGHT = 1.8f;
                 dy *= VERTICAL_WEIGHT;
                 
-                float dist2 = dx * dx + dy * dy;
+                // Pythagorean theorem: distance = sqrt(dx^2 + dy^2)
+                float dist2 = dx * dx + dy * dy;        
                 float r = static_cast<float>(radius);
 
+                // If tile is within explosion boundaries set to true
                 float limit = (r - 0.5f) * (r - 0.5f);
                 bool inExplosion = (dist2 <= limit);
                 
+                // If inside explosion radius
                 if (inExplosion) {
-                    // pick a flame based on distance / frame
+
+                    // Pick a flame based on distance / frame
                     char flame;
+                    
+                    // Constantly changing character to simulate flowing flame
                     int phase = (f + static_cast<int>(dx) + static_cast<int>(dy)) & 3;
                     switch (phase) {
                         case 0: flame = '*'; break;
@@ -387,14 +406,14 @@ void Game::playExplosion(int cx, int cy) {
                     }
                     std::cout << COLOR_BRED << flame << COLOR_RESET;
                 }
-                else {
-                    char tile = board.getObstaclePos(x,y);
+                else { // Not in explosion range
+                    char tile = board.getObstaclePos(x,y); // get tile (coin, rock, .)
 
-                    // get rid of player sprite
+                    // Get rid of player '@'
                     if (x == cx && y == cy) {
                         std::cout << ' ';  
                     }
-                    else {
+                    else { // Output tile in same position
                         std::cout << tile;
                     }
                 }
@@ -402,17 +421,23 @@ void Game::playExplosion(int cx, int cy) {
             std::cout << "\n";
         }
 
+        // Output death message
         cout << "\n" 
              << std::setw(((SCREEN_WIDTH + board.getWidth()) / 2) - (int)chosenMessage.size()) << ""
              << COLOR_BRED << chosenMessage << COLOR_RESET << "\n";
         
         cout << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n\n";
 
-        auto end = clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        // Get end of frame generation timestamp
+        auto end = clock::now(); 
+        
+        // Computes how long frame took to generate
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start); 
+
+        // Maintain timing by sleeping for duration
         if (elapsed < EXPLOSION_FRAME_DURATION) {
             std::this_thread::sleep_for(EXPLOSION_FRAME_DURATION - elapsed);
-        }             
+        }           
     }
 }
 

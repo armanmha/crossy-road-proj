@@ -16,15 +16,17 @@ constexpr const char* COLOR_BRED   =    "\e[1;91m";
 constexpr const char* COLOR_BGREEN   =    "\e[1;92m";
 
 Board::Board(int width, int height, const std::string& difficulty) {
-    if(width <= 0 || height <= 0) {
+    if (width <= 0 || height <= 0) {
         throw std::invalid_argument("Width and Height must be positive integers.");
     }
 
     this->width = width;
     this->height = height;
     this->difficulty = difficulty;
+
     vehiclesLanes.clear();
     rocksLanes.clear();
+
     // Create each lane with its specific 'y' coordinate
     for (int y = 0; y < height; ++y) {
         bool safeRow = ((y == height - 1) || (y == 0));
@@ -33,7 +35,7 @@ Board::Board(int width, int height, const std::string& difficulty) {
         rocksLanes.emplace_back(RockLane('.', 0, y, width, safeRow)); 
     }
 
-    // immediately spawn 
+    // Immediately spawn 
     for (int y = 0; y < height; ++y) {
         vehiclesLanes.at(y).spawnVehicles();
         rocksLanes.at(y).spawnRocks();
@@ -50,6 +52,7 @@ int Board::getHeight() const {
     return height;
 }
 
+// Spawns new objects every 50 frames
 void Board::update() {
     ++frameCounter;
 
@@ -65,14 +68,15 @@ void Board::update() {
 }
 
 void Board::draw(const Player& player, int barrierY) {
-    int posX = player.getPosition().first;  // retrieve updated x position
-    int posY = player.getPosition().second; // retrieve updated y position
+    int posX = player.getPosition().first;  // Retrieve updated x position
+    int posY = player.getPosition().second; // Retrieve updated y position
     std::string currentLaneStr;
     
+    // Vars for coin animation
     static int coinFrame = 0;
     coinFrame++;
 
-    // outputs player position in 2D array
+    // Outputs player position in 2D array
     for (int y = 0; y < height; ++y) {
         if (y % 2 == 0) {
             currentLaneStr = vehiclesLanes.at(y).getOutputString();
@@ -84,26 +88,26 @@ void Board::draw(const Player& player, int barrierY) {
             if (x == posX && y == posY) {
                 char shape = player.getShape();
 
-                // default color is yellow when '@' player
+                // Default color is cyan when '@' player
                 const char* color = COLOR_BCYAN;
 
-                // if user selected 'y' change color of '$' to green
+                // If user selected 'y' change color of '$' to green (easter egg)
                 if (shape == '$'){
                     color = COLOR_BGREEN;
                 }
-                // draw the player at their position with the correct color and shape 
+                // Draw the player at their position with the correct color and shape 
                 std::cout << color << shape << COLOR_RESET; 
             } 
             else if (y >= barrierY && barrierY < height) {
-                std::cout << COLOR_BRED << '#' << COLOR_RESET;
+                std::cout << COLOR_BRED << '#' << COLOR_RESET;  // Moving barrrier
             }
             else {
-                char ch = currentLaneStr.at(x);   // empty grid for now
+                char ch = currentLaneStr.at(x);   // Empty grid for now
                 
                 if (ch == 'C') {
                     char displayCoin;
 
-                    switch ((coinFrame / 5) % 3) {
+                    switch ((coinFrame / 5) % 3) {                         // Different stages of coin animation
                     case 0: displayCoin = 'C'; break;
                     case 1: displayCoin = 'o'; break;
                     case 2: displayCoin = '*'; break;
@@ -125,12 +129,11 @@ char Board::getObstaclePos(int x, int y) const {
         return '.'; // Out of bounds so just returning safe character
     }
 
-    // takes pattern from draw function: if x is even, vehicle lane or if odd, rock lane
-    // finds if vehicle, rock, or empty space is at that position
-    // this works like this because currently rows of vehicles and rocks alternate top down
-    // ex: row 0 = vehicles, row 1 = rocks, etc etc
+    // Takes pattern from draw function: if x is even, vehicle lane or if odd, rock lane
+    // Finds if vehicle, rock, or empty space is at that position
+    // This works like this because currently rows of vehicles and rocks alternate top down
+    // Ex: row 0 = vehicles, row 1 = rocks, etc etc
 
-    // basically, 
     if (y % 2 == 0) {
         return vehiclesLanes.at(y).getOutputString().at(x);
     } 
@@ -140,6 +143,7 @@ char Board::getObstaclePos(int x, int y) const {
     }
 }
 
+// Regenerates new board once player reaches top of screen
 void Board::regenerate() {
     frameCounter = 0;
     vehiclesLanes.clear();
@@ -161,6 +165,7 @@ void Board::regenerate() {
     placeCoins(10);
 }
 
+// Replaces object on board with normal tile
 void Board::clearObstacle(int x, int y) {
     if (x < 0 || x >= width || y < 0 || y >= height) {
         return;
@@ -173,6 +178,7 @@ void Board::clearObstacle(int x, int y) {
     }
 }
 
+// Places coin in random place on board
 void Board::placeCoins(int numCoins) {
     for (int n = 0; n < numCoins; ++n) {
         bool placed = false;
@@ -180,16 +186,17 @@ void Board::placeCoins(int numCoins) {
         for (int attempts = 0; attempts < 50 && !placed; ++ attempts) {
             int y = std::rand() % height;
 
-            // avoid top and bottom safe rows
+            // Avoid top and bottom safe rows
             if (y == 0 || y == height - 1) {
                 continue;
             }
 
-            // only on rock lanes
+            // Only place on rock lanes to avoid hitting cars
             if (y % 2 == 0) {
                 continue;
             }
 
+            // Random x position
             int x = std::rand() % width;
 
             char tile = getObstaclePos(x,y);

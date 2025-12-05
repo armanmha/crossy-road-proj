@@ -4,11 +4,11 @@ Player::Player(int startX, int startY)
     : GameplayObjects('@', startX, startY) {}
 
 void Player::movePlayer(InputKey key, int boardWidth, int boardHeight) {
-    // retrieve player position
+    // Retrieve player position
     int x = getPosition().first;
     int y = getPosition().second; 
 
-    // calculate next player position based on input
+    // Calculate next player position based on input
     switch (key) {
         case InputKey::Up:
             y -= 1;
@@ -26,47 +26,47 @@ void Player::movePlayer(InputKey key, int boardWidth, int boardHeight) {
             return;
     }
 
-    // if x is less than 0 out of bounds
+    // If x is less than 0 out of bounds
     if (x < 0) {
         x = 0;
     }
 
-    // if x exceeds board width, out of bounds
+    // If x exceeds board width, out of bounds
     if (x >= boardWidth) {
         x = boardWidth - 1;
     }
 
-    // if y is less than 0 out of bounds
+    // If y is less than 0 out of bounds
     if (y < 0) {
         y = 0;
     }
 
-    // if y exceeds board height, out of bounds
+    // If y exceeds board height, out of bounds
     if (y >= boardHeight) {
         y = boardHeight - 1;
     }
 
-    // update poition in board
+    // Update poition in board
     setPosition (x, y);     
 }
 
-// TODO - Link to car objects
+// Check collision between player and objects
 bool Player::checkCollision(const Board& board) const {
 
-    // get players position
+    // Get players position
     auto pos = getPosition();
     int x = pos.first;
     int y = pos.second;
 
-    // check if there is an obstacle at that position
+    // Check if there is an obstacle at that position
     char tile = board.getObstaclePos(x, y);
     
-    // if the tile at that position is '0', there is a collision and the game should terminate 
+    // If the tile at that position is '0', there is a collision and the game should terminate 
     if (tile == '0'){
         return true; 
     }
 
-    // if not, keep playing
+    // If not, keep playing
     else {
         return false; 
     }
