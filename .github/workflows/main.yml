@@ -30,7 +30,7 @@ jobs:
 
     - name: Run GamePlayObject tests
       run: |
-        ./tests/bin/runGamePlayObjectTests
+        ./tests/bin/runGameplayObjectTests
 
     - name: Run Game tests
       run: |
