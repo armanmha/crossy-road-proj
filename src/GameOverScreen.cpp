@@ -59,11 +59,12 @@ void GameOverScreen::display(int cursorIndex){
     // Declares variables
     string line(SCREEN_WIDTH/2, '=');
     string frame(SCREEN_WIDTH,  '=');
-    cout << "\n\n";
+    
 
     string title = string(COLOR_RED) + "GAME OVER" + COLOR_RESET;
 
     // Top Frame line
+    cout << "\n\n";
     cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << frame << "\n\n";
 
     cout <<  std::setw(((SCREEN_WIDTH + title.size()) / 2) + 4) << title << "\n\n";
@@ -72,7 +73,7 @@ void GameOverScreen::display(int cursorIndex){
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
     // Print high score
-    int highScore = game.getScore(); // temp high score
+    int highScore = game.getScore(); 
     string scoreText = string(COLOR_BLUE) + "Score: " + std::to_string(highScore) + COLOR_RESET;
     cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 4) << "** " << scoreText << " ** \n\n"; 
 

@@ -14,6 +14,7 @@ class Game : public Screen {
     private:
         int score;
         bool isPaused;
+        int highestRow; // smallest y the player has reached so far
         
         Board board;
         Player player;
@@ -31,6 +32,7 @@ class Game : public Screen {
         void displayScore(int);
         void pause();
         void gameOver();
+        void addScore(int points);
         int getScore();
         bool confirmQuitToMenu();
 };

@@ -30,6 +30,8 @@ class Board {
         void draw(const Player& player, int barrierY); // draws grid
         
         char getObstaclePos(int x, int y) const;
+        void clearObstacle(int x, int y);
 
         void regenerate();
+        void placeCoins(int numCoins);
 };

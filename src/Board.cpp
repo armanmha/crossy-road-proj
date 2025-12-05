@@ -9,6 +9,11 @@ constexpr const char* COLOR_RESET  = "\x1b[0m";
 constexpr const char* COLOR_RED       = "\x1b[31m";
 constexpr const char* COLOR_GREEN   = "\x1b[32m";
 constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
+constexpr const char* COLOR_GOLD   =    "\e[1;93m";
+constexpr const char* COLOR_WHITE   =    "\e[1;97m";
+constexpr const char* COLOR_BCYAN   =    "\e[1;96m";
+constexpr const char* COLOR_BRED   =    "\e[1;91m";
+constexpr const char* COLOR_BGREEN   =    "\e[1;92m";
 
 Board::Board(int width, int height, const std::string& difficulty) {
     if(width <= 0 || height <= 0) {
@@ -17,6 +22,7 @@ Board::Board(int width, int height, const std::string& difficulty) {
 
     this->width = width;
     this->height = height;
+    this->difficulty = difficulty;
     vehiclesLanes.clear();
     rocksLanes.clear();
     // Create each lane with its specific 'y' coordinate
@@ -26,6 +32,14 @@ Board::Board(int width, int height, const std::string& difficulty) {
         vehiclesLanes.emplace_back(VehicleLane('.', 0, y, width, safeRow, difficulty)); 
         rocksLanes.emplace_back(RockLane('.', 0, y, width, safeRow)); 
     }
+
+    // immediately spawn 
+    for (int y = 0; y < height; ++y) {
+        vehiclesLanes.at(y).spawnVehicles();
+        rocksLanes.at(y).spawnRocks();
+    }
+
+    placeCoins(10);
 }
 
 int Board::getWidth() const {
@@ -68,20 +82,27 @@ void Board::draw(const Player& player, int barrierY) {
                 char shape = player.getShape();
 
                 // default color is yellow when '@' player
-                const char* color = COLOR_YELLOW;
+                const char* color = COLOR_BCYAN;
 
                 // if user selected 'y' change color of '$' to green
                 if (shape == '$'){
-                    color = COLOR_GREEN;
+                    color = COLOR_BGREEN;
                 }
                 // draw the player at their position with the correct color and shape 
                 std::cout << color << shape << COLOR_RESET; 
             } 
             else if (y >= barrierY && barrierY < height) {
-                std::cout << COLOR_RED << '#' << COLOR_RESET;
+                std::cout << COLOR_BRED << '#' << COLOR_RESET;
             }
             else {
-                std::cout << currentLaneStr.at(x);   // empty grid for now
+                char ch = currentLaneStr.at(x);   // empty grid for now
+
+                if (ch == 'C') {
+                    std::cout << COLOR_GOLD << ch << COLOR_RESET; // colored coin
+                }
+                else {
+                    std::cout << ch;
+                }
             }
         }
         std::cout << "\n";
@@ -118,5 +139,54 @@ void Board::regenerate() {
 
         vehiclesLanes.emplace_back(VehicleLane('.', 0, y, width, safeRow, difficulty)); 
         rocksLanes.emplace_back(RockLane('.', 0, y, width, safeRow)); 
+    }
+
+    // immediately spawn 
+    for (int y = 0; y < height; ++y) {
+        vehiclesLanes.at(y).spawnVehicles();
+        rocksLanes.at(y).spawnRocks();
+    }
+
+    placeCoins(10);
+}
+
+void Board::clearObstacle(int x, int y) {
+    if (x < 0 || x >= width || y < 0 || y >= height) {
+        return;
+    }
+
+    if (y % 2 == 0) {
+        vehiclesLanes.at(y).setTile(x, '.');
+    } else {
+        rocksLanes.at(y).setTile(x, '.');
+    }
+}
+
+void Board::placeCoins(int numCoins) {
+    for (int n = 0; n < numCoins; ++n) {
+        bool placed = false;
+
+        for (int attempts = 0; attempts < 50 && !placed; ++ attempts) {
+            int y = std::rand() % height;
+
+            // avoid top and bottom safe rows
+            if (y == 0 || y == height - 1) {
+                continue;
+            }
+
+            // only on rock lanes
+            if (y % 2 == 0) {
+                continue;
+            }
+
+            int x = std::rand() % width;
+
+            char tile = getObstaclePos(x,y);
+
+            if (tile = '.') {
+                rocksLanes.at(y).setTile(x, 'C');
+                placed = true;
+            }
+        }
     }
 }

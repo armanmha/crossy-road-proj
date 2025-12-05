@@ -33,6 +33,7 @@ void Game::start() {
     // declare vars
     score = 0; // reset score at start of game
     player.setPosition(board.getWidth() / 2, board.getHeight() - 1); // reset player position
+    highestRow = player.getPosition().second; // start progress at bottom
     string frame(SCREEN_WIDTH,  '=');
     bool running = true;
 
@@ -134,6 +135,19 @@ void Game::start() {
                     player.setPosition(oldX, oldY);
                 }
                 else {
+
+                    // Coin Pickup: +5 points no matter direction
+                    if (tile == 'C') {
+                        addScore(5);
+                        board.clearObstacle(newX, newY);
+                    }
+
+                    // Forward Progress +1 point for new forward row
+                    if (key == InputKey::Up && newY < highestRow) {
+                        highestRow = newY;  // update furthest progress
+                        addScore(1);
+                    }
+
                     // Only check colliosion if player moved onto a non-rock tile
                     if (player.checkCollision(board)) {
                         gameOver();
@@ -146,6 +160,8 @@ void Game::start() {
                             player.setPosition(board.getWidth() / 2, board.getHeight() - 1);
 
                             barrierY = board.getHeight() + 1; // reinitialize barrier to below board
+                            
+                            highestRow = player.getPosition().second; // start progress at bottom
                         }
                     }
                 }
@@ -281,8 +297,10 @@ void Game::gameOver() {
 // TODO - Implement these functions
 void Game::displayScore(int) {}
 
-
-
 int Game::getScore() {
     return score;
+}
+
+void Game::addScore(int points) {
+    score += points;
 }
