@@ -10,3 +10,9 @@ TEST(GameTest, InitialScoreIsZero) {
     Game game(dummyMenu);
     EXPECT_EQ(game.getScore(), 0);
 }
+
+TEST(GameTest, InitialPlayerPosition) {
+    Menu dummyMenu("fakefile.txt");
+    Game game(dummyMenu);
+    EXPECT_EQ(game.getScore(), 0);
+}
