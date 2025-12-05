@@ -21,6 +21,9 @@ constexpr const char* COLOR_RED       = "\x1b[31m";
 constexpr const char* COLOR_BLUE      = "\x1b[36m";
 constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
 constexpr const char* UNDERLINE       = "\x1b[4m";
+constexpr const char* COLOR_BGREEN    = "\e[1;92m";
+constexpr const char* COLOR_BRED   =    "\e[1;91m";
+constexpr const char* COLOR_GOLD   =    "\e[1;93m";
 
 // Generates new frame with updated cursor instantly 
 void PauseScreen::display(int cursorIndex){
@@ -36,7 +39,7 @@ void PauseScreen::display(int cursorIndex){
     string frame(SCREEN_WIDTH,  '=');
     cout << "\n\n";
 
-    string title = string(COLOR_YELLOW) + "PAUSED" + COLOR_RESET;
+    string title = string(COLOR_GOLD) + "PAUSED" + COLOR_RESET;
 
     // Top Frame line
     cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << frame << "\n\n";

@@ -23,6 +23,10 @@ constexpr const char* COLOR_RED       = "\x1b[31m";
 constexpr const char* COLOR_BLUE      = "\x1b[36m";
 constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
 constexpr const char* UNDERLINE       = "\x1b[4m";
+constexpr const char* COLOR_BGREEN    = "\e[1;92m";
+constexpr const char* COLOR_BRED      = "\e[1;91m";
+constexpr const char* COLOR_GOLD      = "\e[1;93m";
+constexpr const char* TEXT_BOLD       = "\e[1;37m";
 
 Game::Game(Menu& menu) : score(0), isPaused(false), board(SCREEN_WIDTH, SCREEN_WIDTH / 4, menu.getDifficulty()), player(board.getWidth() / 2, board.getHeight() - 1), mainMenu(menu) {}
 
@@ -71,6 +75,11 @@ void Game::start() {
         // check for collision by calling checkCollision function, if true, end game
         // for when cars move into player
         if (player.checkCollision(board)) {
+            auto pos = player.getPosition();
+            int cx = pos.first;
+            int cy = pos.second;
+
+            playExplosion(cx, cy);
             gameOver();
             running = false;
         }
@@ -80,9 +89,10 @@ void Game::start() {
 
         board.draw(player, barrierY);
 
-        std::cout << "\nScore: " << score << "\n";
-        std::cout << "Use ARROWS to move. ESC to pause. Q to quit.\n";
-        std::cout << "Current Difficulty: " << mainMenu.getColoredDifficulty() << "\n";
+        std::cout << "\nScore: " << score;
+        mainMenu.printRight("Use ARROWS to move. ESC to pause. Q to quit.\n", 0);
+        std::cout << "Current Difficulty: " << mainMenu.getColoredDifficulty();
+        mainMenu.printRight(string(COLOR_GOLD) + "C" + string(COLOR_RESET) + " give +5 points\n", 0);
 
         // bottom Frame line
         cout << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n\n";
@@ -150,14 +160,20 @@ void Game::start() {
 
                     // Only check colliosion if player moved onto a non-rock tile
                     if (player.checkCollision(board)) {
+                        auto pos = player.getPosition();
+                        int cx = pos.first;
+                        int cy = pos.second;
+
+                        playExplosion(cx, cy);
                         gameOver();
                         running = false;
-                    } else {
+                    } 
+                    else {
                         if (newY == 0) {
 
                             board.regenerate();
 
-                            player.setPosition(board.getWidth() / 2, board.getHeight() - 1);
+                            player.setPosition(newX, board.getHeight() - 1);
 
                             barrierY = board.getHeight() + 1; // reinitialize barrier to below board
                             
@@ -215,6 +231,19 @@ void Game::start() {
     }
 }
 
+void Game::gameOver() {
+    GameOverScreen gameOverScreen(*this, mainMenu);
+    gameOverScreen.run();
+}
+
+void Game::addScore(int points) {
+    score += points;
+}
+
+int Game::getScore() {
+    return score;
+}
+
 bool Game::confirmQuitToMenu() {
     enableMenuMode();
 
@@ -228,15 +257,18 @@ bool Game::confirmQuitToMenu() {
 
         std::string line(SCREEN_WIDTH/2, '=');
         std::string frame(SCREEN_WIDTH, '=');
-        std::string title = "Quit to menu?";
+        std::string rawTitle = "QUIT TO MENU?";
+        std::string title    = string(TEXT_BOLD) + rawTitle + string(COLOR_RESET);
 
         std::cout << "\n\n";
 
         // Top Frame line
         cout << std::setw((SCREEN_WIDTH + frame.size()) / 2) << frame << "\n\n";
-        cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
-        cout << std::setw((SCREEN_WIDTH + line.size()) / 2)  << line  << "\n\n";
 
+        // Title
+        cout << std::setw((SCREEN_WIDTH - rawTitle.size()) / 2) << "** " << title << " ** \n\n"; 
+
+        cout << std::setw((SCREEN_WIDTH + line.size()) / 2)  << line  << "\n\n";
 
         const std::string options[] = {"Yes", "No "};
 
@@ -245,7 +277,7 @@ bool Game::confirmQuitToMenu() {
             int padding = (SCREEN_WIDTH - (int)label.size()) / 2;
 
             if (i == cursor) {
-                std::cout << std::setw(padding - 2) << "" << "→ " << label << "\n\n";
+                std::cout << std::setw(padding - 2) << "" << "→ " << UNDERLINE << label << COLOR_RESET << "\n\n";
             } else {
                 std::cout << std::setw(padding) << "" << label << "\n\n";
             }
@@ -289,18 +321,84 @@ bool Game::confirmQuitToMenu() {
     return confirm;
 }
 
-void Game::gameOver() {
-    GameOverScreen gameOverScreen(*this, mainMenu);
-    gameOverScreen.run();
+void Game::playExplosion(int cx, int cy) {
+    using clock = std::chrono::steady_clock;
+    const int EXPLOSION_FRAMES = 50;
+    const auto EXPLOSION_FRAME_DURATION = std::chrono::milliseconds(50);
+
+    std::string frame(SCREEN_WIDTH, '=');
+
+    for (int f = 0; f < EXPLOSION_FRAMES; ++f) {
+        auto start = clock::now();
+
+        clear();
+
+        // Top Frame Line
+        cout << "\n\n" << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n";
+
+        int width = board.getWidth();
+        int height = board.getHeight();
+
+        // explosion radius grows over time
+        int radius = 1 + f / 2;
+        int maxRadius = 7;
+        if (radius > maxRadius) radius = maxRadius;
+
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                float dx = static_cast<float>(x - cx);
+                float dy = static_cast<float>(y - cy);
+                
+                // account for terminal characters being more tall than wide
+                const float VERTICAL_WEIGHT = 1.8f;
+                dy *= VERTICAL_WEIGHT;
+                
+                float dist2 = dx * dx + dy * dy;
+                float r = static_cast<float>(radius);
+
+                float limit = (r - 0.5f) * (r - 0.5f);
+                bool inExplosion = (dist2 <= limit);
+                
+                if (inExplosion) {
+                    // pick a flame based on distance / frame
+                    char flame;
+                    int phase = (f + static_cast<int>(dx) + static_cast<int>(dy)) & 3;
+                    switch (phase) {
+                        case 0: flame = '*'; break;
+                        case 1: flame = 'x'; break;
+                        case 2: flame = 'o'; break;
+                        default: flame = '+'; break;
+                    }
+                    std::cout << COLOR_BRED << flame << COLOR_RESET;
+                }
+                else {
+                    char tile = board.getObstaclePos(x,y);
+
+                    // get rid of player sprite
+                    if (x == cx && y == cy) {
+                        std::cout << ' ';  
+                    }
+                    else {
+                        std::cout << tile;
+                    }
+                }
+            }
+            std::cout << "\n";
+        }
+
+        // Simple explosion HUD
+        std::string boomText = "That's gotta hurt...";
+        cout << "\n" 
+             << std::setw((SCREEN_WIDTH + (int)boomText.size()) / 2) << ""
+             << COLOR_BRED << boomText << COLOR_RESET << "\n";
+        
+        cout << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n\n";
+
+        auto end = clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        if (elapsed < EXPLOSION_FRAME_DURATION) {
+            std::this_thread::sleep_for(EXPLOSION_FRAME_DURATION - elapsed);
+        }             
+    }
 }
 
-// TODO - Implement these functions
-void Game::displayScore(int) {}
-
-int Game::getScore() {
-    return score;
-}
-
-void Game::addScore(int points) {
-    score += points;
-}

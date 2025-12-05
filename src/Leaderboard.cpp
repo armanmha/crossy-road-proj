@@ -20,6 +20,10 @@ constexpr const char* COLOR_RED       = "\x1b[31m";
 constexpr const char* COLOR_BLUE      = "\x1b[36m";
 constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
 constexpr const char* UNDERLINE       = "\x1b[4m";
+constexpr const char* COLOR_BGREEN    = "\e[1;92m";
+constexpr const char* COLOR_BRED      = "\e[1;91m";
+constexpr const char* COLOR_GOLD      = "\e[1;93m";
+constexpr const char* TEXT_BOLD       = "\e[1;37m";
 
 // Player scores file is read, sorted, and stored
 void LeaderboardScoreManagement::loadSortedScores(){
@@ -84,10 +88,10 @@ void LeaderboardDisplay::displayScores(int numScores){
     
     string line(SCREEN_WIDTH/2, '=');
     string frame(SCREEN_WIDTH,  '=');
-    string title = "Leaderboard";
+    string title = string(TEXT_BOLD) + "LEADERBOARD" + string(COLOR_RESET);
 
     // Output title
-    cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << title << "\n\n";
+    cout << std::setw(((SCREEN_WIDTH + title.size()) / 2) + 6) << title << "\n\n";
     
     // Line above play button
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";

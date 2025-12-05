@@ -29,10 +29,9 @@ class Game : public Screen {
         ~Game() {}
 
         void start();
-        void displayScore(int);
-        void pause();
         void gameOver();
         void addScore(int points);
         int getScore();
         bool confirmQuitToMenu();
+        void playExplosion(int cx, int cy);
 };

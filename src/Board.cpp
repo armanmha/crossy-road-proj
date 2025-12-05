@@ -68,6 +68,9 @@ void Board::draw(const Player& player, int barrierY) {
     int posX = player.getPosition().first;  // retrieve updated x position
     int posY = player.getPosition().second; // retrieve updated y position
     std::string currentLaneStr;
+    
+    static int coinFrame = 0;
+    coinFrame++;
 
     // outputs player position in 2D array
     for (int y = 0; y < height; ++y) {
@@ -96,9 +99,17 @@ void Board::draw(const Player& player, int barrierY) {
             }
             else {
                 char ch = currentLaneStr.at(x);   // empty grid for now
-
+                
                 if (ch == 'C') {
-                    std::cout << COLOR_GOLD << ch << COLOR_RESET; // colored coin
+                    char displayCoin;
+
+                    switch ((coinFrame / 5) % 3) {
+                    case 0: displayCoin = 'C'; break;
+                    case 1: displayCoin = 'o'; break;
+                    case 2: displayCoin = '*'; break;
+                    }
+
+                    std::cout << COLOR_GOLD << displayCoin << COLOR_RESET; // colored coin
                 }
                 else {
                     std::cout << ch;
@@ -183,7 +194,7 @@ void Board::placeCoins(int numCoins) {
 
             char tile = getObstaclePos(x,y);
 
-            if (tile = '.') {
+            if (tile == '.') {
                 rocksLanes.at(y).setTile(x, 'C');
                 placed = true;
             }
