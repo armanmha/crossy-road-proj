@@ -37,6 +37,9 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 * <b>Gameplay:</b>
 	The main menu also leads to the gameplay screen, which presents the user with ASCII art of lanes, vehicles, rocks, and the user themself. A legend is provided to clear any confusion. The top right of the screen displays the controls, and the center shows the user’s current score.
 
+* <b>Pause Screen:</b>
+	The pause screen is accessed by pressing ESC during gameplay. It allows the player to rest, view their score, and either resume to gameplay or quit to the menu.
+
 * <b>Game Over:</b>
 	The game over screen occurs once the user has lost the game. It displays the score the user obtained, and the option to enter a name associated with the score in order to save the score. The bottom corners of the screen have buttons that allow the user to either “Retry”, which brings them back to the gameplay screen with a score of 0, or “Quit”, which brings them back to the main menu.
 
