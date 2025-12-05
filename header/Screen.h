@@ -1,18 +1,20 @@
 #pragma once
 
-enum class InputKey {         // Maps numbers to arrow keys
+enum class InputKey {  // Maps numbers to arrow keys
   Up,
   Down,
   Left,
   Right,
   Enter,
   Quit,
+  Pause,
+  ToggleChar,
   Unknown
 };
 
 class Screen {
   private:
-    bool rawEnabled = false;  // Tracks if raw mode is enabled in terminal
+    bool rawEnabled = false;            // Tracks if raw mode is enabled in terminal
 
   protected:
     static const int SCREEN_WIDTH = 80; // Width of terminal screen
@@ -21,9 +23,11 @@ class Screen {
     Screen();
     ~Screen();
     
-    void enableRawMode();
+    void enableMenuMode();
+    void enableGameMode();
     void disableRawMode();
 
-    InputKey processInput();  // Processes user input
-    void clear();             // Clears screen/terminal
+    InputKey processInput();             // Processes user input
+    InputKey processInputNonBlocking();  // Processes user input
+    void clear();                        // Clears screen/terminal
 };

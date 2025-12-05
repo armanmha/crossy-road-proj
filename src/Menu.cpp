@@ -1,10 +1,16 @@
 #include "../header/Menu.h"
+#include "../header/Game.h"
 
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
 #include <limits>
 #include <vector>
+#include <string>
+#include <chrono>
+#include <thread>
+#include <unistd.h>
+#include <sys/select.h>
 
 using std::cout;
 using std::string;
@@ -18,6 +24,9 @@ constexpr const char* COLOR_RED       = "\x1b[31m";
 constexpr const char* COLOR_BLUE      = "\x1b[36m";
 constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
 constexpr const char* UNDERLINE       = "\x1b[4m";
+constexpr const char* COLOR_BGREEN    = "\e[1;92m";
+constexpr const char* COLOR_BRED   =    "\e[1;91m";
+constexpr const char* COLOR_GOLD   =    "\e[1;93m";
 
 // Declare crossy road Logo
 const std::vector<string> CROSSY_ROAD_LOGO = {
@@ -35,8 +44,12 @@ const std::vector<string> CROSSY_ROAD_LOGO = {
 };
 
 void Menu::startGame(){
-    Game game(*this);
+    Game game(*this); // Passes current menu to game for returning later
+    disableRawMode();
+    enableGameMode();
     game.start();
+    disableRawMode();
+    enableMenuMode(); 
 }
 
 
@@ -67,6 +80,19 @@ string Menu::getColoredDifficulty(){
             return string(COLOR_YELLOW) + "Medium" + COLOR_RESET;
         case 3:
             return string(COLOR_RED) + "Hard" + COLOR_RESET;
+        default:
+            return "Unknown";
+    }
+}
+
+string Menu::getColoredHighScore(int score){
+    switch(currentDifficulty){
+        case 1:
+            return string(COLOR_BGREEN) + "High Score: " + std::to_string(score) + COLOR_RESET;
+        case 2:
+            return string(COLOR_GOLD) + "High Score: " + std::to_string(score) + COLOR_RESET;
+        case 3:
+            return string(COLOR_BRED) + "High Score: " + std::to_string(score) + COLOR_RESET;
         default:
             return "Unknown";
     }
@@ -113,17 +139,17 @@ void Menu::printRight(const string& text, int padding) {
 
 // Generates new frame with updated cursor instantly 
 void Menu::display(int cursorIndex){
-    // \x1b[3J - clears scrollback history in terminal
-    // \x1b[2J - clears screen in terminal
-    // \x1b[H  - moves cursor to top left in terminal so frame prints in same place
-    // std::cout << "\x1b[3J\x1b[2J\x1b[H" << std::flush;  
-
     // Declares variables
     string line(SCREEN_WIDTH/2, '=');
     string frame(SCREEN_WIDTH,  '=');
     cout << "\n\n";
 
     int maxLogoLen = 0;
+
+    static int animFrame = 0;
+    animFrame++;
+
+    int offset = (animFrame / 50) % 2;
 
     // For loop calculates the size of the title logo for proper formatting
     for (const auto& lineStr : CROSSY_ROAD_LOGO) {
@@ -137,9 +163,10 @@ void Menu::display(int cursorIndex){
 
     // For loop prints logo line by line 
     for (const auto& lineStr : CROSSY_ROAD_LOGO) {
-        cout <<  std::setw((SCREEN_WIDTH + (int)lineStr.size()) / 2)
-        << lineStr
-        << COLOR_RESET << "\n";
+        cout << COLOR_GOLD  
+             << std::setw((SCREEN_WIDTH + (int)lineStr.size()) / 2 + offset)
+             << lineStr
+             << COLOR_RESET << "\n";
     }
 
     std::cout << "\n";
@@ -147,10 +174,23 @@ void Menu::display(int cursorIndex){
     // Line above high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
+    // Get Difficulty
+    std::string currentDiff = getDifficulty();
+
     // Print high score
-    int highScore = 1000; // temp high score
-    string scoreText = string(COLOR_BLUE) + "High Score: " + std::to_string(highScore) + COLOR_RESET;
-    cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 6) << "** " << scoreText << " ** \n\n"; 
+    int highScore = 0; // temp high score
+    leaderboardManager.loadSortedScores();
+
+    // Get copy of scores
+    std::vector<LeaderboardPlayer> scores = leaderboardManager.getScores();
+
+    for(const auto& p : scores) {
+        if (p.difficulty == currentDiff && p.score > highScore) {
+            highScore = p.score;
+        }
+    }
+
+    cout << std::setw(((SCREEN_WIDTH - getColoredHighScore(highScore).size()) / 2) + 4) << "** " << getColoredHighScore(highScore) << " ** \n\n"; 
 
     // Line below high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
@@ -222,10 +262,15 @@ void Menu::run() {
     const int numItems = 4;     // Set constant number of menu items
     bool running = true;        // Tracks if menu is running
 
-    enableRawMode();     // Enables RAW mode in terminal
+    enableGameMode();     // Enables RAW mode in terminal
+
+    using clock = std::chrono::steady_clock;
+    const auto frameDuration = std::chrono::milliseconds(10);
 
     // While menu is running
     while (running) {
+        auto frameStart = clock::now();
+
         std::cout << "\x1b[3J"; // Clear scrollback buffer for safety
         clear();                // Clear screen
         display(cursor);        // Display frame with current cursor position
@@ -234,7 +279,7 @@ void Menu::run() {
 
         // Determines cursor position
         switch (key) {
-            case InputKey::Up: // Moves cursor 1 position up in menu
+            case InputKey::Up:   // Moves cursor 1 position up in menu
                 cursor = (cursor - 1 + numItems) % numItems;
                 break;
 
@@ -242,7 +287,7 @@ void Menu::run() {
                 cursor = (cursor + 1) % numItems;
                 break;
 
-            case InputKey::Left:    // Changes difficulty 
+            case InputKey::Left: // Changes difficulty 
                 if (cursor == 1) {                                           // If cursor is at difficulty section
                     int newDifficulty = (currentDifficulty - 2 + 3) % 3 + 1; // Ex. left on easy(1) -> hard(3)
                     changeDifficulty(newDifficulty);
@@ -257,31 +302,40 @@ void Menu::run() {
                 break;
 
             case InputKey::Enter:   
-                if (cursor == 0) {                                          // When on play button
+                if (cursor == 0) {                                           // When on play button
                     clear();
                     startGame();
                 }
-                else if (cursor == 1) {                                     // When on difficulty selection
-                    int newDifficulty = (currentDifficulty % 3) + 1;        // Ex. right on hard(3) -> easy(1)
+                else if (cursor == 1) {                                      // When on difficulty selection
+                    int newDifficulty = (currentDifficulty % 3) + 1;         // Ex. right on hard(3) -> easy(1)
                     changeDifficulty(newDifficulty);
                 }
-                else if (cursor == 2) {                                     // When on leaderboard selection
+                else if (cursor == 2) {                                      // When on leaderboard selection
                     clear();
                     seeLeaderboard(5);
                 }
-                else if (cursor == 3) {                                     // If on quit game
-                    running = false;                                        // Deactivate menu loop
+                else if (cursor == 3) {                                      // If on quit game
+                    running = false;                                         // Deactivate menu loop
                 }
                 break;
 
-            case InputKey::Quit:                                            // Quit the game
+            case InputKey::Quit:                                             // Quit the game
                 running = false;
                 break;
             
-            default:                                                        // Breaks out of switch
+            default:                                                         // Breaks out of switch
                 break;
+        }
+
+        // Cap FPS
+        auto frameEnd = clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(frameEnd - frameStart);
+      
+        if (elapsed < frameDuration) {
+            std::this_thread::sleep_for(frameDuration - elapsed);
         }
     }
 
-    disableRawMode(); // resets terminal to original settings
+    disableRawMode(); // Resets terminal to original settings
+    std::exit(0);
 }

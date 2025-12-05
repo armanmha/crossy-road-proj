@@ -5,21 +5,33 @@
 #include <vector>
 #include <string>
 
+class Player;
+
 class Board {
     private:
         int width;
         int height;
 
-        std::vector<Lane> lanes;
+        std::vector<VehicleLane> vehiclesLanes;
+        std::vector<RockLane> rocksLanes;
+
+        int frameCounter = 0;
+        std::string difficulty;
     
     public:
         Board() : width(0), height(0) {}
         ~Board() {}
-        Board(int w, int h);
+        Board(int w, int h, const std::string& difficulty);
 
         int getWidth() const;
         int getHeight() const;
 
-        void draw(const Player& player); // draws grid
+        void update();
+        void draw(const Player& player, int barrierY); 
         
+        char getObstaclePos(int x, int y) const;
+        void clearObstacle(int x, int y);
+
+        void regenerate();
+        void placeCoins(int numCoins);
 };
