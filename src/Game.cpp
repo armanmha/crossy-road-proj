@@ -42,7 +42,7 @@ void Game::start() {
     bool running = true;
 
     // barrier starts below visible grid
-    barrierY = board.getHeight() + 2;
+    barrierY = board.getHeight() + 1;
     barrierCounter = 0;
     barrierSpeed = 250;
 
@@ -217,6 +217,11 @@ void Game::start() {
     
         int playerY = player.getPosition().second;
         if (playerY >= barrierY && barrierY < board.getHeight()) {
+            auto pos = player.getPosition();
+            int cx = pos.first;
+            int cy = pos.second;
+
+            playExplosion(cx, cy);
             gameOver();
             running = false;
         }
