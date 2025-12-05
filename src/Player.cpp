@@ -73,11 +73,14 @@ bool Player::checkCollision(const Board& board) const {
 }
 
 int Player::scoreUpdating(){
-    auto[x, y] = getPostion();
+    auto[x, y] = getPosition();
     if (y < highestRow_){
         int delta = highestRow_ - y; // Rows that moved upwards
         highestRow_ = y; // and update it the highest row reached
         return delta;
     }
     return 0;
+}
+void Player::resetHighestRow() {
+    highestRow_ = getPosition().second;
 }

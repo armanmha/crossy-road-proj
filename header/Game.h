@@ -12,12 +12,13 @@ class Menu; // Forward declaration
 
 class Game : public Screen {
     private:
-        int score;
+        int score = player.scoreUpdating();
         bool isPaused;
         
         Board board;
         Player player;
         Menu& mainMenu; // track main menu for quitting back to it
+        int totalScore_ = 0;
 
     public:
         Game(Menu& menu);

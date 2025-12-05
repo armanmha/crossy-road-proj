@@ -36,6 +36,18 @@ void Game::start() {
     string frame(SCREEN_WIDTH,  '=');
     bool running = true;
 
+    // barrier starts below visible grid
+    barrierY = board.getHeight() + 2;
+    barrierCounter = 0;
+    barrierSpeed = 250;
+
+    if (mainMenu.getDifficulty() == "Hard") {
+        barrierSpeed = 150;
+    }
+    else if (mainMenu.getDifficulty() == "Medium") {
+        barrierSpeed = 200;
+    } 
+
     using clock = std::chrono::steady_clock;
     const auto frameDuration = std::chrono::milliseconds(10);   // ~100 FPS
 
@@ -44,6 +56,14 @@ void Game::start() {
 
         clear();        // clear previous page if present
         clear();        // clear previous frame
+
+        ++barrierCounter;
+
+        if (barrierCounter % barrierSpeed == 0) {
+            if (barrierY > 0) {
+                --barrierY; // move barrier up one row
+            }
+        }
 
         board.update();
 
@@ -58,15 +78,16 @@ void Game::start() {
         cout << "\n\n" << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n";
 
         board.draw(player);
-
         std::cout << "\nScore: " << score << "\n";
         std::cout << "Use ARROWS to move. ESC to pause. Q to quit.\n";
+        std::cout << "Current Difficulty: " << mainMenu.getColoredDifficulty() << "\n";
 
         // bottom Frame line
         cout << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n\n";
 
         // get user input
         InputKey key = processInputNonBlocking();
+
 
         // move player if arrow keys pressed
         switch (key) {
@@ -117,7 +138,16 @@ void Game::start() {
                     if (player.checkCollision(board)) {
                         gameOver();
                         running = false;
-                    } 
+                    } else {
+                        if (newY == 0) {
+
+                            board.regenerate();
+
+                            player.setPosition(board.getWidth() / 2, board.getHeight() - 1);
+
+                            barrierY = board.getHeight() + 1; // reinitialize barrier to below board
+                        }
+                    }
                 }
             }
                 break;
@@ -153,6 +183,11 @@ void Game::start() {
                 break;
         }
     
+        int playerY = player.getPosition().second;
+        if (playerY >= barrierY && barrierY < board.getHeight()) {
+            gameOver();
+            running = false;
+        }
 
         // cap FPS
         auto frameEnd = clock::now();
@@ -161,7 +196,10 @@ void Game::start() {
         if (elapsed < frameDuration) {
             std::this_thread::sleep_for(frameDuration - elapsed);
         }
+        //updating score adds the current score to the total score
+        score += player.scoreUpdating();
     }
+    
 }
 
 bool Game::confirmQuitToMenu() {
@@ -244,10 +282,11 @@ void Game::gameOver() {
 }
 
 // TODO - Implement these functions
-void Game::displayScore(int) {}
 
-
-
+void Game::pause() {}
+void Game::gameOver() {}
 int Game::getScore() {
+    score += player.scoreUpdating();
     return score;
 }
+//function is not needed or can hold it for the displaying menu function above
