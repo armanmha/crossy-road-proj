@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main, dev, jmcla012/testing/test-cases ]
+    branches: [ master, dev, jmcla012/testing/test-cases ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build:
