@@ -41,7 +41,7 @@ bool GameOverScreen::saveScoreWithName(const std::string& name) {
     int playerScore = game.getScore();
     string difficulty = mainMenu.getDifficulty();
 
-    std::ofstream scoreFile("./data/scores.txt", std::ios::app);
+    std::ofstream scoreFile("./data/playerScores.txt", std::ios::app);
     if(!scoreFile.is_open()) {
         throw std::runtime_error("Could not open scores file for writing.");
     }

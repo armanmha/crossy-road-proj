@@ -1,9 +1,0 @@
-77 AAR Easy
-62 JAC Easy
-103 ARM Hard
-67 GNG Hard
-0 ETH Medium
-6 BOB Easy
-0 TestPlayer Easy
-0 TestvnoenoenonvevnevnvoenoenvPlayer Easy
-0 t Easy

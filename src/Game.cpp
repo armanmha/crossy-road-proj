@@ -42,7 +42,7 @@ void Game::start() {
     bool running = true;
 
     // barrier starts below visible grid
-    barrierY = board.getHeight() + 2;
+    barrierY = board.getHeight() + 1;
     barrierCounter = 0;
     barrierSpeed = 250;
 
@@ -217,6 +217,11 @@ void Game::start() {
     
         int playerY = player.getPosition().second;
         if (playerY >= barrierY && barrierY < board.getHeight()) {
+            auto pos = player.getPosition();
+            int cx = pos.first;
+            int cy = pos.second;
+
+            playExplosion(cx, cy);
             gameOver();
             running = false;
         }
@@ -326,6 +331,17 @@ void Game::playExplosion(int cx, int cy) {
     const int EXPLOSION_FRAMES = 50;
     const auto EXPLOSION_FRAME_DURATION = std::chrono::milliseconds(50);
 
+    // Simple explosion HUD
+    const std::string deathMessages[] = {
+        "That's gotta hurt...",
+        "Maybe avoid the cars next time?",
+        "Traffic is ruthless these days...",
+        "Hopefully you have insurance..."
+    };
+
+    int numMessages = sizeof(deathMessages) / sizeof(deathMessages[0]);
+    std::string chosenMessage = deathMessages[rand() % numMessages];
+
     std::string frame(SCREEN_WIDTH, '=');
 
     for (int f = 0; f < EXPLOSION_FRAMES; ++f) {
@@ -386,11 +402,9 @@ void Game::playExplosion(int cx, int cy) {
             std::cout << "\n";
         }
 
-        // Simple explosion HUD
-        std::string boomText = "That's gotta hurt...";
         cout << "\n" 
-             << std::setw((SCREEN_WIDTH + (int)boomText.size()) / 2) << ""
-             << COLOR_BRED << boomText << COLOR_RESET << "\n";
+             << std::setw(((SCREEN_WIDTH + board.getWidth()) / 2) - (int)chosenMessage.size()) << ""
+             << COLOR_BRED << chosenMessage << COLOR_RESET << "\n";
         
         cout << std::setw((SCREEN_WIDTH + board.getWidth()) / 2) << frame << "\n\n";
 
