@@ -12,17 +12,22 @@ class Menu; // Forward declaration
 
 class Game : public Screen {
     private:
-        int score;
+        int score = player.scoreUpdating();
         bool isPaused;
         int highestRow;       // Smallest y the player has reached so far
         
         Board board;
         Player player;
+<<<<<<< HEAD
         Menu& mainMenu;       // Track main menu for quitting back to it
 
         int barrierY;         // Current row of barrier
         int barrierCounter;   // Used to move barrier slowly
         int barrierSpeed;     // Changes speed of barrier based on difficulty
+=======
+        Menu& mainMenu; // track main menu for quitting back to it
+        int totalScore_ = 0;
+>>>>>>> ethanjung-commits/newScoreadd
 
     public:
         Game(Menu& menu);

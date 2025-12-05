@@ -11,4 +11,9 @@ class Player : public GameplayObjects {
 
         void movePlayer(InputKey key, int boardWidth, int boardHeight);
         bool checkCollision(const Board& board) const;
+        void setCharacter(char newChar);
+        int scoreUpdating();
+        void resetHighestRow();
+    private:
+        int highestRow_; // tracks highest row reached for scoring
 };

@@ -71,6 +71,14 @@ void Game::start() {
             }
         }
 
+        ++barrierCounter;
+
+        if (barrierCounter % barrierSpeed == 0) {
+            if (barrierY > 0) {
+                --barrierY; // move barrier up one row
+            }
+        }
+
         board.update();
 
         // Check for collision by calling checkCollision function, if true, end game
@@ -214,8 +222,14 @@ void Game::start() {
             default:
                 break;
         }
-    
+        //updating score adds the current score to the total score
+        score += player.scoreUpdating();
+
         int playerY = player.getPosition().second;
+        if (playerY >= barrierY && barrierY < board.getHeight()) {
+            gameOver();
+            running = false;
+        }
 
         // If barrier hits player
         if (playerY >= barrierY && barrierY < board.getHeight()) {
@@ -237,6 +251,7 @@ void Game::start() {
             std::this_thread::sleep_for(frameDuration - elapsed);
         }  
     }
+    
 }
 
 void Game::gameOver() {
