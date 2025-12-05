@@ -4,7 +4,7 @@
 
 class GameplayObjects {
     protected:
-        int length;                         // for objects longer than 1 cell (cars, logs)
+        int  length;                         // for objects longer than 1 cell (cars, logs)
         char shape;                         // characters used to draw object
         std::pair<int, int> position;       // (x, y) grid position
         bool safeToUser;                    // whether player can stand on it (logs yes, cars no)
@@ -23,4 +23,5 @@ class GameplayObjects {
         std::string getOutputString() const { return outputString; }
         int getLength() const { return length; }
         bool isSafe() const { return safeToUser; }
+        void setTile(int x, char c);
 };

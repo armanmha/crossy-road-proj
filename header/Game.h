@@ -14,19 +14,24 @@ class Game : public Screen {
     private:
         int score;
         bool isPaused;
+        int highestRow; // smallest y the player has reached so far
         
         Board board;
         Player player;
         Menu& mainMenu; // track main menu for quitting back to it
+
+        int barrierY;         // current row of barrier
+        int barrierCounter;   // used to move barrier slowly
+        int barrierSpeed; // changes speed of barrier based on difficulty
 
     public:
         Game(Menu& menu);
         ~Game() {}
 
         void start();
-        void displayScore(int);
-        void pause();
         void gameOver();
+        void addScore(int points);
         int getScore();
         bool confirmQuitToMenu();
+        void playExplosion(int cx, int cy);
 };

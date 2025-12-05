@@ -6,6 +6,11 @@
 #include <iomanip>
 #include <limits>
 #include <vector>
+#include <string>
+#include <chrono>
+#include <thread>
+#include <unistd.h>
+#include <sys/select.h>
 
 using std::cout;
 using std::string;
@@ -19,6 +24,9 @@ constexpr const char* COLOR_RED       = "\x1b[31m";
 constexpr const char* COLOR_BLUE      = "\x1b[36m";
 constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
 constexpr const char* UNDERLINE       = "\x1b[4m";
+constexpr const char* COLOR_BGREEN    = "\e[1;92m";
+constexpr const char* COLOR_BRED   =    "\e[1;91m";
+constexpr const char* COLOR_GOLD   =    "\e[1;93m";
 
 // Declare crossy road Logo
 const std::vector<string> CROSSY_ROAD_LOGO = {
@@ -77,6 +85,19 @@ string Menu::getColoredDifficulty(){
     }
 }
 
+string Menu::getColoredHighScore(int score){
+    switch(currentDifficulty){
+        case 1:
+            return string(COLOR_BGREEN) + "High Score: " + std::to_string(score) + COLOR_RESET;
+        case 2:
+            return string(COLOR_GOLD) + "High Score: " + std::to_string(score) + COLOR_RESET;
+        case 3:
+            return string(COLOR_BRED) + "High Score: " + std::to_string(score) + COLOR_RESET;
+        default:
+            return "Unknown";
+    }
+}
+
 // Displays leaderboard screen
 void Menu::seeLeaderboard(int scoresToDisplay) {
 
@@ -130,6 +151,11 @@ void Menu::display(int cursorIndex){
 
     int maxLogoLen = 0;
 
+    static int animFrame = 0;
+    animFrame++;
+
+    int offset = (animFrame / 50) % 2;
+
     // For loop calculates the size of the title logo for proper formatting
     for (const auto& lineStr : CROSSY_ROAD_LOGO) {
         if ((int)lineStr.size() > maxLogoLen) {
@@ -142,9 +168,10 @@ void Menu::display(int cursorIndex){
 
     // For loop prints logo line by line 
     for (const auto& lineStr : CROSSY_ROAD_LOGO) {
-        cout <<  std::setw((SCREEN_WIDTH + (int)lineStr.size()) / 2)
-        << lineStr
-        << COLOR_RESET << "\n";
+        cout << COLOR_GOLD  
+             << std::setw((SCREEN_WIDTH + (int)lineStr.size()) / 2 + offset)
+             << lineStr
+             << COLOR_RESET << "\n";
     }
 
     std::cout << "\n";
@@ -152,10 +179,23 @@ void Menu::display(int cursorIndex){
     // Line above high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
+    // Get Difficulty
+    std::string currentDiff = getDifficulty();
+
     // Print high score
-    int highScore = 1000; // temp high score
-    string scoreText = string(COLOR_BLUE) + "High Score: " + std::to_string(highScore) + COLOR_RESET;
-    cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 4) << "** " << scoreText << " ** \n\n"; 
+    int highScore = 0; // temp high score
+    leaderboardManager.loadSortedScores();
+
+    // get copy of scores
+    std::vector<LeaderboardPlayer> scores = leaderboardManager.getScores();
+
+    for(const auto& p : scores) {
+        if (p.difficulty == currentDiff && p.score > highScore) {
+            highScore = p.score;
+        }
+    }
+
+    cout << std::setw(((SCREEN_WIDTH - getColoredHighScore(highScore).size()) / 2) + 4) << "** " << getColoredHighScore(highScore) << " ** \n\n"; 
 
     // Line below high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
@@ -227,10 +267,15 @@ void Menu::run() {
     const int numItems = 4;     // Set constant number of menu items
     bool running = true;        // Tracks if menu is running
 
-    enableMenuMode();     // Enables RAW mode in terminal
+    enableGameMode();     // Enables RAW mode in terminal
+
+    using clock = std::chrono::steady_clock;
+    const auto frameDuration = std::chrono::milliseconds(10);
 
     // While menu is running
     while (running) {
+        auto frameStart = clock::now();
+
         std::cout << "\x1b[3J"; // Clear scrollback buffer for safety
         clear();                // Clear screen
         display(cursor);        // Display frame with current cursor position
@@ -285,6 +330,14 @@ void Menu::run() {
             
             default:                                                        // Breaks out of switch
                 break;
+        }
+
+        // Cap FPS
+        auto frameEnd = clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(frameEnd - frameStart);
+      
+        if (elapsed < frameDuration) {
+            std::this_thread::sleep_for(frameDuration - elapsed);
         }
     }
 

@@ -25,5 +25,6 @@ class Menu : public Screen {
 
    string getDifficulty();
    string getColoredDifficulty();
+   string getColoredHighScore(int score);
 
 };

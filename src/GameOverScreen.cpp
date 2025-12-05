@@ -21,6 +21,11 @@ constexpr const char* COLOR_RED       = "\x1b[31m";
 constexpr const char* COLOR_BLUE      = "\x1b[36m";
 constexpr const char* COLOR_HIGHLIGHT = "\x1b[36m";
 constexpr const char* UNDERLINE       = "\x1b[4m";
+constexpr const char* COLOR_BGREEN    = "\e[1;92m";
+constexpr const char* COLOR_BRED      = "\e[1;91m";
+constexpr const char* COLOR_GOLD      = "\e[1;93m";
+constexpr const char* TEXT_BOLD       = "\e[1;37m";
+
 
 void GameOverScreen::retry() {
     clear();
@@ -36,7 +41,7 @@ bool GameOverScreen::saveScoreWithName(const std::string& name) {
     int playerScore = game.getScore();
     string difficulty = mainMenu.getDifficulty();
 
-    std::ofstream scoreFile("./data/scores.txt", std::ios::app);
+    std::ofstream scoreFile("./data/playerScores.txt", std::ios::app);
     if(!scoreFile.is_open()) {
         throw std::runtime_error("Could not open scores file for writing.");
     }
@@ -59,22 +64,28 @@ void GameOverScreen::display(int cursorIndex){
     // Declares variables
     string line(SCREEN_WIDTH/2, '=');
     string frame(SCREEN_WIDTH,  '=');
-    cout << "\n\n";
 
-    string title = string(COLOR_RED) + "GAME OVER" + COLOR_RESET;
+
+
+
+    std::string rawTitle = "GAME OVER";
+    string title = string(COLOR_BRED) + rawTitle + COLOR_RESET;
+
+    std::cout << "\n\n";
 
     // Top Frame line
-    cout << std::setw((SCREEN_WIDTH + title.size()) / 2) << frame << "\n\n";
+    cout << std::setw((SCREEN_WIDTH + frame.size()) / 2) << frame << "\n\n";
 
-    cout <<  std::setw(((SCREEN_WIDTH + title.size()) / 2) + 4) << title << "\n\n";
+    // Title
+    cout << std::setw((SCREEN_WIDTH - rawTitle.size()) / 2) << "" << title << "\n\n"; 
 
     // Line above high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
 
     // Print high score
-    int highScore = game.getScore(); // temp high score
-    string scoreText = string(COLOR_BLUE) + "Score: " + std::to_string(highScore) + COLOR_RESET;
-    cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 4) << "** " << scoreText << " ** \n\n"; 
+    int highScore = game.getScore(); 
+    string scoreText = string(COLOR_BLUE) + "Final Score: " + std::to_string(highScore) + COLOR_RESET;
+    cout << std::setw(((SCREEN_WIDTH - scoreText.size()) / 2) + 6) << "** " << scoreText << " ** \n\n"; 
 
     // Line below high score
     cout << std::setw((SCREEN_WIDTH + line.size()) / 2) << line << "\n\n";
