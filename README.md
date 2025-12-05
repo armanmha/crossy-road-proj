@@ -42,7 +42,7 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 <h1></h1><b>Class Diagram:</b>
 <br></br>
 
-<img width="2025" height="992" alt="CS100 Milestone 3 UML" src="https://github.com/user-attachments/assets/14baf0f2-2a2a-4eee-a8eb-ac3a7af44d27" />
+<img width="2241" height="1369" alt="CS100 Milestone 3 UMLpng" src="https://github.com/user-attachments/assets/e72d87ae-f039-4080-98ef-0bba29b7fd6b" />
 
 <h1></h1>
 
@@ -66,6 +66,9 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 * <b> Game: </b>
 	The game class is called by the menu class and is in charge of tracking the user's score and the state of the game. The game may be started, paused, and ended from this class. Ending the game calls the class in charge of the game over screen.
 
+* <b> PauseScreen: </b>
+	The pause screen class is called during gameplay, and is used to freeze gameplay. The screen displays the current score, along with options to either resume or quit.
+
 * <b> GameOverScreen: </b>
 	The game over screen class displays a game over screen for the player if they lose the game. It includes their score, an option to save their score (along with their specified name), and options to retry or quit. Retrying calls the game class again, and the player restarts the game. Selecting quit causes the user to go back to the main menu, which is handled by the menu class.
 
@@ -75,8 +78,8 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 * <b> Gameplay Objects: </b>
 	The gameplay objects class stores any objects that appear during gameplay, including lanes, obstacles (ie. vehicles) and the player. Each object has a specified length and shape (which is the visual representation of the object). The position of the object is stored so each object’s position can be manipulated and tracked. The safeToUser boolean specifies whether the player can safely interact with the object or if touching it will trigger the game to end.
 
-* <b> Lane: </b>
-	The lane class stores any vehicles that will travel across it during gameplay, denoted by a specified shape, which comes from the gameplay objects class. The spawnVehicle() function causes the stored vehicles to move across the lane.
+* <b> VehicleLane and RockLane: </b>
+	The lane classes store any vehicles or rocks that will travel across during gameplay, denoted by a specified shape, which comes from the gameplay objects class. The spawnVehicles() and spawnRocks() function causes the respective objects to appear on the lanes, with vehicle movement..
 
 * <b> Vehicle: </b>
 	The vehicle class is a gameplay object with a speed. The speed integer represents how quickly the vehicle will move across the screen during gameplay. The moveVehicle(int, int) function moves the vehicle to a position given in cartesian coordinates every refresh. 
