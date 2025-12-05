@@ -11,3 +11,19 @@ TEST(GameOverScreenTest, SaveScoreWithName) {
 
     EXPECT_NO_THROW(gameOverScreen.saveScoreWithName("TestPlayer"));
 }
+
+TEST(GameOverScreenTest, SaveScoreWithLongName) {
+    Menu dummyMenu("fakefile.txt");
+    Game game(dummyMenu);
+    GameOverScreen gameOverScreen(game, dummyMenu);
+
+    EXPECT_NO_THROW(gameOverScreen.saveScoreWithName("TestvnoenoenonvevnevnvoenoenvPlayer"));
+}
+
+TEST(GameOverScreenTest, SaveScoreWithShortName) {
+    Menu dummyMenu("fakefile.txt");
+    Game game(dummyMenu);
+    GameOverScreen gameOverScreen(game, dummyMenu);
+
+    EXPECT_NO_THROW(gameOverScreen.saveScoreWithName("t"));
+}

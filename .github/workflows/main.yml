@@ -15,31 +15,55 @@ jobs:
       with:
         submodules: 'recursive'
 
-    - name: Build tests for the Leaderboard class
+    - name: Build tests
       run: |
         cmake .
         make
 
-    - name: Run Leaderboard tests
-      run: ./tests/bin/runLeaderboardTests
-
-    - name: Run Lane tests
-      run: | 
-        ./tests/bin/runLaneTests
-
-    - name: Run Menu tests
-      run: | 
-        ./tests/bin/runMenuTests
-
     - name: Run Board tests
-      run: | 
+      run: |
         ./tests/bin/runBoardTests
 
+    - name: Run GameOver tests
+      run: |
+        ./tests/bin/runGameOverTests
+
+    - name: Run GamePlayObject tests
+      run: |
+        ./tests/bin/runGameplayObjectTests
+
     - name: Run Game tests
-      run: | 
+      run: |
         ./tests/bin/runGameTests
 
-    - name: Run Game Over tests
-      run: | 
-        ./tests/bin/runGameOverTests
+    - name: Run Lane tests
+      run: |
+        ./tests/bin/runLaneTests
+
+    - name: Run Leaderboard tests
+      run: |
+        ./tests/bin/runLeaderboardTests
+
+    - name: Run Menu tests
+      run: |
+        ./tests/bin/runMenuTests
+
+    - name: Run Pause Screen tests
+      run: |
+        ./tests/bin/runPauseScreenTests
+
+    - name: Run Player tests
+      run: |
+        ./tests/bin/runPlayerTests
+
+    - name: Run Screen tests
+      run: |
+        ./tests/bin/runScreenTests
+
+    - name: Run Vehicle tests
+      run: |      
+        ./tests/bin/runVehicleTests
+
+
+
         
