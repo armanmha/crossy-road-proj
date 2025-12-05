@@ -27,7 +27,7 @@ class Board {
         int getHeight() const;
 
         void update();
-        void draw(const Player& player, int barrierY); // draws grid
+        void draw(const Player& player, int barrierY); 
         
         char getObstaclePos(int x, int y) const;
         void clearObstacle(int x, int y);

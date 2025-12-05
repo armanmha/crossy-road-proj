@@ -20,8 +20,6 @@ class VehicleLane : public GameplayObjects{
     ~VehicleLane();
 
     void spawnVehicles();
-    
-    
 };
 
 class RockLane : public GameplayObjects{

@@ -50,7 +50,7 @@ void LeaderboardScoreManagement::loadSortedScores(){
     inFS.close();
 }
 
-// assigns color to difficulty
+// Assigns color to difficulty
 string LeaderboardDisplay::assignColor(const string& difficulty){
     if (difficulty == "Easy") {
         return string(COLOR_GREEN) + "Easy" + COLOR_RESET;
@@ -66,7 +66,7 @@ string LeaderboardDisplay::assignColor(const string& difficulty){
     }
 }
 
-// returns proper padding size when outputting scores
+// Returns proper padding size when outputting scores
 int LeaderboardDisplay::findSize(const string& difficulty){
     if (difficulty == "Easy") {
         return 4;
@@ -98,7 +98,7 @@ void LeaderboardDisplay::displayScores(int numScores){
     // Scores (up to numScores)
     for(int i = 0; i < numScores && i < playerScores.size(); i++){
 
-        // tracks padding size for difficulty
+        // Tracks padding size for difficulty
         int difficultySize = findSize(playerScores.at(i).difficulty);
 
         string scoreEntry = std::to_string(i + 1) + ". " + playerScores.at(i).name + " - " + std::to_string(playerScores.at(i).score) + " (" + assignColor(playerScores.at(i).difficulty) + ")";

@@ -14,15 +14,15 @@ class Game : public Screen {
     private:
         int score;
         bool isPaused;
-        int highestRow; // smallest y the player has reached so far
+        int highestRow;       // Smallest y the player has reached so far
         
         Board board;
         Player player;
-        Menu& mainMenu; // track main menu for quitting back to it
+        Menu& mainMenu;       // Track main menu for quitting back to it
 
-        int barrierY;         // current row of barrier
-        int barrierCounter;   // used to move barrier slowly
-        int barrierSpeed; // changes speed of barrier based on difficulty
+        int barrierY;         // Current row of barrier
+        int barrierCounter;   // Used to move barrier slowly
+        int barrierSpeed;     // Changes speed of barrier based on difficulty
 
     public:
         Game(Menu& menu);

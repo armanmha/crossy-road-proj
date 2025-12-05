@@ -21,6 +21,7 @@ std::pair<int, int> GameplayObjects::getPosition() const {
     return position;
 }
 
+// replaces tile with object
 void GameplayObjects::setTile(int x, char c) {
     if (x >= 0 && x < length) {
         outputString[x] = c;
