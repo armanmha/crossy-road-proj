@@ -1,5 +1,7 @@
 [![CI](https://github.com/cs100/final-project-ahami040-ejung047-alimt001-jmcla012/actions/workflows/main.yml/badge.svg)](https://github.com/cs100/final-project-ahami040-ejung047-alimt001-jmcla012/actions/workflows/main.yml)
 
+**Note: This project repo was cloned as the original's privacy could not be modified as it was UCR's organization.**
+
 # Crossy Road Clone
 
   Authors: [Jacob McLaughlin](https://github.com/BacoJaco), [Aaron Limtiaco](https://github.com/airvon), [Arman Hamidi Asl](https://github.com/armanmha), [Ethan Jung](https://github.com/ethanjung-commits)
