@@ -4,7 +4,7 @@
 
 # Crossy Road Clone
 
-  Authors: [Jacob McLaughlin](https://github.com/BacoJaco), [Aaron Limtiaco](https://github.com/airvon), [Arman Hamidi Asl](https://github.com/armanmha), [Ethan Jung](https://github.com/ethanjung-commits)
+  Authors: [Jacob McLaughlin](https://github.com/BacoJaco), [Aaron Limtiaco](https://github.com/airvon), [Arman Hamidi Asl](https://github.com/armanmha)
 
 ## Project Description
 This project is important to us because our group grew up with the dream of making video games and this is a great way to get experience doing so. This project also introduces the same methods of product development that software engineers in the industry utilize on a daily basis. Learning to work as a team similarly to how we would in a professional environment while doing something we are passionate about will help prepare us for industry work in the future.
