@@ -16,7 +16,7 @@ The features that the project provides include real-time character movement, a l
 ## Diagrams
 <b>Navigation:</b>
 
-<img width="712" height="801" alt="Nav_Diagram" src="https://github.com/user-attachments/assets/0d7b38d3-9e97-47db-bcf7-ac93b2039e91" />
+<img width="712" height="801" alt="1" src="https://github.com/user-attachments/assets/a0602a74-f272-4b17-b805-bab7d506e7fe" />
 
 <h1></h1>
 <b>Screen Layouts:</b>
