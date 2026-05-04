@@ -16,12 +16,12 @@ The features that the project provides include real-time character movement, a l
 ## Diagrams
 <b>Navigation:</b>
 
-<img width="712" height="801" alt="1" src="https://github.com/user-attachments/assets/a0602a74-f272-4b17-b805-bab7d506e7fe" />
+<img width="712" height="801" alt="1" src="https://github.com/user-attachments/assets/f7c2b04a-4c90-463e-9049-78bc9c2c8ca5" />
 
 <h1></h1>
 <b>Screen Layouts:</b>
 
-<img width="1582" height="836" alt="Screen Layout" src="https://github.com/user-attachments/assets/0998028f-d350-4c0a-adb0-ecf69885a57b" />
+<img width="1582" height="836" alt="2" src="https://github.com/user-attachments/assets/40468002-aad5-4d64-ba25-677d89c80833" />
 
 <h1></h1>
 <b>Screen Layout Description:</b>
@@ -49,7 +49,8 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 <h1></h1><b>Class Diagram:</b>
 <br></br>
 
-<img width="2241" height="1369" alt="CS100 Milestone 3 UMLpng" src="https://github.com/user-attachments/assets/e72d87ae-f039-4080-98ef-0bba29b7fd6b" />
+<img width="2241" height="1369" alt="3" src="https://github.com/user-attachments/assets/da9d2103-5369-4dae-8030-fd6603870d9c" />
+
 
 <h1></h1>
 
@@ -111,14 +112,15 @@ The main menu screen presents the user with options to “Play”, “Change Dif
 <b>Main Menu:</b>
 <br>
 
-<img width="761" height="694" alt="MainMenu" src="https://github.com/user-attachments/assets/7902002c-33e1-47d4-a375-a1b71a41af75" />
+<img width="761" height="694" alt="4" src="https://github.com/user-attachments/assets/9d987421-53d4-43e8-98e3-5feb6b569252" />
+
 
 <br>
 The main menu is navigated using the arrow/WASD keys, and the enter keys selects individual options. Pressing the enter key while "PLAY" is underlined leads to the gameplay, and pressing the enter key while "View Leaderboard" is underlined leads to the leaderboard.
 
 <h1></h1>
 
-<img width="764" height="676" alt="MainMenuDifficulty" src="https://github.com/user-attachments/assets/d87c47d0-b556-4eea-8c3b-5e0136a2fa6b" />
+<img width="764" height="676" alt="5" src="https://github.com/user-attachments/assets/c0afbca8-e9a4-455b-b0d8-d620dff78ff5" />
 
 <br>
 The left/right arrow keys change the difficulty. The options are "Easy", "Medium", and "Hard".
@@ -126,7 +128,7 @@ The left/right arrow keys change the difficulty. The options are "Easy", "Medium
 <h1></h1><b>Leaderboard:</b>
 <br>
 
-<img width="742" height="415" alt="Leaderboard" src="https://github.com/user-attachments/assets/c551fe24-c377-4f36-964e-4836e75bcb84" />
+<img width="742" height="415" alt="6" src="https://github.com/user-attachments/assets/0283b347-8952-4bae-9e0a-14de8e52372e" />
 
 <br>
 The leaderboard displays the top N scores, where N is a positive number chosen by the user. Pressing either the enter or q/Q keys anywhere on the leaderboard screen leads back to the main menu.
@@ -134,19 +136,24 @@ The leaderboard displays the top N scores, where N is a positive number chosen b
 <h1></h1><b>Gameplay:</b>
 <br>
 
-<img width="861" height="617" alt="GameplayInitial" src="https://github.com/user-attachments/assets/f95e2bad-8c97-4c91-88ec-8063f76a7835" />
+<img width="861" height="617" alt="7" src="https://github.com/user-attachments/assets/d1f41e99-6dc0-43fd-a891-632b9bff9502" />
+
 
 The gameplay can be navigated with the WASD/arrow keys. The cyan '@' symbol represents the character, and the yellow characters are coins. The '0' and '+' represent obstacles. The '0' is a moving vehicle and will end the game on player-collision. The '+' is a rock and will prevent the player from moving past it.
 
 <h1></h1>
 
-<img width="860" height="611" alt="GameplayUp" src="https://github.com/user-attachments/assets/354e1c92-5e6e-4ad0-a17f-61bce4fb7292" />
+<img width="860" height="611" alt="8" src="https://github.com/user-attachments/assets/834b2ad0-672c-47fd-8685-ca243c6579f7" />
+
 
 <br>
 As the player progresses up through the level, the score is incremented. After some time, a red wall begins moving up to keep the player moving.
 
 <h1></h1>
-<img width="758" height="550" alt="GameplayDeath" src="https://github.com/user-attachments/assets/ac81eb4e-5bac-4a1e-ac81-a10fbc720828" />
+
+<img width="758" height="550" alt="9" src="https://github.com/user-attachments/assets/6c04a695-ff16-4ebc-be4a-6eb228e08218" />
+
+
 <br>
 When the player overlaps with a vehicle (denoted by '0'), the game ends, and the game over screen is triggered.
 
@@ -155,28 +162,32 @@ When the player overlaps with a vehicle (denoted by '0'), the game ends, and the
 <h1></h1><b>Pause Screen:</b>
 <br>
 
-<img width="740" height="352" alt="Pause" src="https://github.com/user-attachments/assets/6d5d1d9c-646e-465d-8afe-8c7d399f7c39" />
+<img width="740" height="352" alt="10" src="https://github.com/user-attachments/assets/2c48df28-c5d3-4b8c-861b-f1b0b8e65ed4" />
+
 
 <br>
 The pause menu is accessed by pressing the ESC key, and pauses gameplay. The player can view their current score, and choose to either resume the game or quit back to the menu.
 
 <h1></h1>
-<img width="744" height="248" alt="image" src="https://github.com/user-attachments/assets/40c97b94-47ac-4f01-9640-2d7b69c9ac06" />
+
+<img width="744" height="248" alt="11" src="https://github.com/user-attachments/assets/4490bb50-7b0a-4be8-96ca-5d03d5e39f6f" />
+
+
 <br>
 Selecting "Quit to Menu" (or pressing the Q/q key during gameplay) will lead to a confirmation screen, with navigation akin to the other menus.
 
 <h1></h1><b>Game Over Screen:</b>
 <br>
 
-
-<img width="760" height="404" alt="GameOver" src="https://github.com/user-attachments/assets/798180fc-7ae3-497f-9a0c-a00f222475a9" />
+<img width="760" height="404" alt="12" src="https://github.com/user-attachments/assets/17ca5f34-26c9-4fd5-80ed-29dbe771f4cf" />
 
 <br>
 Navigating to "Save Score" with the arrow keys allows the player to save their score for the leaderboard. Selecting "Retry" brings the player to a new level, and selecting "Quit to Menu" quits to the menu.
 
 <h1></h1>
 
-<img width="309" height="71" alt="GameOverSaveScore" src="https://github.com/user-attachments/assets/3d79186b-095e-4d67-aa06-14a137c96d15" />
+<img width="309" height="71" alt="13" src="https://github.com/user-attachments/assets/600cb9eb-e312-48ea-a759-9c8a5a5a7ef2" />
+
 
 <br>
 Selecting "Save Score" leads to this screen, where the player may type up to three characters to represent their name. Pressing the enter key confirms and saves the score to a text file.
